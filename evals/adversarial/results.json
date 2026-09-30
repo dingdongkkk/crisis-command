@@ -56,7 +56,7 @@
   {
     "probe": "override_conflict_has_coded_reason",
     "invariant": "Record conflicting overrides with reasons (0004)",
-    "passed": false,
-    "evidence": "got OVERRIDE_INFEASIBLE conflicts=[]"
+    "passed": true,
+    "evidence": "409 OVERRIDE_CONFLICT ['TYPE_INELIGIBLE']"
   }
 ]
