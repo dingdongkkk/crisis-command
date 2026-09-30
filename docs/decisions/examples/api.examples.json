@@ -1,0 +1,144 @@
+[
+  {
+    "name": "health",
+    "request": {"method": "GET", "path": "/health"},
+    "response": {"status": 200, "body": {"status": "ok", "mode": "simulation", "schema_version": "1.0", "routing_provider": "fixture", "llm_provider": "template", "degraded": []}}
+  },
+  {
+    "name": "state_snapshot",
+    "request": {"method": "GET", "path": "/state"},
+    "response": {"status": 200, "body": {"schema_version": "1.0", "session_id": "sess_demo_01", "as_of_sequence": 60, "planning_sequence": 58, "sim_time_s": 620, "incidents": ["…"], "units": ["…"], "facilities": ["…"], "flood": ["…"], "active_overrides": [], "approved_plan_id": "plan_0006", "current_proposal_id": "plan_0007"}}
+  },
+  {
+    "name": "events_after_too_old",
+    "request": {"method": "GET", "path": "/events?after_sequence=3&session_id=sess_demo_00"},
+    "response": {"status": 410, "body": {"type": "https://crisis-command.local/problems/snapshot-required", "title": "Snapshot required", "status": 410, "code": "SNAPSHOT_REQUIRED", "detail": "Session sess_demo_00 is not the current session.", "current": {"session_id": "sess_demo_01", "head_sequence": 60}}}
+  },
+  {
+    "name": "post_report_valid",
+    "request": {"method": "POST", "path": "/reports", "headers": {"Idempotency-Key": "c0a8012e-7b1f-4c7a-9d3e-2f4b6a8c0e11"},
+      "body": {"channel": "text_sim", "text": "Synthetic: school roof has collapsed, children trapped, don't know how many.", "location": {"type": "Point", "coordinates": [77.5838, 12.93]}, "location_source": "caller_stated", "sim_time_s": 600}},
+    "response": {"status": 201, "body": {"report_id": "rpt_0010", "incident_id": "inc_0006", "sequence": 53, "escalated": true}}
+  },
+  {
+    "name": "post_report_missing_idempotency_key",
+    "request": {"method": "POST", "path": "/reports", "headers": {}, "body": {"channel": "text_sim", "text": "Synthetic test", "location": {"type": "Point", "coordinates": [77.5838, 12.93]}, "location_source": "caller_stated", "sim_time_s": 600}},
+    "response": {"status": 400, "body": {"type": "https://crisis-command.local/problems/idempotency-key-missing", "title": "Idempotency-Key header required", "status": 400, "code": "IDEMPOTENCY_KEY_MISSING"}}
+  },
+  {
+    "name": "post_report_key_reused_different_body",
+    "request": {"method": "POST", "path": "/reports", "headers": {"Idempotency-Key": "c0a8012e-7b1f-4c7a-9d3e-2f4b6a8c0e11"},
+      "body": {"channel": "text_sim", "text": "A different synthetic report", "location": {"type": "Point", "coordinates": [77.6, 12.97]}, "location_source": "caller_stated", "sim_time_s": 610}},
+    "response": {"status": 422, "body": {"type": "https://crisis-command.local/problems/idempotency-key-reused", "title": "Idempotency key reused with a different request", "status": 422, "code": "IDEMPOTENCY_KEY_REUSED"}}
+  },
+  {
+    "name": "post_report_swapped_coordinates",
+    "request": {"method": "POST", "path": "/reports", "headers": {"Idempotency-Key": "d1b9023f-8c20-4d8b-8e4f-3a5c7b9d1f22"},
+      "body": {"channel": "text_sim", "text": "Synthetic test", "location": {"type": "Point", "coordinates": [12.93, 77.5838]}, "location_source": "caller_stated", "sim_time_s": 600}},
+    "response": {"status": 422, "body": {"type": "https://crisis-command.local/problems/validation-failed", "title": "Request failed validation", "status": 422, "code": "VALIDATION_FAILED", "errors": [{"pointer": "/location/coordinates/1", "message": "latitude 77.5838 outside [-90, 90]"}]}}
+  },
+  {
+    "name": "unit_status_valid",
+    "request": {"method": "POST", "path": "/units/unit_A2/status", "headers": {"Idempotency-Key": "e2ca134a-9d31-4e9c-9f5a-4b6d8cae2a33"},
+      "body": {"to_status": "broken_down", "position": {"type": "Point", "coordinates": [77.6231, 12.9241]}, "sim_time_s": 600}},
+    "response": {"status": 200, "body": {"unit_id": "unit_A2", "status": "broken_down", "sequence": 58, "invalidated_assignment_ids": ["asg_0006_02"]}}
+  },
+  {
+    "name": "flood_event_valid",
+    "request": {"method": "POST", "path": "/flood-events", "headers": {"Idempotency-Key": "f3db245b-ae42-4fad-8a6b-5c7e9dbf3b44"},
+      "body": {"flood_id": "flood_bellandur", "version": 1, "closes_roads": true, "effective_sim_time_s": 300, "geometry": {"type": "Polygon", "coordinates": [[[77.668, 12.924], [77.69, 12.924], [77.69, 12.938], [77.668, 12.938], [77.668, 12.924]]]}}},
+    "response": {"status": 201, "body": {"flood_id": "flood_bellandur", "version": 1, "sequence": 31}}
+  },
+  {
+    "name": "flood_event_unclosed_ring",
+    "request": {"method": "POST", "path": "/flood-events", "headers": {"Idempotency-Key": "04ec356c-bf53-40be-9b7c-6d8faec04c55"},
+      "body": {"flood_id": "flood_bellandur", "version": 2, "closes_roads": true, "effective_sim_time_s": 420, "geometry": {"type": "Polygon", "coordinates": [[[77.668, 12.924], [77.69, 12.924], [77.69, 12.938]]]}}},
+    "response": {"status": 422, "body": {"type": "https://crisis-command.local/problems/validation-failed", "title": "Request failed validation", "status": 422, "code": "VALIDATION_FAILED", "errors": [{"pointer": "/geometry/coordinates/0", "message": "ring must have ≥ 4 positions and be closed"}]}}
+  },
+  {
+    "name": "recompute",
+    "request": {"method": "POST", "path": "/plans/recompute", "headers": {"Idempotency-Key": "15fd467d-c064-41cf-8c8d-7e9a0bfd5d66"}, "body": {"reason": "operator_requested"}},
+    "response": {"status": 202, "body": {"status": "computing", "planning_sequence": 58}}
+  },
+  {
+    "name": "get_plan",
+    "request": {"method": "GET", "path": "/plans/plan_0007"},
+    "response": {"status": 200, "body": {"$ref": "plan.valid.json"}}
+  },
+  {
+    "name": "approve_valid",
+    "request": {"method": "POST", "path": "/plans/plan_0007/approve", "headers": {"Idempotency-Key": "0f1e2d3c-4b5a-4968-8776-655443322110"},
+      "body": {"expected_plan_version": 7, "expected_planning_sequence": 58, "acknowledged_flag_ids": ["flag_0007_1", "flag_0007_2", "flag_0007_3", "flag_0007_4"], "note": "Shortage acknowledged."}},
+    "response": {"status": 200, "body": {"plan_id": "plan_0007", "state": "approved", "sequence": 61, "outbox_keys": ["plan_0007:asg_0007_03", "plan_0007:asg_0007_04", "plan_0007:asg_0007_05"]}}
+  },
+  {
+    "name": "approve_idempotent_retry",
+    "request": {"method": "POST", "path": "/plans/plan_0007/approve", "headers": {"Idempotency-Key": "0f1e2d3c-4b5a-4968-8776-655443322110"},
+      "body": {"expected_plan_version": 7, "expected_planning_sequence": 58, "acknowledged_flag_ids": ["flag_0007_1", "flag_0007_2", "flag_0007_3", "flag_0007_4"], "note": "Shortage acknowledged."}},
+    "response": {"status": 200, "headers": {"Idempotent-Replayed": "true"}, "body": {"plan_id": "plan_0007", "state": "approved", "sequence": 61, "outbox_keys": ["plan_0007:asg_0007_03", "plan_0007:asg_0007_04", "plan_0007:asg_0007_05"]}}
+  },
+  {
+    "name": "approve_stale",
+    "precondition": "UnitStatusChanged committed at sequence 59 (planning) before this request; plan_0008 proposed from it.",
+    "request": {"method": "POST", "path": "/plans/plan_0007/approve", "headers": {"Idempotency-Key": "26ae578e-d175-42d0-9d9e-8fab1ce06e77"},
+      "body": {"expected_plan_version": 7, "expected_planning_sequence": 58, "acknowledged_flag_ids": ["flag_0007_1", "flag_0007_2", "flag_0007_3", "flag_0007_4"]}},
+    "response": {"status": 409, "body": {"type": "https://crisis-command.local/problems/stale-plan", "title": "Plan is no longer current", "status": 409, "code": "STALE_PLAN", "detail": "Plan plan_0007 was based on sequence 58; planning sequence is now 59.", "current": {"plan_id": "plan_0008", "plan_version": 8, "planning_sequence": 59}}},
+    "side_effects": ["ApprovalRejected{plan_id: plan_0007, code: STALE_PLAN} appended (affects_planning false)", "no PlanApproved", "no SimulatedDispatchQueued"]
+  },
+  {
+    "name": "approve_already_approved",
+    "request": {"method": "POST", "path": "/plans/plan_0007/approve", "headers": {"Idempotency-Key": "37bf689f-e286-43e1-8eaf-9abc2df17f88"},
+      "body": {"expected_plan_version": 7, "expected_planning_sequence": 58, "acknowledged_flag_ids": ["flag_0007_1", "flag_0007_2", "flag_0007_3", "flag_0007_4"]}},
+    "response": {"status": 409, "body": {"type": "https://crisis-command.local/problems/plan-not-proposed", "title": "Plan is not awaiting approval", "status": 409, "code": "PLAN_NOT_PROPOSED", "current": {"plan_id": "plan_0007", "state": "approved"}}}
+  },
+  {
+    "name": "approve_missing_ack",
+    "request": {"method": "POST", "path": "/plans/plan_0007/approve", "headers": {"Idempotency-Key": "48c07aa0-f397-44f2-8fb0-abcd3e028099"},
+      "body": {"expected_plan_version": 7, "expected_planning_sequence": 58, "acknowledged_flag_ids": ["flag_0007_3", "flag_0007_4"]}},
+    "response": {"status": 409, "body": {"type": "https://crisis-command.local/problems/unacknowledged-flags", "title": "Flags require acknowledgement", "status": 409, "code": "UNACKNOWLEDGED_FLAGS", "missing_flag_ids": ["flag_0007_1", "flag_0007_2"]}}
+  },
+  {
+    "name": "override_pin_conflict",
+    "request": {"method": "POST", "path": "/overrides", "headers": {"Idempotency-Key": "7d8f0c9a-1b2c-4d3e-9f4a-5b6c7d8e9f10"},
+      "body": {"kind": "pin", "unit_id": "unit_A1", "need_id": "need_0006_als", "expected_plan_id": "plan_0007", "expected_planning_sequence": 58, "reason_text": "Send A1 to the school."}},
+    "response": {"status": 409, "body": {"type": "https://crisis-command.local/problems/override-conflict", "title": "Override conflicts with a hard constraint", "status": 409, "code": "OVERRIDE_CONFLICT", "override_id": "ovr_0001", "conflicts": [{"code": "UNIT_LOCKED", "unit_id": "unit_A1", "detail": "unit_A1 is on_scene at inc_0001"}]}},
+    "side_effects": ["OverrideRejected appended with the same conflicts", "plan unchanged"]
+  },
+  {
+    "name": "override_bls_bridge_valid",
+    "request": {"method": "POST", "path": "/overrides", "headers": {"Idempotency-Key": "8e9a1dab-2c3d-4e4f-a05b-6c7d8e9fa021"},
+      "body": {"kind": "approve_bls_bridge", "unit_id": "unit_B2", "bridges_need_id": "need_0006_als", "expected_plan_id": "plan_0007", "expected_planning_sequence": 67, "reason_text": "No ALS available; BLS bridge until ALS frees."}},
+    "response": {"status": 201, "body": {"override_id": "ovr_0002", "status": "active", "sequence": 68, "recompute": "computing"}},
+    "precondition": "plan_0007 approved (61); its three SimulatedDispatchSent events are 65–67, so planning_sequence is 67. Illustrative only: this bridge takes B2 off its own BLS task, which then shows as unmet.",
+    "side_effects": ["OverrideAccepted appended", "next plan has unit_B2 role bridge, satisfies_need false, flag ALS_UNMET_BLS_BRIDGING (critical, requires_ack)"]
+  },
+  {
+    "name": "override_bls_to_als_pin_invalid",
+    "request": {"method": "POST", "path": "/overrides", "headers": {"Idempotency-Key": "9fab2ebc-3d4e-4f50-b16c-7d8e9fab1032"},
+      "body": {"kind": "pin", "unit_id": "unit_B2", "need_id": "need_0006_als", "expected_plan_id": "plan_0007", "expected_planning_sequence": 58, "reason_text": "Use B2 as ALS."}},
+    "response": {"status": 409, "body": {"type": "https://crisis-command.local/problems/override-conflict", "title": "Override conflicts with a hard constraint", "status": 409, "code": "OVERRIDE_CONFLICT", "override_id": "ovr_0003", "conflicts": [{"code": "TYPE_INELIGIBLE", "unit_id": "unit_B2", "detail": "bls unit cannot satisfy an als need; use approve_bls_bridge"}]}}
+  },
+  {
+    "name": "medical_profile_denied",
+    "request": {"method": "POST", "path": "/incidents/inc_0004/medical-profile-access", "headers": {"Idempotency-Key": "a0bc3fcd-4e5f-4061-827d-8e9fab0c2143"},
+      "body": {"profile_ref": "mprof_syn_0001", "operator_reason": "Check history"}},
+    "response": {"status": 403, "body": {"type": "https://crisis-command.local/problems/profile-access-denied", "title": "Medical profile access denied", "status": 403, "code": "PROFILE_ACCESS_DENIED", "reason": "CALLER_IS_NOT_PATIENT"}},
+    "side_effects": ["MedicalProfileAccessDenied{incident_id, profile_ref, reason} appended without profile values"]
+  },
+  {
+    "name": "demo_reset",
+    "request": {"method": "POST", "path": "/demo/reset", "headers": {"Idempotency-Key": "b1cd40de-5f60-4172-938e-9fab0c1d3254"}, "body": {"fixture": "demo-bengaluru-v1", "seed": 7}},
+    "response": {"status": 200, "body": {"session_id": "sess_demo_02", "head_sequence": 1}}
+  },
+  {
+    "name": "demo_advance",
+    "request": {"method": "POST", "path": "/demo/advance", "headers": {"Idempotency-Key": "c2de51ef-6071-4283-a48b-ab0c1d2e4365"}, "body": {"to_step": "T+10"}},
+    "response": {"status": 200, "body": {"sim_time_s": 600, "head_sequence": 58, "appended": 3}}
+  },
+  {
+    "name": "demo_reset_outside_simulation",
+    "precondition": "CRISIS_MODE is not simulation",
+    "request": {"method": "POST", "path": "/demo/reset", "headers": {"Idempotency-Key": "d3ef62f0-7182-4394-b59c-bc1d2e3f5476"}, "body": {"fixture": "demo-bengaluru-v1", "seed": 7}},
+    "response": {"status": 403, "body": {"type": "https://crisis-command.local/problems/simulation-only", "title": "Simulation-only endpoint", "status": 403, "code": "SIMULATION_ONLY"}}
+  }
+]

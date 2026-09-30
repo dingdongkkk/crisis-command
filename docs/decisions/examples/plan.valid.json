@@ -1,0 +1,69 @@
+{
+  "_comment": "CC-01 illustrative T+10 proposal. ETAs and unit choices are placeholders showing shape; CC-05/CC-08 compute real values. Previously approved plan is plan_0006.",
+  "plan_id": "plan_0007",
+  "version": 7,
+  "session_id": "sess_demo_01",
+  "state": "proposed",
+  "based_on_planning_sequence": 58,
+  "created_sim_time_s": 601,
+  "created_at": "2026-09-30T09:10:01.350Z",
+  "policy_version": "demo-2026.1",
+  "supersedes_approved_plan_id": "plan_0006",
+  "solver": {"engine": "ortools_cp_sat", "status": "OPTIMAL", "objective_cost": 20315063, "wall_time_ms": 184, "seed": 7, "workers": 1},
+  "assignments": [
+    {"assignment_id": "asg_0007_01", "unit_id": "unit_A1", "incident_id": "inc_0001", "need_id": "need_0001_als", "role": "primary", "satisfies_need": true, "eta_s": 0, "locked": "on_scene", "destination_facility_id": "hosp_H1", "reasons": [{"code": "UNIT_LOCKED", "params": {"unit_id": "unit_A1", "lock": "on_scene"}}]},
+    {"assignment_id": "asg_0007_02", "unit_id": "unit_B1", "incident_id": "inc_0004", "need_id": "need_0004_bls", "role": "primary", "satisfies_need": true, "eta_s": 95, "locked": "near_arrival", "reasons": [{"code": "UNIT_LOCKED", "params": {"unit_id": "unit_B1", "lock": "near_arrival"}}]},
+    {"assignment_id": "asg_0007_03", "unit_id": "unit_B2", "incident_id": "inc_0006", "need_id": "need_0006_bls", "role": "primary", "satisfies_need": true, "eta_s": 140, "locked": null, "reasons": [{"code": "NEAREST_ELIGIBLE", "params": {"unit_id": "unit_B2", "eta_s": 140}}]},
+    {"assignment_id": "asg_0007_04", "unit_id": "unit_B3", "incident_id": "inc_0006", "need_id": "need_0006_bls", "role": "primary", "satisfies_need": true, "eta_s": 1260, "locked": null, "reasons": [{"code": "ONLY_ELIGIBLE_REMAINING", "params": {"unit_id": "unit_B3"}}]},
+    {"assignment_id": "asg_0007_05", "unit_id": "unit_F1", "incident_id": "inc_0006", "need_id": "need_0006_fire", "role": "primary", "satisfies_need": true, "eta_s": 780, "locked": null, "reasons": [{"code": "NEAREST_ELIGIBLE", "params": {"unit_id": "unit_F1", "eta_s": 780}}]},
+    {"assignment_id": "asg_0007_06", "unit_id": "unit_F2", "incident_id": "inc_0005", "need_id": "need_0005_fire", "role": "primary", "satisfies_need": true, "eta_s": 0, "locked": "on_scene", "reasons": [{"code": "UNIT_LOCKED", "params": {"unit_id": "unit_F2", "lock": "on_scene"}}]},
+    {"assignment_id": "asg_0007_07", "unit_id": "unit_BT1", "incident_id": "inc_0003", "need_id": "need_0003_water", "role": "primary", "satisfies_need": true, "eta_s": 210, "locked": null, "reasons": [{"code": "NEAREST_ELIGIBLE", "params": {"unit_id": "unit_BT1", "eta_s": 210}}]}
+  ],
+  "facility_allocations": [
+    {"allocation_id": "fal_0007_01", "facility_id": "shelter_S1", "incident_id": "inc_0005", "need_id": "need_0005_shelter", "persons": 40, "free_after_persons": 50}
+  ],
+  "unmet_needs": [
+    {
+      "need_id": "need_0006_als", "incident_id": "inc_0006", "type": "als", "quantity_unmet": 1, "severity": "critical", "basis": "provisional_unknown", "waiting_s": 1,
+      "reasons": [
+        {"code": "ALS_LOCKED_ON_SCENE", "params": {"unit_id": "unit_A1", "incident_id": "inc_0001"}},
+        {"code": "ALS_OUT_OF_SERVICE", "params": {"unit_id": "unit_A2", "status": "broken_down"}}
+      ],
+      "bridge_candidates": [
+        {"unit_id": "unit_B2", "eta_s": 140, "cost_of_taking": [{"metric": "unmet_need", "need_id": "need_0006_bls"}]}
+      ]
+    },
+    {
+      "need_id": "need_0004_als", "incident_id": "inc_0004", "type": "als", "quantity_unmet": 1, "severity": "high", "basis": "provisional_unknown", "waiting_s": 481,
+      "reasons": [
+        {"code": "ALS_LOCKED_ON_SCENE", "params": {"unit_id": "unit_A1", "incident_id": "inc_0001"}},
+        {"code": "ALS_OUT_OF_SERVICE", "params": {"unit_id": "unit_A2", "status": "broken_down"}}
+      ],
+      "bridge_candidates": [
+        {"unit_id": "unit_B1", "eta_s": 95, "cost_of_taking": [{"metric": "already_assigned_same_incident", "need_id": "need_0004_bls"}]}
+      ]
+    }
+  ],
+  "flags": [
+    {"flag_id": "flag_0007_1", "code": "ALS_UNMET", "severity": "critical", "requires_ack": true, "incident_id": "inc_0006", "need_id": "need_0006_als", "message": "inc_0006 has no ALS unit. No eligible ALS is available or reachable."},
+    {"flag_id": "flag_0007_2", "code": "ALS_UNMET", "severity": "critical", "requires_ack": true, "incident_id": "inc_0004", "need_id": "need_0004_als", "message": "inc_0004 lost ALS unit_A2 (broken down). No eligible ALS is available."},
+    {"flag_id": "flag_0007_3", "code": "RESERVE_UNCOVERED", "severity": "warning", "requires_ack": true, "zone_id": "zone_north", "resource_type": "bls", "since_sim_time_s": 601, "message": "zone_north has no ambulance within 600 s after unit_B3 moves."},
+    {"flag_id": "flag_0007_4", "code": "RESERVE_UNCOVERED", "severity": "warning", "requires_ack": true, "zone_id": "zone_south", "resource_type": "bls", "since_sim_time_s": 601, "message": "zone_south has no ambulance within 600 s."}
+  ],
+  "diff": {
+    "against_plan_id": "plan_0006",
+    "changed": [],
+    "added": [
+      {"unit_id": "unit_B2", "from": {"state": "available", "zone_id": "zone_south"}, "to": {"incident_id": "inc_0006", "need_id": "need_0006_bls", "eta_s": 140}},
+      {"unit_id": "unit_B3", "from": {"state": "available", "zone_id": "zone_north"}, "to": {"incident_id": "inc_0006", "need_id": "need_0006_bls", "eta_s": 1260}},
+      {"unit_id": "unit_F1", "from": {"state": "available", "zone_id": "zone_central"}, "to": {"incident_id": "inc_0006", "need_id": "need_0006_fire", "eta_s": 780}}
+    ],
+    "released": [
+      {"unit_id": "unit_A2", "from": {"incident_id": "inc_0004", "need_id": "need_0004_als"}, "reason": {"code": "UNIT_UNAVAILABLE", "params": {"status": "broken_down"}}}
+    ],
+    "unchanged_count": 4,
+    "newly_unmet": ["need_0004_als", "need_0006_als"],
+    "totals": {"weighted_eta_delta_s": 10900, "units_moved": 0, "units_added": 3, "units_released": 1, "needs_unmet": 2, "zones_uncovered": 2}
+  },
+  "soft_consequences": []
+}
