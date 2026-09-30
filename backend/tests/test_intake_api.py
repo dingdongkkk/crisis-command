@@ -207,3 +207,26 @@ def test_template_provider_reports_no_model_degradation(client: TestClient) -> N
     health = client.get("/health").json()
     assert health["llm_provider"] == "template"
     assert "MODEL_UNAVAILABLE" not in health["degraded"]
+
+
+def test_road_status_question_is_not_promoted_to_an_emergency(client: TestClient) -> None:
+    # CC-11 benchmark finding: "flooded?" in a road question created a water-rescue need.
+    accepted = _report(client, "Is the underpass near Silk Board flooded?").json()
+    incident = next(
+        i
+        for i in client.get("/state").json()["incidents"]
+        if i["incident_id"] == accepted["incident_id"]
+    )
+    assert incident["category"] == "information_request"
+    assert incident["needs"] == []
+
+
+def test_stranded_in_rising_water_is_still_an_emergency(client: TestClient) -> None:
+    accepted = _report(client, "Water rising fast, our car is stuck, 2 people inside").json()
+    incident = next(
+        i
+        for i in client.get("/state").json()["incidents"]
+        if i["incident_id"] == accepted["incident_id"]
+    )
+    assert incident["category"] == "emergency"
+    assert "water_rescue" in [n["type"] for n in incident["needs"]]
