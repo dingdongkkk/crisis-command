@@ -57,8 +57,10 @@ DEMO_PROFILE: dict[str, Any] = dict(
 )
 
 
-def seed_profile(incident_id: str) -> Callable[[sqlite3.Connection], None]:
-    data = json.dumps({**DEMO_PROFILE, "linked_incident_id": incident_id})
+def seed_profile(session_id: str, incident_id: str) -> Callable[[sqlite3.Connection], None]:
+    data = json.dumps(
+        {**DEMO_PROFILE, "linked_incident_id": incident_id, "linked_session_id": session_id}
+    )
 
     def write(conn: sqlite3.Connection) -> None:
         conn.execute(
@@ -187,7 +189,7 @@ def advance(state: StateSnapshot, command: DemoAdvanceCommand) -> Decision:
             writers.append(result.write_private)
         if moment == 0 and text.startswith("Chest pain"):
             created = next(e for e in result.events if e.event_type == "IncidentCreated")
-            writers.append(seed_profile(created.aggregate_id))
+            writers.append(seed_profile(state.session_id, created.aggregate_id))
         events.extend(result.events)
         working = preview(working, result.events)
     # Shared tick advances time once for every unit, never one planning event per unit.

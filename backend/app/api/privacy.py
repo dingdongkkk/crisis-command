@@ -53,7 +53,12 @@ def denial_reason(
         return "MISSING_OPERATOR_REASON"
     if not any(i.incident_id == incident_id and i.status == "active" for i in state.incidents):
         return "INCIDENT_NOT_ACTIVE"
-    if profile is None or profile.get("linked_incident_id") != incident_id:
+    # Incident IDs restart with each session, so a link is to (session, incident) (CC-12 P1).
+    if (
+        profile is None
+        or profile.get("linked_incident_id") != incident_id
+        or profile.get("linked_session_id") != state.session_id
+    ):
         return "PROFILE_NOT_LINKED"
     if not profile["consent_granted"]:
         return "CONSENT_REVOKED" if profile.get("consent_revoked") else "NO_CONSENT"
@@ -87,12 +92,13 @@ def put_profile(
     command: ProfileWrite,
     idempotency_key: IdempotencyKey = None,
 ) -> JSONResponse:
-    def decide(_: StateSnapshot) -> Decision:
+    def decide(state: StateSnapshot) -> Decision:
         if not command.synthetic or set(command.scope) - set(FIELDS):
             raise DomainError(
                 422, "VALIDATION_FAILED", "Synthetic profiles and supported consent scopes only"
             )
         data = command.model_dump(exclude={"expected_session_id"})
+        data["linked_session_id"] = state.session_id
         previous = profile_data(request, profile_ref)
         if not command.consent_granted:
             for field in FIELDS:

@@ -27,6 +27,8 @@ from app.contracts.plan import Plan
 from app.contracts.state import DispatchCommand, StateSnapshot
 from app.domain.commands import UNAVAILABLE, DomainError, NewEvent
 from app.planning.allocator import Routes, allocate, validate_plan
+from app.routing.router import closures_key
+from app.routing.service import active_closures
 from app.storage.event_store import Decision, EventStore, problem
 
 SYSTEM = {"kind": "system", "id": "planner"}
@@ -373,16 +375,57 @@ class Planner:
             ),
         )
 
+    def _still_routable(self, state: StateSnapshot, command: DispatchCommand) -> bool:
+        """Is the assignment still drivable under the flood closures now in effect?
+
+        Computed before the writer lock (routing is not done under it); the decision then
+        checks the closures did not change in between (CC-12 P1: a flood after approval must
+        not let a queued simulated dispatch go out on a closed road)."""
+        if command.action != "assign":
+            return True
+        unit = next((u for u in state.units if u.unit_id == command.unit_id), None)
+        incident = next((i for i in state.incidents if i.incident_id == command.incident_id), None)
+        if unit is None or incident is None:
+            return True  # the fence below rejects these cases with its own reason
+        plan = state.approved_plan
+        assignment = (
+            next((a for a in plan.assignments if a.assignment_id == command.assignment_id), None)
+            if plan
+            else None
+        )
+        need = next(
+            (n for n in incident.needs if assignment and n.need_id == assignment.need_id), None
+        )
+        if need is not None and need.type == "water_rescue":
+            return True  # boat routes are not road routes; unchanged behaviour
+        route = self.routes.route(state, unit.position.coordinates, incident.location.coordinates)
+        return route.route_status == "ok"
+
     def deliver(self) -> None:
         state = self.store.state()
+        closures = closures_key(active_closures(state))
         for command in state.outbox:
             if command.state != DispatchState.PENDING:
                 continue
+            routable = self._still_routable(state, command)
 
-            def decide(current: StateSnapshot, command: DispatchCommand = command) -> Decision:
+            def decide(
+                current: StateSnapshot,
+                command: DispatchCommand = command,
+                routable: bool = routable,
+            ) -> Decision:
                 c = next((c for c in current.outbox if c.outbox_key == command.outbox_key), None)
                 if c is None or c.state != DispatchState.PENDING:
                     return Decision([], lambda _: (200, {}))
+                if closures_key(active_closures(current)) != closures or not routable:
+                    # Road network changed (or route closed) since approval: never send; the
+                    # replan proposes a new route for human approval.
+                    payload = SimulatedDispatchEndedPayload(
+                        outbox_key=c.outbox_key, reason="ROUTE_INVALIDATED"
+                    )
+                    return Decision(
+                        [event(current, "SimulatedDispatchCancelled", payload)], lambda _: (200, {})
+                    )
                 unit = next((u for u in current.units if u.unit_id == c.unit_id), None)
                 plan = current.approved_plan
                 valid = (
