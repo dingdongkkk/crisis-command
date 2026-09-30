@@ -1,0 +1,4945 @@
+{
+  "benchmark": "cc-11-allocation-v1",
+  "simulated": true,
+  "definitions": {
+    "weighted_response_s": "severity-weighted mean ETA of the first approved decision per need (served needs only)",
+    "critical_under_8min_share": "critical needs whose first approved ETA <= 480 s; unmet counts as a miss",
+    "first_decision_unmet": "needs left unmet in the first approved plan that contained them",
+    "final_unmet_quanta": "unmet demand quanta in the last approved plan",
+    "reassignments": "committed units moved to a different need while their need stayed open",
+    "mean_uncovered_zones": "mean per replan of reserve zone/resource pairs not covered",
+    "replan_ms": "wall time of Planner.recompute (state read, candidate routing, solve, publish)"
+  },
+  "metadata": {
+    "generated_at": "2026-09-30T17:30:20+00:00",
+    "commit": "e4d8a571e36a0da2bff98521a003fa9ae7a9f80a",
+    "dirty": false,
+    "python": "3.12.14",
+    "ortools": "9.15.6755",
+    "platform": "macOS-26.4.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "processor": "arm",
+    "cpu_count": 10
+  },
+  "summary": {
+    "planner": {
+      "seeds": 100,
+      "needs": 1042,
+      "weighted_response_s_mean": 757.0,
+      "weighted_response_s_median": 769.6,
+      "critical_needs": 940,
+      "critical_under_8min": 117,
+      "critical_under_8min_share": 0.1245,
+      "first_decision_unmet": 510,
+      "final_unmet_quanta": 528,
+      "reassignments": 90,
+      "reassignments_to_higher_severity": 21,
+      "mean_uncovered_zones": 1.194,
+      "replans": 714,
+      "replan_ms_p50": 34.2,
+      "replan_ms_p95": 114.0,
+      "runs_with_errors": 0
+    },
+    "baseline": {
+      "seeds": 100,
+      "needs": 1042,
+      "weighted_response_s_mean": 830.5,
+      "weighted_response_s_median": 855.9,
+      "critical_needs": 940,
+      "critical_under_8min": 100,
+      "critical_under_8min_share": 0.1064,
+      "first_decision_unmet": 514,
+      "final_unmet_quanta": 530,
+      "reassignments": 34,
+      "reassignments_to_higher_severity": 22,
+      "mean_uncovered_zones": 1.155,
+      "replans": 714,
+      "replan_ms_p50": 27.9,
+      "replan_ms_p95": 89.0,
+      "runs_with_errors": 0
+    }
+  },
+  "paired": {
+    "weighted_response_s": {
+      "planner_better": 46,
+      "tie": 52,
+      "baseline_better": 2
+    },
+    "critical_under_8min": {
+      "planner_better": 17,
+      "tie": 83,
+      "baseline_better": 0
+    },
+    "final_unmet_quanta": {
+      "planner_better": 2,
+      "tie": 98,
+      "baseline_better": 0
+    },
+    "reassignments": {
+      "planner_better": 1,
+      "tie": 52,
+      "baseline_better": 47
+    },
+    "mean_uncovered_zones": {
+      "planner_better": 3,
+      "tie": 90,
+      "baseline_better": 7
+    }
+  },
+  "baseline_minus_planner": {
+    "weighted_response_s": {
+      "pairs": 100,
+      "mean": 73.46,
+      "ci95": [
+        54.16,
+        94.25
+      ]
+    },
+    "critical_under_8min": {
+      "pairs": 100,
+      "mean": -0.17,
+      "ci95": [
+        -0.25,
+        -0.1
+      ]
+    },
+    "reassignments": {
+      "pairs": 100,
+      "mean": -0.56,
+      "ci95": [
+        -0.71,
+        -0.42
+      ]
+    }
+  },
+  "seeds": [
+    {
+      "seed": 1,
+      "events": 6,
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 785.0,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          55.8,
+          5.3,
+          13.2,
+          27.0,
+          43.6,
+          43.0
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 785.0,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          53.4,
+          3.6,
+          10.8,
+          42.7,
+          35.2,
+          51.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 2,
+      "events": 6,
+      "baseline": {
+        "needs": 4,
+        "weighted_response_s": 531.0,
+        "critical_needs": 4,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 6,
+        "latencies_ms": [
+          7.7,
+          3.2,
+          32.8,
+          24.3,
+          4.6,
+          4.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 4,
+        "weighted_response_s": 531.0,
+        "critical_needs": 4,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 6,
+        "latencies_ms": [
+          9.0,
+          3.7,
+          54.3,
+          28.1,
+          7.5,
+          7.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 3,
+      "events": 6,
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 774.8,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 6,
+        "latencies_ms": [
+          35.9,
+          41.4,
+          13.5,
+          45.0,
+          112.2,
+          15.0
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 1051.6,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 6,
+        "latencies_ms": [
+          32.5,
+          36.1,
+          7.9,
+          58.4,
+          107.6,
+          8.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 4,
+      "events": 6,
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 690.0,
+        "critical_needs": 7,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.333,
+        "replans": 6,
+        "latencies_ms": [
+          9.5,
+          2.9,
+          3.5,
+          27.7,
+          30.7,
+          20.4
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 690.0,
+        "critical_needs": 7,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.333,
+        "replans": 6,
+        "latencies_ms": [
+          10.5,
+          4.0,
+          5.0,
+          32.7,
+          40.4,
+          63.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 5,
+      "events": 9,
+      "planner": {
+        "needs": 17,
+        "weighted_response_s": 753.0,
+        "critical_needs": 17,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 11,
+        "final_unmet_quanta": 12,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.778,
+        "replans": 9,
+        "latencies_ms": [
+          31.4,
+          56.4,
+          86.2,
+          52.1,
+          88.0,
+          52.9,
+          60.6,
+          77.7,
+          105.9
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 17,
+        "weighted_response_s": 888.3,
+        "critical_needs": 17,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 11,
+        "final_unmet_quanta": 12,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.778,
+        "replans": 9,
+        "latencies_ms": [
+          27.4,
+          47.1,
+          75.4,
+          39.0,
+          60.4,
+          60.6,
+          37.8,
+          11.5,
+          50.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 6,
+      "events": 8,
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 748.0,
+        "critical_needs": 13,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.375,
+        "replans": 8,
+        "latencies_ms": [
+          12.6,
+          18.6,
+          32.0,
+          29.6,
+          54.2,
+          33.3,
+          22.8,
+          34.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 748.0,
+        "critical_needs": 13,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.375,
+        "replans": 8,
+        "latencies_ms": [
+          14.6,
+          22.1,
+          35.6,
+          33.6,
+          35.0,
+          47.2,
+          45.3,
+          79.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 7,
+      "events": 7,
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 842.3,
+        "critical_needs": 12,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 7,
+        "reassignments": 3,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.429,
+        "replans": 7,
+        "latencies_ms": [
+          40.3,
+          36.1,
+          38.3,
+          56.4,
+          91.0,
+          79.1,
+          222.0
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 930.8,
+        "critical_needs": 12,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 7,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.143,
+        "replans": 7,
+        "latencies_ms": [
+          36.3,
+          40.6,
+          29.5,
+          38.3,
+          41.8,
+          73.5,
+          162.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 8,
+      "events": 6,
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 570.2,
+        "critical_needs": 7,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 0.167,
+        "replans": 6,
+        "latencies_ms": [
+          18.0,
+          9.7,
+          10.3,
+          31.0,
+          78.5,
+          28.8
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 570.2,
+        "critical_needs": 7,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 0.167,
+        "replans": 6,
+        "latencies_ms": [
+          18.4,
+          39.7,
+          13.0,
+          34.9,
+          81.3,
+          40.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 9,
+      "events": 8,
+      "planner": {
+        "needs": 16,
+        "weighted_response_s": 686.5,
+        "critical_needs": 16,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 11,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.125,
+        "replans": 8,
+        "latencies_ms": [
+          55.6,
+          16.4,
+          41.5,
+          54.1,
+          54.0,
+          73.7,
+          91.8,
+          266.1
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 16,
+        "weighted_response_s": 663.5,
+        "critical_needs": 16,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.25,
+        "replans": 8,
+        "latencies_ms": [
+          21.7,
+          11.9,
+          34.6,
+          69.7,
+          32.1,
+          40.8,
+          41.8,
+          168.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 10,
+      "events": 9,
+      "baseline": {
+        "needs": 14,
+        "weighted_response_s": 859.5,
+        "critical_needs": 14,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 8,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.556,
+        "replans": 9,
+        "latencies_ms": [
+          24.2,
+          26.1,
+          32.7,
+          31.7,
+          24.4,
+          29.9,
+          168.6,
+          38.0,
+          36.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 14,
+        "weighted_response_s": 815.7,
+        "critical_needs": 14,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 8,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.556,
+        "replans": 9,
+        "latencies_ms": [
+          24.7,
+          28.8,
+          35.7,
+          36.7,
+          29.3,
+          43.9,
+          151.5,
+          51.9,
+          61.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 11,
+      "events": 8,
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 736.0,
+        "critical_needs": 7,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 8,
+        "latencies_ms": [
+          0.7,
+          61.1,
+          15.6,
+          32.1,
+          26.6,
+          34.9,
+          33.7,
+          41.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 736.0,
+        "critical_needs": 7,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 8,
+        "latencies_ms": [
+          0.8,
+          60.4,
+          14.1,
+          29.8,
+          23.6,
+          31.4,
+          29.0,
+          35.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 12,
+      "events": 8,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 545.0,
+        "critical_needs": 9,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.25,
+        "replans": 8,
+        "latencies_ms": [
+          2.1,
+          2.1,
+          19.2,
+          20.2,
+          29.8,
+          18.6,
+          58.8,
+          8.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 545.0,
+        "critical_needs": 9,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.25,
+        "replans": 8,
+        "latencies_ms": [
+          2.8,
+          2.5,
+          22.8,
+          28.0,
+          39.8,
+          29.2,
+          37.8,
+          20.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 13,
+      "events": 7,
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 728.6,
+        "critical_needs": 7,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 1.429,
+        "replans": 7,
+        "latencies_ms": [
+          11.7,
+          15.6,
+          72.6,
+          39.3,
+          52.4,
+          46.5,
+          166.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 728.6,
+        "critical_needs": 7,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 1.429,
+        "replans": 7,
+        "latencies_ms": [
+          10.7,
+          13.1,
+          29.1,
+          29.1,
+          39.7,
+          30.3,
+          150.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 14,
+      "events": 5,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 957.5,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 5,
+        "latencies_ms": [
+          0.7,
+          65.7,
+          23.0,
+          30.8,
+          32.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 834.3,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 5,
+        "latencies_ms": [
+          0.7,
+          67.0,
+          25.0,
+          41.1,
+          51.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 15,
+      "events": 5,
+      "planner": {
+        "needs": 13,
+        "weighted_response_s": 942.7,
+        "critical_needs": 13,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.8,
+        "replans": 5,
+        "latencies_ms": [
+          28.6,
+          51.0,
+          52.9,
+          75.1,
+          64.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 13,
+        "weighted_response_s": 981.4,
+        "critical_needs": 13,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.8,
+        "replans": 5,
+        "latencies_ms": [
+          27.6,
+          46.7,
+          37.8,
+          90.0,
+          77.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 16,
+      "events": 6,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 820.6,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.833,
+        "replans": 6,
+        "latencies_ms": [
+          7.5,
+          22.6,
+          26.5,
+          28.6,
+          29.9,
+          37.6
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 820.6,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.833,
+        "replans": 6,
+        "latencies_ms": [
+          8.9,
+          27.9,
+          32.2,
+          36.1,
+          37.8,
+          59.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 17,
+      "events": 8,
+      "planner": {
+        "needs": 17,
+        "weighted_response_s": 732.7,
+        "critical_needs": 15,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 11,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.375,
+        "replans": 8,
+        "latencies_ms": [
+          21.5,
+          29.6,
+          36.4,
+          89.0,
+          39.4,
+          56.4,
+          137.0,
+          77.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 17,
+        "weighted_response_s": 732.7,
+        "critical_needs": 15,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 11,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.375,
+        "replans": 8,
+        "latencies_ms": [
+          20.5,
+          23.3,
+          26.4,
+          35.3,
+          25.8,
+          38.1,
+          72.6,
+          9.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 18,
+      "events": 6,
+      "baseline": {
+        "needs": 5,
+        "weighted_response_s": 1037.0,
+        "critical_needs": 4,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          2.3,
+          2.2,
+          22.0,
+          23.6,
+          9.6,
+          51.6
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 5,
+        "weighted_response_s": 712.8,
+        "critical_needs": 4,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          2.8,
+          2.8,
+          24.0,
+          25.5,
+          10.5,
+          8.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 19,
+      "events": 9,
+      "planner": {
+        "needs": 19,
+        "weighted_response_s": 955.4,
+        "critical_needs": 17,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 12,
+        "final_unmet_quanta": 13,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.556,
+        "replans": 9,
+        "latencies_ms": [
+          23.9,
+          13.3,
+          7.0,
+          26.7,
+          39.5,
+          57.6,
+          57.5,
+          132.0,
+          97.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 19,
+        "weighted_response_s": 955.4,
+        "critical_needs": 17,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 12,
+        "final_unmet_quanta": 13,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.556,
+        "replans": 9,
+        "latencies_ms": [
+          22.4,
+          11.1,
+          5.1,
+          24.1,
+          31.5,
+          42.1,
+          36.2,
+          42.7,
+          47.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 20,
+      "events": 11,
+      "baseline": {
+        "needs": 14,
+        "weighted_response_s": 771.5,
+        "critical_needs": 13,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 10,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.364,
+        "replans": 11,
+        "latencies_ms": [
+          16.9,
+          32.2,
+          36.9,
+          78.3,
+          46.8,
+          40.0,
+          10.3,
+          85.1,
+          10.8,
+          16.6,
+          64.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 14,
+        "weighted_response_s": 733.7,
+        "critical_needs": 13,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 10,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.364,
+        "replans": 11,
+        "latencies_ms": [
+          17.7,
+          39.0,
+          88.6,
+          84.9,
+          55.1,
+          57.4,
+          38.7,
+          78.1,
+          68.4,
+          54.7,
+          32.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 21,
+      "events": 6,
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 672.2,
+        "critical_needs": 6,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.333,
+        "replans": 6,
+        "latencies_ms": [
+          2.5,
+          46.3,
+          90.7,
+          10.0,
+          26.9,
+          46.6
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 953.8,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.333,
+        "replans": 6,
+        "latencies_ms": [
+          2.1,
+          47.1,
+          38.4,
+          6.4,
+          21.9,
+          39.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 22,
+      "events": 6,
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 1028.0,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          67.8,
+          23.2,
+          26.3,
+          23.4,
+          26.3,
+          37.5
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 1028.0,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          27.1,
+          75.4,
+          30.0,
+          27.7,
+          27.4,
+          40.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 23,
+      "events": 6,
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 398.8,
+        "critical_needs": 8,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 6,
+        "latencies_ms": [
+          24.9,
+          20.9,
+          22.7,
+          81.3,
+          26.1,
+          30.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 398.8,
+        "critical_needs": 8,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 6,
+        "latencies_ms": [
+          21.4,
+          17.7,
+          18.6,
+          27.2,
+          19.6,
+          23.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 24,
+      "events": 10,
+      "baseline": {
+        "needs": 18,
+        "weighted_response_s": 875.6,
+        "critical_needs": 16,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 11,
+        "final_unmet_quanta": 12,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 2.2,
+        "replans": 10,
+        "latencies_ms": [
+          29.1,
+          13.5,
+          17.6,
+          64.9,
+          47.3,
+          34.5,
+          48.3,
+          37.5,
+          43.8,
+          44.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 18,
+        "weighted_response_s": 823.5,
+        "critical_needs": 16,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 11,
+        "final_unmet_quanta": 12,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 2.2,
+        "replans": 10,
+        "latencies_ms": [
+          32.6,
+          17.5,
+          24.1,
+          71.8,
+          114.6,
+          106.0,
+          76.3,
+          66.7,
+          89.1,
+          103.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 25,
+      "events": 7,
+      "planner": {
+        "needs": 13,
+        "weighted_response_s": 987.8,
+        "critical_needs": 13,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 7,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 7,
+        "latencies_ms": [
+          21.7,
+          41.8,
+          15.8,
+          54.6,
+          44.6,
+          54.5,
+          65.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 13,
+        "weighted_response_s": 1035.0,
+        "critical_needs": 13,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 7,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 7,
+        "latencies_ms": [
+          21.0,
+          89.2,
+          9.6,
+          46.2,
+          89.7,
+          37.1,
+          95.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 26,
+      "events": 9,
+      "baseline": {
+        "needs": 16,
+        "weighted_response_s": 864.2,
+        "critical_needs": 15,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 10,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 9,
+        "latencies_ms": [
+          21.9,
+          20.4,
+          30.1,
+          56.9,
+          40.3,
+          10.0,
+          31.9,
+          32.0,
+          37.6
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 16,
+        "weighted_response_s": 783.8,
+        "critical_needs": 15,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 10,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 9,
+        "latencies_ms": [
+          23.6,
+          22.4,
+          34.7,
+          52.5,
+          45.0,
+          15.7,
+          38.4,
+          47.1,
+          63.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 27,
+      "events": 9,
+      "planner": {
+        "needs": 16,
+        "weighted_response_s": 757.3,
+        "critical_needs": 15,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 11,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.222,
+        "replans": 9,
+        "latencies_ms": [
+          2.6,
+          86.3,
+          26.5,
+          43.6,
+          41.5,
+          40.4,
+          79.0,
+          58.3,
+          81.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 16,
+        "weighted_response_s": 1038.7,
+        "critical_needs": 15,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.556,
+        "replans": 9,
+        "latencies_ms": [
+          2.1,
+          25.9,
+          31.6,
+          35.0,
+          31.5,
+          27.9,
+          10.8,
+          34.2,
+          93.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 28,
+      "events": 5,
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 731.8,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.6,
+        "replans": 5,
+        "latencies_ms": [
+          22.3,
+          5.4,
+          18.4,
+          24.9,
+          29.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 661.0,
+        "critical_needs": 8,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.4,
+        "replans": 5,
+        "latencies_ms": [
+          26.2,
+          8.4,
+          23.2,
+          30.5,
+          37.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 29,
+      "events": 8,
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 923.0,
+        "critical_needs": 12,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 7,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.5,
+        "replans": 8,
+        "latencies_ms": [
+          2.5,
+          2.4,
+          29.9,
+          24.0,
+          33.1,
+          37.6,
+          113.7,
+          66.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 923.0,
+        "critical_needs": 12,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 7,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.5,
+        "replans": 8,
+        "latencies_ms": [
+          2.1,
+          2.4,
+          34.5,
+          22.3,
+          28.8,
+          31.9,
+          39.2,
+          36.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 30,
+      "events": 8,
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 901.3,
+        "critical_needs": 15,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.375,
+        "replans": 8,
+        "latencies_ms": [
+          13.7,
+          45.5,
+          42.1,
+          38.8,
+          39.9,
+          41.0,
+          37.6,
+          10.3
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 901.3,
+        "critical_needs": 15,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.375,
+        "replans": 8,
+        "latencies_ms": [
+          15.2,
+          50.0,
+          46.4,
+          106.9,
+          52.2,
+          53.7,
+          54.8,
+          27.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 31,
+      "events": 4,
+      "planner": {
+        "needs": 5,
+        "weighted_response_s": 537.2,
+        "critical_needs": 5,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.75,
+        "replans": 4,
+        "latencies_ms": [
+          17.8,
+          32.2,
+          10.1,
+          34.0
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 5,
+        "weighted_response_s": 537.2,
+        "critical_needs": 5,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.75,
+        "replans": 4,
+        "latencies_ms": [
+          16.7,
+          27.5,
+          5.5,
+          28.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 32,
+      "events": 5,
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 856.6,
+        "critical_needs": 5,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.2,
+        "replans": 5,
+        "latencies_ms": [
+          2.2,
+          46.2,
+          2.2,
+          24.4,
+          91.8
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 770.8,
+        "critical_needs": 5,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.2,
+        "replans": 5,
+        "latencies_ms": [
+          2.6,
+          46.9,
+          2.6,
+          25.1,
+          33.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 33,
+      "events": 9,
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 653.8,
+        "critical_needs": 9,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 9,
+        "latencies_ms": [
+          32.3,
+          28.4,
+          33.2,
+          30.8,
+          10.9,
+          10.7,
+          44.2,
+          28.2,
+          31.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 653.8,
+        "critical_needs": 9,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 9,
+        "latencies_ms": [
+          27.8,
+          89.4,
+          28.9,
+          28.5,
+          7.3,
+          6.5,
+          42.0,
+          21.6,
+          88.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 34,
+      "events": 9,
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 784.2,
+        "critical_needs": 11,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.556,
+        "replans": 9,
+        "latencies_ms": [
+          16.1,
+          4.1,
+          11.3,
+          21.0,
+          24.0,
+          77.0,
+          28.7,
+          7.1,
+          46.6
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 784.2,
+        "critical_needs": 11,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.556,
+        "replans": 9,
+        "latencies_ms": [
+          17.7,
+          5.4,
+          13.5,
+          23.5,
+          27.4,
+          82.2,
+          37.9,
+          16.8,
+          66.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 35,
+      "events": 8,
+      "planner": {
+        "needs": 16,
+        "weighted_response_s": 658.6,
+        "critical_needs": 14,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 9,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.25,
+        "replans": 8,
+        "latencies_ms": [
+          39.7,
+          11.3,
+          43.9,
+          21.9,
+          50.2,
+          69.1,
+          89.3,
+          136.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 16,
+        "weighted_response_s": 824.3,
+        "critical_needs": 14,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.25,
+        "replans": 8,
+        "latencies_ms": [
+          35.6,
+          7.9,
+          33.7,
+          12.7,
+          31.0,
+          42.1,
+          40.9,
+          33.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 36,
+      "events": 6,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 855.5,
+        "critical_needs": 10,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.167,
+        "replans": 6,
+        "latencies_ms": [
+          2.3,
+          39.4,
+          23.9,
+          30.8,
+          40.9,
+          42.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 741.2,
+        "critical_needs": 10,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.167,
+        "replans": 6,
+        "latencies_ms": [
+          2.5,
+          43.6,
+          26.0,
+          36.2,
+          48.6,
+          57.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 37,
+      "events": 11,
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 806.0,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.909,
+        "replans": 11,
+        "latencies_ms": [
+          2.5,
+          11.6,
+          15.1,
+          37.9,
+          6.7,
+          6.5,
+          43.0,
+          38.8,
+          17.2,
+          122.8,
+          43.4
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 806.0,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.909,
+        "replans": 11,
+        "latencies_ms": [
+          2.1,
+          10.2,
+          13.7,
+          35.0,
+          75.6,
+          4.5,
+          35.9,
+          30.6,
+          9.0,
+          114.3,
+          33.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 38,
+      "events": 10,
+      "baseline": {
+        "needs": 17,
+        "weighted_response_s": 744.7,
+        "critical_needs": 16,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.5,
+        "replans": 10,
+        "latencies_ms": [
+          25.4,
+          12.4,
+          40.6,
+          38.6,
+          97.2,
+          41.3,
+          10.0,
+          10.1,
+          16.2,
+          111.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 17,
+        "weighted_response_s": 744.7,
+        "critical_needs": 16,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.5,
+        "replans": 10,
+        "latencies_ms": [
+          29.8,
+          17.4,
+          52.9,
+          59.8,
+          118.6,
+          148.5,
+          68.2,
+          57.2,
+          60.9,
+          104.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 39,
+      "events": 6,
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 515.5,
+        "critical_needs": 12,
+        "critical_under_8min": 4,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 7,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.6,
+        "replans": 6,
+        "latencies_ms": [
+          0.8,
+          70.7,
+          38.7,
+          40.3,
+          67.3,
+          56.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 700.3,
+        "critical_needs": 12,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 7,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.6,
+        "replans": 6,
+        "latencies_ms": [
+          0.7,
+          67.1,
+          28.9,
+          29.3,
+          50.3,
+          33.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 40,
+      "events": 8,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 871.3,
+        "critical_needs": 11,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.5,
+        "replans": 8,
+        "latencies_ms": [
+          23.9,
+          55.3,
+          30.6,
+          15.5,
+          31.6,
+          36.0,
+          46.9,
+          11.0
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 733.7,
+        "critical_needs": 11,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.5,
+        "replans": 8,
+        "latencies_ms": [
+          29.0,
+          59.3,
+          39.5,
+          25.3,
+          43.1,
+          49.8,
+          65.7,
+          30.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 41,
+      "events": 8,
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 874.8,
+        "critical_needs": 9,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.857,
+        "replans": 8,
+        "latencies_ms": [
+          0.8,
+          46.8,
+          34.0,
+          21.0,
+          30.2,
+          37.7,
+          132.5,
+          68.0
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 1032.8,
+        "critical_needs": 9,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.857,
+        "replans": 8,
+        "latencies_ms": [
+          0.8,
+          47.3,
+          29.5,
+          16.6,
+          22.9,
+          29.7,
+          43.8,
+          48.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 42,
+      "events": 9,
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 767.2,
+        "critical_needs": 13,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 10,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.667,
+        "replans": 9,
+        "latencies_ms": [
+          15.8,
+          28.7,
+          24.2,
+          33.4,
+          9.1,
+          30.1,
+          33.2,
+          12.5,
+          27.8
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 490.2,
+        "critical_needs": 13,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 10,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.667,
+        "replans": 9,
+        "latencies_ms": [
+          17.0,
+          29.8,
+          26.1,
+          37.1,
+          13.1,
+          35.8,
+          48.7,
+          111.3,
+          49.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 43,
+      "events": 5,
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 513.8,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.6,
+        "replans": 5,
+        "latencies_ms": [
+          2.4,
+          25.3,
+          24.3,
+          59.0,
+          35.0
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 737.8,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 5,
+        "latencies_ms": [
+          2.1,
+          21.2,
+          25.7,
+          66.0,
+          26.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 44,
+      "events": 8,
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 740.7,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 1.125,
+        "replans": 8,
+        "latencies_ms": [
+          19.3,
+          16.3,
+          25.7,
+          22.6,
+          82.9,
+          34.2,
+          12.9,
+          8.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 667.8,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 3,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 1.125,
+        "replans": 8,
+        "latencies_ms": [
+          19.7,
+          18.1,
+          31.5,
+          29.6,
+          87.1,
+          50.8,
+          27.9,
+          23.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 45,
+      "events": 6,
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 970.6,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 6,
+        "latencies_ms": [
+          35.8,
+          25.2,
+          15.9,
+          32.1,
+          54.2,
+          50.1
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 970.6,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 6,
+        "latencies_ms": [
+          31.4,
+          19.6,
+          10.3,
+          112.6,
+          45.9,
+          40.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 46,
+      "events": 4,
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 831.2,
+        "critical_needs": 7,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.5,
+        "replans": 4,
+        "latencies_ms": [
+          8.6,
+          21.8,
+          25.9,
+          44.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 831.2,
+        "critical_needs": 7,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.5,
+        "replans": 4,
+        "latencies_ms": [
+          9.8,
+          23.0,
+          28.5,
+          52.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 47,
+      "events": 7,
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 689.3,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 7,
+        "latencies_ms": [
+          14.1,
+          17.1,
+          30.8,
+          7.9,
+          45.2,
+          26.4,
+          121.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 912.3,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 7,
+        "latencies_ms": [
+          13.2,
+          15.2,
+          29.4,
+          6.4,
+          131.1,
+          22.3,
+          117.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 48,
+      "events": 9,
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 962.2,
+        "critical_needs": 15,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 11,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.556,
+        "replans": 9,
+        "latencies_ms": [
+          38.7,
+          29.6,
+          9.5,
+          36.0,
+          35.9,
+          34.1,
+          132.0,
+          10.6,
+          48.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 962.2,
+        "critical_needs": 15,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 11,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.556,
+        "replans": 9,
+        "latencies_ms": [
+          43.3,
+          35.6,
+          15.2,
+          43.2,
+          50.9,
+          133.5,
+          52.4,
+          22.0,
+          156.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 49,
+      "events": 5,
+      "planner": {
+        "needs": 3,
+        "weighted_response_s": 656.8,
+        "critical_needs": 1,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 0,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 5,
+        "latencies_ms": [
+          0.7,
+          62.2,
+          4.1,
+          4.2,
+          12.6
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 3,
+        "weighted_response_s": 656.8,
+        "critical_needs": 1,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 0,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 5,
+        "latencies_ms": [
+          0.8,
+          60.6,
+          3.3,
+          3.2,
+          10.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 50,
+      "events": 8,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 749.8,
+        "critical_needs": 10,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 8,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.5,
+        "replans": 8,
+        "latencies_ms": [
+          11.7,
+          24.7,
+          40.5,
+          34.7,
+          108.5,
+          14.1,
+          12.7,
+          32.9
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 749.8,
+        "critical_needs": 10,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 8,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.5,
+        "replans": 8,
+        "latencies_ms": [
+          12.3,
+          31.0,
+          50.2,
+          46.4,
+          24.2,
+          24.3,
+          20.0,
+          40.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 51,
+      "events": 7,
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 1010.7,
+        "critical_needs": 11,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.143,
+        "replans": 7,
+        "latencies_ms": [
+          40.8,
+          11.5,
+          133.9,
+          43.1,
+          20.4,
+          83.2,
+          157.9
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 1176.5,
+        "critical_needs": 11,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.571,
+        "replans": 7,
+        "latencies_ms": [
+          37.5,
+          8.6,
+          35.8,
+          28.1,
+          8.6,
+          90.2,
+          42.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 52,
+      "events": 6,
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 833.0,
+        "critical_needs": 7,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          20.8,
+          12.6,
+          35.3,
+          24.6,
+          34.2,
+          32.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 833.0,
+        "critical_needs": 7,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          22.1,
+          14.3,
+          38.7,
+          28.8,
+          39.1,
+          39.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 53,
+      "events": 8,
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 959.7,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 8,
+        "latencies_ms": [
+          18.1,
+          5.9,
+          112.5,
+          31.6,
+          9.2,
+          33.2,
+          46.5,
+          16.9
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 959.7,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 8,
+        "latencies_ms": [
+          17.1,
+          4.8,
+          13.7,
+          28.3,
+          7.1,
+          27.6,
+          39.2,
+          11.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 54,
+      "events": 6,
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 926.3,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.667,
+        "replans": 6,
+        "latencies_ms": [
+          24.4,
+          62.3,
+          28.8,
+          146.5,
+          33.5,
+          10.8
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 926.3,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.667,
+        "replans": 6,
+        "latencies_ms": [
+          25.5,
+          63.6,
+          34.4,
+          49.9,
+          148.3,
+          25.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 55,
+      "events": 5,
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 1086.8,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 2,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 5,
+        "latencies_ms": [
+          0.7,
+          84.5,
+          16.2,
+          68.0,
+          37.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 1374.6,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 5,
+        "latencies_ms": [
+          0.8,
+          79.7,
+          12.2,
+          158.2,
+          12.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 56,
+      "events": 8,
+      "baseline": {
+        "needs": 20,
+        "weighted_response_s": 930.6,
+        "critical_needs": 20,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 13,
+        "final_unmet_quanta": 13,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.375,
+        "replans": 8,
+        "latencies_ms": [
+          32.4,
+          26.7,
+          29.1,
+          36.3,
+          35.3,
+          43.9,
+          50.5,
+          37.0
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 20,
+        "weighted_response_s": 723.4,
+        "critical_needs": 20,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 13,
+        "final_unmet_quanta": 13,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.375,
+        "replans": 8,
+        "latencies_ms": [
+          36.5,
+          32.3,
+          42.7,
+          60.6,
+          85.2,
+          90.7,
+          131.4,
+          117.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 57,
+      "events": 4,
+      "planner": {
+        "needs": 4,
+        "weighted_response_s": 480.5,
+        "critical_needs": 4,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 0,
+        "final_unmet_quanta": 0,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.75,
+        "replans": 4,
+        "latencies_ms": [
+          2.4,
+          24.8,
+          26.4,
+          9.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 4,
+        "weighted_response_s": 480.5,
+        "critical_needs": 4,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 0,
+        "final_unmet_quanta": 0,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.75,
+        "replans": 4,
+        "latencies_ms": [
+          2.1,
+          20.7,
+          21.4,
+          5.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 58,
+      "events": 10,
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 784.2,
+        "critical_needs": 13,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 11,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 2.5,
+        "replans": 10,
+        "latencies_ms": [
+          10.4,
+          33.4,
+          29.0,
+          10.6,
+          22.7,
+          33.6,
+          24.5,
+          39.9,
+          119.3,
+          36.8
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 661.9,
+        "critical_needs": 13,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 11,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 2.5,
+        "replans": 10,
+        "latencies_ms": [
+          11.3,
+          38.9,
+          34.5,
+          15.3,
+          28.3,
+          40.2,
+          33.4,
+          53.5,
+          134.4,
+          62.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 59,
+      "events": 7,
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 1139.0,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.714,
+        "replans": 7,
+        "latencies_ms": [
+          10.8,
+          47.1,
+          17.5,
+          19.9,
+          23.7,
+          40.2,
+          53.9
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 1139.0,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.714,
+        "replans": 7,
+        "latencies_ms": [
+          9.6,
+          45.3,
+          15.4,
+          18.4,
+          21.9,
+          35.5,
+          44.5
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 60,
+      "events": 6,
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 633.2,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 6,
+        "latencies_ms": [
+          29.4,
+          5.9,
+          5.9,
+          17.3,
+          38.0,
+          24.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 633.2,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 6,
+        "latencies_ms": [
+          33.9,
+          9.1,
+          9.3,
+          22.5,
+          44.1,
+          31.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 61,
+      "events": 7,
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 443.5,
+        "critical_needs": 5,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.714,
+        "replans": 7,
+        "latencies_ms": [
+          2.5,
+          17.4,
+          27.0,
+          11.5,
+          26.8,
+          13.1,
+          13.4
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 443.5,
+        "critical_needs": 5,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.714,
+        "replans": 7,
+        "latencies_ms": [
+          2.1,
+          15.2,
+          22.5,
+          6.9,
+          21.3,
+          7.4,
+          7.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 62,
+      "events": 8,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 868.8,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 8,
+        "latencies_ms": [
+          34.1,
+          6.4,
+          30.3,
+          29.7,
+          13.8,
+          30.1,
+          47.8,
+          15.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 868.8,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 8,
+        "latencies_ms": [
+          37.7,
+          10.1,
+          34.1,
+          35.9,
+          19.3,
+          37.6,
+          58.4,
+          25.5
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 63,
+      "events": 8,
+      "planner": {
+        "needs": 13,
+        "weighted_response_s": 903.5,
+        "critical_needs": 13,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 8,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.75,
+        "replans": 8,
+        "latencies_ms": [
+          31.1,
+          50.8,
+          19.1,
+          75.8,
+          53.9,
+          159.6,
+          60.9,
+          86.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 13,
+        "weighted_response_s": 990.5,
+        "critical_needs": 13,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 8,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.125,
+        "replans": 8,
+        "latencies_ms": [
+          27.1,
+          40.0,
+          8.3,
+          70.2,
+          37.3,
+          24.0,
+          35.9,
+          45.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 64,
+      "events": 8,
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 761.6,
+        "critical_needs": 11,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.75,
+        "replans": 8,
+        "latencies_ms": [
+          9.7,
+          17.6,
+          31.6,
+          26.4,
+          37.5,
+          41.6,
+          134.7,
+          28.6
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 648.8,
+        "critical_needs": 11,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 6,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.75,
+        "replans": 8,
+        "latencies_ms": [
+          10.9,
+          19.3,
+          38.3,
+          34.7,
+          46.3,
+          53.4,
+          146.8,
+          41.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 65,
+      "events": 7,
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 783.7,
+        "critical_needs": 10,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.429,
+        "replans": 7,
+        "latencies_ms": [
+          17.6,
+          4.8,
+          15.6,
+          37.4,
+          40.0,
+          47.3,
+          27.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 896.3,
+        "critical_needs": 10,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.429,
+        "replans": 7,
+        "latencies_ms": [
+          17.1,
+          3.7,
+          14.2,
+          35.7,
+          36.6,
+          39.1,
+          18.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 66,
+      "events": 6,
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 853.2,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 2,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.6,
+        "replans": 6,
+        "latencies_ms": [
+          0.8,
+          61.1,
+          3.8,
+          28.0,
+          37.1,
+          15.0
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 853.2,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 2,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.6,
+        "replans": 6,
+        "latencies_ms": [
+          0.8,
+          62.5,
+          4.9,
+          33.4,
+          166.8,
+          22.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 67,
+      "events": 5,
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 643.4,
+        "critical_needs": 6,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 2,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 5,
+        "latencies_ms": [
+          15.0,
+          32.7,
+          38.8,
+          28.5,
+          90.8
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 897.4,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 5,
+        "latencies_ms": [
+          13.9,
+          24.0,
+          32.0,
+          142.3,
+          83.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 68,
+      "events": 10,
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 1022.5,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.1,
+        "replans": 10,
+        "latencies_ms": [
+          2.2,
+          29.0,
+          21.9,
+          5.8,
+          5.9,
+          8.7,
+          36.2,
+          27.6,
+          28.5,
+          10.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 1022.5,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.1,
+        "replans": 10,
+        "latencies_ms": [
+          2.6,
+          30.8,
+          23.1,
+          7.7,
+          7.8,
+          10.7,
+          42.0,
+          34.9,
+          42.6,
+          26.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 69,
+      "events": 11,
+      "planner": {
+        "needs": 14,
+        "weighted_response_s": 863.4,
+        "critical_needs": 12,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 8,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 1.182,
+        "replans": 11,
+        "latencies_ms": [
+          146.4,
+          15.0,
+          67.5,
+          5.3,
+          28.9,
+          29.7,
+          33.9,
+          13.8,
+          40.9,
+          20.0,
+          53.6
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 14,
+        "weighted_response_s": 863.4,
+        "critical_needs": 12,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 8,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 1.182,
+        "replans": 11,
+        "latencies_ms": [
+          21.6,
+          13.1,
+          192.3,
+          4.0,
+          27.1,
+          26.9,
+          26.8,
+          7.7,
+          29.6,
+          9.3,
+          40.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 70,
+      "events": 4,
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 873.1,
+        "critical_needs": 4,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 2,
+        "mean_uncovered_zones": 0.0,
+        "replans": 4,
+        "latencies_ms": [
+          2.2,
+          12.4,
+          15.7,
+          152.5
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 848.3,
+        "critical_needs": 4,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 3,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 4,
+        "latencies_ms": [
+          2.6,
+          12.8,
+          17.8,
+          30.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 71,
+      "events": 7,
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 782.5,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.667,
+        "replans": 7,
+        "latencies_ms": [
+          0.8,
+          54.6,
+          4.3,
+          38.0,
+          56.5,
+          53.5,
+          61.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 782.5,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.667,
+        "replans": 7,
+        "latencies_ms": [
+          0.7,
+          54.1,
+          3.3,
+          33.3,
+          45.0,
+          40.2,
+          38.5
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 72,
+      "events": 5,
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 747.8,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 5,
+        "latencies_ms": [
+          15.3,
+          27.2,
+          39.7,
+          33.1,
+          99.6
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 747.8,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 5,
+        "latencies_ms": [
+          18.0,
+          32.8,
+          47.7,
+          43.8,
+          106.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 73,
+      "events": 6,
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 790.1,
+        "critical_needs": 5,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          9.8,
+          17.2,
+          5.2,
+          22.5,
+          159.0,
+          46.4
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 790.1,
+        "critical_needs": 5,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          9.1,
+          15.1,
+          3.8,
+          20.1,
+          25.7,
+          40.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 74,
+      "events": 9,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 781.1,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 8,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.111,
+        "replans": 9,
+        "latencies_ms": [
+          26.7,
+          24.5,
+          20.6,
+          26.1,
+          25.0,
+          25.4,
+          29.5,
+          13.7,
+          13.4
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 566.2,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.889,
+        "replans": 9,
+        "latencies_ms": [
+          31.5,
+          22.7,
+          26.2,
+          31.5,
+          30.6,
+          32.9,
+          169.6,
+          21.8,
+          24.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 75,
+      "events": 7,
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 839.3,
+        "critical_needs": 10,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 3,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.143,
+        "replans": 7,
+        "latencies_ms": [
+          45.3,
+          22.6,
+          36.4,
+          34.7,
+          14.7,
+          39.1,
+          60.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 908.6,
+        "critical_needs": 10,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.286,
+        "replans": 7,
+        "latencies_ms": [
+          40.9,
+          25.9,
+          27.7,
+          24.6,
+          6.2,
+          28.2,
+          40.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 76,
+      "events": 8,
+      "baseline": {
+        "needs": 14,
+        "weighted_response_s": 1055.4,
+        "critical_needs": 14,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 11,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.625,
+        "replans": 8,
+        "latencies_ms": [
+          30.1,
+          9.6,
+          39.5,
+          23.9,
+          27.0,
+          78.5,
+          39.4,
+          165.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 14,
+        "weighted_response_s": 788.2,
+        "critical_needs": 14,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 11,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.625,
+        "replans": 8,
+        "latencies_ms": [
+          34.4,
+          12.4,
+          49.6,
+          34.1,
+          39.6,
+          88.4,
+          57.5,
+          60.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 77,
+      "events": 7,
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 865.6,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.571,
+        "replans": 7,
+        "latencies_ms": [
+          2.5,
+          31.2,
+          9.5,
+          25.5,
+          14.6,
+          37.1,
+          17.1
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 997.4,
+        "critical_needs": 6,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.571,
+        "replans": 7,
+        "latencies_ms": [
+          2.1,
+          27.0,
+          6.1,
+          21.1,
+          11.5,
+          28.2,
+          9.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 78,
+      "events": 6,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 864.4,
+        "critical_needs": 8,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.667,
+        "replans": 6,
+        "latencies_ms": [
+          13.9,
+          20.4,
+          41.8,
+          41.6,
+          26.3,
+          124.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 769.4,
+        "critical_needs": 8,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.667,
+        "replans": 6,
+        "latencies_ms": [
+          14.9,
+          23.0,
+          188.7,
+          50.2,
+          36.9,
+          135.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 79,
+      "events": 6,
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 530.5,
+        "critical_needs": 4,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 1,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          11.2,
+          14.5,
+          22.4,
+          34.2,
+          10.1,
+          83.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 691.3,
+        "critical_needs": 4,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          10.2,
+          13.2,
+          20.4,
+          31.6,
+          6.5,
+          80.5
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 80,
+      "events": 7,
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 1221.2,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 7,
+        "latencies_ms": [
+          0.7,
+          58.9,
+          167.4,
+          45.9,
+          23.6,
+          41.5,
+          38.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 830.2,
+        "critical_needs": 8,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 7,
+        "latencies_ms": [
+          0.7,
+          60.3,
+          25.5,
+          48.3,
+          26.1,
+          46.6,
+          44.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 81,
+      "events": 10,
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 612.3,
+        "critical_needs": 13,
+        "critical_under_8min": 4,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 10,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.5,
+        "replans": 10,
+        "latencies_ms": [
+          2.5,
+          9.1,
+          42.3,
+          4.3,
+          23.6,
+          8.6,
+          36.2,
+          28.1,
+          39.7,
+          40.1
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 612.3,
+        "critical_needs": 13,
+        "critical_under_8min": 4,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 10,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.5,
+        "replans": 10,
+        "latencies_ms": [
+          2.2,
+          7.8,
+          41.7,
+          3.4,
+          20.8,
+          6.1,
+          31.4,
+          22.3,
+          33.1,
+          31.8
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 82,
+      "events": 7,
+      "baseline": {
+        "needs": 4,
+        "weighted_response_s": 511.7,
+        "critical_needs": 4,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 7,
+        "latencies_ms": [
+          16.8,
+          3.2,
+          14.3,
+          32.9,
+          4.9,
+          78.0,
+          17.3
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 4,
+        "weighted_response_s": 511.7,
+        "critical_needs": 4,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 1,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 7,
+        "latencies_ms": [
+          17.7,
+          4.5,
+          16.9,
+          35.4,
+          7.3,
+          81.4,
+          19.5
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 83,
+      "events": 8,
+      "planner": {
+        "needs": 15,
+        "weighted_response_s": 884.7,
+        "critical_needs": 15,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.25,
+        "replans": 8,
+        "latencies_ms": [
+          18.6,
+          23.7,
+          44.3,
+          54.6,
+          65.9,
+          170.3,
+          57.6,
+          67.2
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 15,
+        "weighted_response_s": 884.7,
+        "critical_needs": 15,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 9,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.25,
+        "replans": 8,
+        "latencies_ms": [
+          19.1,
+          24.7,
+          37.3,
+          46.2,
+          44.2,
+          138.5,
+          35.1,
+          35.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 84,
+      "events": 10,
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 329.8,
+        "critical_needs": 8,
+        "critical_under_8min": 4,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 10,
+        "latencies_ms": [
+          2.1,
+          2.2,
+          27.8,
+          13.4,
+          28.8,
+          8.7,
+          13.6,
+          33.0,
+          159.1,
+          31.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 329.8,
+        "critical_needs": 8,
+        "critical_under_8min": 4,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 6,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 10,
+        "latencies_ms": [
+          2.5,
+          2.9,
+          31.8,
+          17.7,
+          34.0,
+          13.8,
+          19.6,
+          40.6,
+          18.2,
+          40.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 85,
+      "events": 5,
+      "planner": {
+        "needs": 9,
+        "weighted_response_s": 920.4,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 5,
+        "latencies_ms": [
+          23.5,
+          25.1,
+          36.9,
+          44.5,
+          51.8
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 9,
+        "weighted_response_s": 1000.0,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.8,
+        "replans": 5,
+        "latencies_ms": [
+          23.0,
+          22.9,
+          34.3,
+          34.3,
+          32.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 86,
+      "events": 4,
+      "baseline": {
+        "needs": 5,
+        "weighted_response_s": 1060.2,
+        "critical_needs": 5,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 0,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.5,
+        "replans": 4,
+        "latencies_ms": [
+          2.1,
+          20.0,
+          22.5,
+          47.0
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 5,
+        "weighted_response_s": 1060.2,
+        "critical_needs": 5,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 0,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.5,
+        "replans": 4,
+        "latencies_ms": [
+          2.4,
+          171.9,
+          23.8,
+          54.9
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 87,
+      "events": 6,
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 859.0,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          24.2,
+          5.2,
+          6.6,
+          4.9,
+          39.0,
+          40.3
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 859.0,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          22.9,
+          4.2,
+          5.5,
+          4.0,
+          35.4,
+          36.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 88,
+      "events": 7,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 703.2,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.571,
+        "replans": 7,
+        "latencies_ms": [
+          17.0,
+          19.5,
+          34.9,
+          29.1,
+          28.4,
+          11.5,
+          44.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 703.2,
+        "critical_needs": 9,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.571,
+        "replans": 7,
+        "latencies_ms": [
+          18.7,
+          21.4,
+          37.7,
+          37.9,
+          37.6,
+          21.1,
+          55.6
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 89,
+      "events": 5,
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 769.8,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 5,
+        "latencies_ms": [
+          34.3,
+          30.3,
+          15.2,
+          15.4,
+          32.8
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 941.0,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 5,
+        "latencies_ms": [
+          30.7,
+          25.9,
+          11.5,
+          11.5,
+          27.4
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 90,
+      "events": 7,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 798.0,
+        "critical_needs": 12,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 8,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 7,
+        "latencies_ms": [
+          0.8,
+          66.5,
+          4.7,
+          3.5,
+          27.3,
+          35.6,
+          39.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 823.6,
+        "critical_needs": 12,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 7,
+        "final_unmet_quanta": 8,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.833,
+        "replans": 7,
+        "latencies_ms": [
+          0.8,
+          70.1,
+          7.1,
+          6.2,
+          34.6,
+          204.0,
+          54.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 91,
+      "events": 5,
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 766.8,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 5,
+        "latencies_ms": [
+          22.9,
+          60.7,
+          20.2,
+          40.2,
+          28.7
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 766.8,
+        "critical_needs": 6,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 2,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.0,
+        "replans": 5,
+        "latencies_ms": [
+          21.9,
+          58.5,
+          17.6,
+          37.0,
+          24.2
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 92,
+      "events": 9,
+      "baseline": {
+        "needs": 12,
+        "weighted_response_s": 862.1,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.333,
+        "replans": 9,
+        "latencies_ms": [
+          12.7,
+          50.5,
+          4.2,
+          14.7,
+          27.8,
+          36.4,
+          31.1,
+          17.8,
+          34.2
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 12,
+        "weighted_response_s": 862.1,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 6,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.333,
+        "replans": 9,
+        "latencies_ms": [
+          14.1,
+          50.7,
+          5.4,
+          16.5,
+          29.9,
+          43.6,
+          38.7,
+          29.8,
+          53.5
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 93,
+      "events": 8,
+      "planner": {
+        "needs": 17,
+        "weighted_response_s": 677.6,
+        "critical_needs": 17,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 10,
+        "final_unmet_quanta": 10,
+        "reassignments": 2,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 8,
+        "latencies_ms": [
+          0.8,
+          57.4,
+          35.5,
+          67.4,
+          64.6,
+          95.8,
+          91.1,
+          122.6
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 17,
+        "weighted_response_s": 939.5,
+        "critical_needs": 17,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 9,
+        "final_unmet_quanta": 10,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 2.0,
+        "replans": 8,
+        "latencies_ms": [
+          0.8,
+          57.5,
+          30.3,
+          41.3,
+          37.8,
+          40.5,
+          41.9,
+          47.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 94,
+      "events": 8,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 807.8,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 8,
+        "latencies_ms": [
+          10.5,
+          26.1,
+          4.7,
+          28.3,
+          37.6,
+          37.4,
+          26.3,
+          37.1
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 807.8,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 8,
+        "latencies_ms": [
+          12.1,
+          190.4,
+          6.6,
+          30.8,
+          45.4,
+          46.8,
+          36.9,
+          51.0
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 95,
+      "events": 9,
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 750.2,
+        "critical_needs": 10,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 9,
+        "latencies_ms": [
+          10.0,
+          3.9,
+          18.4,
+          23.9,
+          46.6,
+          48.2,
+          24.3,
+          64.1,
+          154.9
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 863.7,
+        "critical_needs": 10,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 1.0,
+        "replans": 9,
+        "latencies_ms": [
+          9.3,
+          2.9,
+          17.6,
+          22.8,
+          40.4,
+          33.6,
+          9.0,
+          45.5,
+          136.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 96,
+      "events": 6,
+      "baseline": {
+        "needs": 6,
+        "weighted_response_s": 375.3,
+        "critical_needs": 4,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          10.7,
+          15.7,
+          3.7,
+          3.8,
+          11.3,
+          30.7
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 6,
+        "weighted_response_s": 375.3,
+        "critical_needs": 4,
+        "critical_under_8min": 2,
+        "first_decision_unmet": 2,
+        "final_unmet_quanta": 1,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 0.0,
+        "replans": 6,
+        "latencies_ms": [
+          12.1,
+          17.6,
+          5.2,
+          5.4,
+          13.0,
+          200.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 97,
+      "events": 6,
+      "planner": {
+        "needs": 8,
+        "weighted_response_s": 458.8,
+        "critical_needs": 8,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          11.9,
+          4.6,
+          28.5,
+          21.6,
+          35.2,
+          39.6
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 8,
+        "weighted_response_s": 776.2,
+        "critical_needs": 8,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 4,
+        "final_unmet_quanta": 4,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.333,
+        "replans": 6,
+        "latencies_ms": [
+          10.7,
+          3.8,
+          27.1,
+          19.9,
+          30.0,
+          34.1
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 98,
+      "events": 8,
+      "baseline": {
+        "needs": 7,
+        "weighted_response_s": 856.2,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.667,
+        "replans": 8,
+        "latencies_ms": [
+          0.7,
+          0.8,
+          61.3,
+          12.2,
+          4.6,
+          30.7,
+          33.1,
+          38.0
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 7,
+        "weighted_response_s": 856.2,
+        "critical_needs": 7,
+        "critical_under_8min": 1,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.667,
+        "replans": 8,
+        "latencies_ms": [
+          0.7,
+          0.7,
+          62.5,
+          13.5,
+          6.0,
+          33.0,
+          39.6,
+          46.7
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 99,
+      "events": 8,
+      "planner": {
+        "needs": 11,
+        "weighted_response_s": 557.3,
+        "critical_needs": 11,
+        "critical_under_8min": 4,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.375,
+        "replans": 8,
+        "latencies_ms": [
+          2.5,
+          18.3,
+          55.4,
+          17.5,
+          36.2,
+          9.5,
+          44.1,
+          68.1
+        ],
+        "errors": []
+      },
+      "baseline": {
+        "needs": 11,
+        "weighted_response_s": 779.3,
+        "critical_needs": 11,
+        "critical_under_8min": 3,
+        "first_decision_unmet": 5,
+        "final_unmet_quanta": 5,
+        "reassignments": 0,
+        "reassignments_to_higher_severity": 0,
+        "mean_uncovered_zones": 0.375,
+        "replans": 8,
+        "latencies_ms": [
+          2.2,
+          17.5,
+          53.4,
+          15.0,
+          33.0,
+          6.1,
+          32.3,
+          44.3
+        ],
+        "errors": []
+      }
+    },
+    {
+      "seed": 100,
+      "events": 6,
+      "baseline": {
+        "needs": 10,
+        "weighted_response_s": 1046.6,
+        "critical_needs": 7,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.667,
+        "replans": 6,
+        "latencies_ms": [
+          35.3,
+          178.9,
+          23.1,
+          10.9,
+          20.7,
+          36.0
+        ],
+        "errors": []
+      },
+      "planner": {
+        "needs": 10,
+        "weighted_response_s": 1046.6,
+        "critical_needs": 7,
+        "critical_under_8min": 0,
+        "first_decision_unmet": 3,
+        "final_unmet_quanta": 3,
+        "reassignments": 1,
+        "reassignments_to_higher_severity": 1,
+        "mean_uncovered_zones": 1.667,
+        "replans": 6,
+        "latencies_ms": [
+          40.3,
+          11.7,
+          27.7,
+          15.1,
+          25.2,
+          46.2
+        ],
+        "errors": []
+      }
+    }
+  ]
+}
