@@ -20,6 +20,27 @@ OPENAPI_PATH = REPO_ROOT / "contracts" / "openapi.json"
 REF_TEMPLATE = "#/$defs/{model}"
 
 
+def _strip_property_titles(node: Any, *, is_definition: bool = False) -> Any:
+    """Drop Pydantic's auto titles on properties/items so generated TypeScript names only
+    the real definitions (otherwise every field becomes a colliding alias type)."""
+    if isinstance(node, list):
+        return [_strip_property_titles(item) for item in node]
+    if not isinstance(node, dict):
+        return node
+    result = {}
+    for key, value in node.items():
+        if key == "title" and not is_definition:
+            continue
+        if key in ("properties", "$defs"):
+            result[key] = {
+                name: _strip_property_titles(sub, is_definition=key == "$defs")
+                for name, sub in value.items()
+            }
+        else:
+            result[key] = _strip_property_titles(value)
+    return result
+
+
 def build_schema() -> dict[str, Any]:
     defs: dict[str, Any] = {}
 
@@ -29,12 +50,14 @@ def build_schema() -> dict[str, Any]:
         defs[name] = schema
 
     for name, adapter in sorted(ADAPTERS.items()):
-        schema = adapter.json_schema(ref_template=REF_TEMPLATE, mode="validation")
+        schema = _strip_property_titles(
+            adapter.json_schema(ref_template=REF_TEMPLATE, mode="validation"), is_definition=True
+        )
         for def_name, definition in schema.pop("$defs", {}).items():
-            merge(def_name, definition)
+            merge(def_name, {**definition, "title": def_name})
         if schema.get("$ref") == REF_TEMPLATE.format(model=name):
             continue  # The top-level model is already a named definition.
-        merge(name, schema)
+        merge(name, {**schema, "title": name})
 
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",

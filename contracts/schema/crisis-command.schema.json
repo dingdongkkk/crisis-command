@@ -5,17 +5,14 @@
       "properties": {
         "requires_active_incident": {
           "const": true,
-          "title": "Requires Active Incident",
           "type": "boolean"
         },
         "requires_caller_is_patient": {
           "const": true,
-          "title": "Requires Caller Is Patient",
           "type": "boolean"
         },
         "requires_operator_reason": {
           "const": true,
-          "title": "Requires Operator Reason",
           "type": "boolean"
         }
       },
@@ -31,7 +28,6 @@
       "additionalProperties": false,
       "properties": {
         "id": {
-          "title": "Id",
           "type": "string"
         },
         "kind": {
@@ -68,12 +64,10 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "fact_key": {
           "pattern": "^[a-z][a-z0-9_]*$",
-          "title": "Fact Key",
           "type": "string"
         }
       },
@@ -95,19 +89,16 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Outbox Keys",
           "type": "array"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         },
         "sequence": {
           "minimum": 1,
-          "title": "Sequence",
           "type": "integer"
         },
         "state": {
@@ -115,7 +106,6 @@
             "approved",
             "dispatched_simulated"
           ],
-          "title": "State",
           "type": "string"
         }
       },
@@ -135,19 +125,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -159,24 +146,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "ApprovalRejected",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -189,37 +172,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/ApprovalRejectedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -248,14 +225,12 @@
       "properties": {
         "code": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Code",
           "type": "string"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         }
       },
@@ -276,23 +251,19 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Acknowledged Flag Ids",
           "type": "array"
         },
         "expected_plan_version": {
-          "title": "Expected Plan Version",
           "type": "integer"
         },
         "expected_planning_sequence": {
           "minimum": 1,
-          "title": "Expected Planning Sequence",
           "type": "integer"
         },
         "expected_session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "note": {
@@ -305,8 +276,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Note"
+          "default": null
         }
       },
       "required": [
@@ -325,7 +295,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Assignment Id",
           "type": "string"
         },
         "bridges_need_id": {
@@ -340,8 +309,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Bridges Need Id"
+          "default": null
         },
         "destination_facility_id": {
           "anyOf": [
@@ -355,19 +323,16 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Destination Facility Id"
+          "default": null
         },
         "eta_s": {
           "ge": 0,
-          "title": "Eta S",
           "type": "integer"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "locked": {
@@ -392,8 +357,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "onward_route": {
           "anyOf": [
@@ -416,14 +380,12 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Persons"
+          "default": null
         },
         "reasons": {
           "items": {
             "$ref": "#/$defs/ReasonFact"
           },
-          "title": "Reasons",
           "type": "array"
         },
         "role": {
@@ -433,14 +395,12 @@
           "$ref": "#/$defs/Route"
         },
         "satisfies_need": {
-          "title": "Satisfies Need",
           "type": "boolean"
         },
         "unit_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -473,19 +433,16 @@
           "items": {
             "$ref": "#/$defs/CostOfTaking"
           },
-          "title": "Cost Of Taking",
           "type": "array"
         },
         "eta_s": {
           "ge": 0,
-          "title": "Eta S",
           "type": "integer"
         },
         "unit_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -501,18 +458,15 @@
       "additionalProperties": false,
       "properties": {
         "granted": {
-          "title": "Granted",
           "type": "boolean"
         },
         "granted_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Granted At",
           "type": "string"
         },
         "revocable": {
-          "title": "Revocable",
           "type": "boolean"
         },
         "scope": {
@@ -525,7 +479,6 @@
             ],
             "type": "string"
           },
-          "title": "Scope",
           "type": "array"
         }
       },
@@ -550,8 +503,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Delta"
+          "default": null
         },
         "metric": {
           "enum": [
@@ -560,7 +512,6 @@
             "already_assigned_same_incident",
             "weighted_eta_s"
           ],
-          "title": "Metric",
           "type": "string"
         },
         "need_id": {
@@ -575,8 +526,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "zone_id": {
           "anyOf": [
@@ -590,8 +540,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Zone Id"
+          "default": null
         }
       },
       "required": [
@@ -619,7 +568,6 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Available Unit Ids",
           "type": "array"
         },
         "resource_type": {
@@ -632,7 +580,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Zone Id",
           "type": "string"
         }
       },
@@ -661,14 +608,12 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Assignment Id",
           "type": "string"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "need_id": {
@@ -683,8 +628,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         }
       },
       "required": [
@@ -701,7 +645,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "to_step": {
@@ -711,7 +654,6 @@
             "T+5",
             "T+10"
           ],
-          "title": "To Step",
           "type": "string"
         }
       },
@@ -727,17 +669,14 @@
       "properties": {
         "appended": {
           "minimum": 0,
-          "title": "Appended",
           "type": "integer"
         },
         "head_sequence": {
           "minimum": 1,
-          "title": "Head Sequence",
           "type": "integer"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -756,16 +695,13 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "fixture": {
           "const": "demo-bengaluru-v1",
-          "title": "Fixture",
           "type": "string"
         },
         "seed": {
-          "title": "Seed",
           "type": "integer"
         }
       },
@@ -782,14 +718,12 @@
       "properties": {
         "head_sequence": {
           "minimum": 1,
-          "title": "Head Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         }
       },
@@ -807,19 +741,16 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Assignment Id",
           "type": "string"
         },
         "desired_revision": {
           "minimum": 0,
-          "title": "Desired Revision",
           "type": "integer"
         },
         "unit_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -844,8 +775,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Eta S"
+          "default": null
         },
         "incident_id": {
           "anyOf": [
@@ -859,8 +789,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Incident Id"
+          "default": null
         },
         "need_id": {
           "anyOf": [
@@ -874,8 +803,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "state": {
           "anyOf": [
@@ -891,8 +819,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "State"
+          "default": null
         },
         "zone_id": {
           "anyOf": [
@@ -906,8 +833,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Zone Id"
+          "default": null
         }
       },
       "title": "DiffEndpoint",
@@ -945,7 +871,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -961,31 +886,25 @@
       "properties": {
         "needs_unmet": {
           "ge": 0,
-          "title": "Needs Unmet",
           "type": "integer"
         },
         "units_added": {
           "ge": 0,
-          "title": "Units Added",
           "type": "integer"
         },
         "units_moved": {
           "ge": 0,
-          "title": "Units Moved",
           "type": "integer"
         },
         "units_released": {
           "ge": 0,
-          "title": "Units Released",
           "type": "integer"
         },
         "weighted_eta_delta_s": {
-          "title": "Weighted Eta Delta S",
           "type": "integer"
         },
         "zones_uncovered": {
           "ge": 0,
-          "title": "Zones Uncovered",
           "type": "integer"
         }
       },
@@ -1020,12 +939,10 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Assignment Id",
           "type": "string"
         },
         "desired_revision": {
           "minimum": 0,
-          "title": "Desired Revision",
           "type": "integer"
         },
         "incident_id": {
@@ -1040,33 +957,28 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Incident Id"
+          "default": null
         },
         "outbox_key": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Outbox Key",
           "type": "string"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "simulated": {
           "const": true,
-          "title": "Simulated",
           "type": "boolean"
         },
         "state": {
@@ -1084,8 +996,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unit Id"
+          "default": null
         }
       },
       "required": [
@@ -1118,19 +1029,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -1142,24 +1050,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "DuplicateCandidateFlagged",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -1172,37 +1076,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/DuplicateCandidateFlaggedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -1233,7 +1131,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Candidate Incident Id",
           "type": "string"
         },
         "reasons": {
@@ -1241,14 +1138,12 @@
             "pattern": "^[A-Z][A-Z0-9_]*$",
             "type": "string"
           },
-          "title": "Reasons",
           "type": "array"
         },
         "report_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Report Id",
           "type": "string"
         }
       },
@@ -1267,13 +1162,11 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "reason_text": {
           "maxLength": 280,
           "minLength": 1,
-          "title": "Reason Text",
           "type": "string"
         },
         "resolution": {
@@ -1281,7 +1174,6 @@
             "linked",
             "kept_separate"
           ],
-          "title": "Resolution",
           "type": "string"
         }
       },
@@ -1300,19 +1192,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -1324,24 +1213,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "EscalatedToHuman",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -1354,37 +1239,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/EscalatedToHumanPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -1415,7 +1294,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "reasons": {
@@ -1424,7 +1302,6 @@
             "type": "string"
           },
           "minItems": 1,
-          "title": "Reasons",
           "type": "array"
         }
       },
@@ -1439,7 +1316,6 @@
       "additionalProperties": false,
       "properties": {
         "escalated": {
-          "title": "Escalated",
           "type": "boolean"
         },
         "reasons": {
@@ -1447,7 +1323,6 @@
             "pattern": "^[A-Z][A-Z0-9_]*$",
             "type": "string"
           },
-          "title": "Reasons",
           "type": "array"
         },
         "sim_time_s": {
@@ -1460,8 +1335,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Sim Time S"
+          "default": null
         }
       },
       "required": [
@@ -1618,26 +1492,24 @@
         {
           "$ref": "#/$defs/ModelAdapterDegradedEvent"
         }
-      ]
+      ],
+      "title": "EventEnvelope"
     },
     "EvidenceSpan": {
       "additionalProperties": false,
       "properties": {
         "end": {
           "ge": 0,
-          "title": "End",
           "type": "integer"
         },
         "report_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Report Id",
           "type": "string"
         },
         "start": {
           "ge": 0,
-          "title": "Start",
           "type": "integer"
         }
       },
@@ -1656,38 +1528,32 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Allocation Id",
           "type": "string"
         },
         "facility_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Facility Id",
           "type": "string"
         },
         "free_after_persons": {
           "ge": 0,
-          "title": "Free After Persons",
           "type": "integer"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "need_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Need Id",
           "type": "string"
         },
         "persons": {
           "minimum": 1,
-          "title": "Persons",
           "type": "integer"
         },
         "route": {
@@ -1720,19 +1586,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -1744,24 +1607,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "FacilityCapacityUpdated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -1774,37 +1633,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/FacilityCapacityUpdatedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -1841,14 +1694,12 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Ed Beds Available"
+          "default": null
         },
         "facility_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Facility Id",
           "type": "string"
         },
         "occupied_persons": {
@@ -1861,8 +1712,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Occupied Persons"
+          "default": null
         }
       },
       "required": [
@@ -1884,20 +1734,17 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Count"
+          "default": null
         },
         "expected_session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "reason_text": {
           "maxLength": 280,
           "minLength": 1,
-          "title": "Reason Text",
           "type": "string"
         },
         "value": {
@@ -1934,8 +1781,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Value"
+          ]
         }
       },
       "required": [
@@ -1981,16 +1827,13 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Flood Id",
           "type": "string"
         },
         "sequence": {
           "minimum": 1,
-          "title": "Sequence",
           "type": "integer"
         },
         "version": {
-          "title": "Version",
           "type": "integer"
         }
       },
@@ -2006,33 +1849,28 @@
       "additionalProperties": false,
       "properties": {
         "closes_roads": {
-          "title": "Closes Roads",
           "type": "boolean"
         },
         "effective_sim_time_s": {
           "ge": 0,
-          "title": "Effective Sim Time S",
           "type": "integer"
         },
         "expected_session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "flood_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Flood Id",
           "type": "string"
         },
         "geometry": {
           "$ref": "#/$defs/Polygon"
         },
         "version": {
-          "title": "Version",
           "type": "integer"
         }
       },
@@ -2051,19 +1889,16 @@
       "additionalProperties": false,
       "properties": {
         "closes_roads": {
-          "title": "Closes Roads",
           "type": "boolean"
         },
         "effective_sim_time_s": {
           "ge": 0,
-          "title": "Effective Sim Time S",
           "type": "integer"
         },
         "flood_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Flood Id",
           "type": "string"
         },
         "geometry": {
@@ -2074,11 +1909,9 @@
             "synthetic_progression",
             "operator_entered"
           ],
-          "title": "Source",
           "type": "string"
         },
         "version": {
-          "title": "Version",
           "type": "integer"
         }
       },
@@ -2100,19 +1933,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -2124,24 +1954,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "FloodZoneUpdated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -2154,37 +1980,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/FloodZoneUpdatedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -2229,7 +2049,6 @@
             "pattern": "^[A-Z][A-Z0-9_]*$",
             "type": "string"
           },
-          "title": "Degraded",
           "type": "array"
         },
         "llm_provider": {
@@ -2237,12 +2056,10 @@
             "template",
             "gemini"
           ],
-          "title": "Llm Provider",
           "type": "string"
         },
         "mode": {
           "const": "simulation",
-          "title": "Mode",
           "type": "string"
         },
         "routing_provider": {
@@ -2250,16 +2067,13 @@
             "fixture",
             "ors_directions"
           ],
-          "title": "Routing Provider",
           "type": "string"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "status": {
           "const": "ok",
-          "title": "Status",
           "type": "string"
         }
       },
@@ -2288,28 +2102,23 @@
             ],
             "type": "string"
           },
-          "title": "Capabilities",
           "type": "array"
         },
         "display_name": {
-          "title": "Display Name",
           "type": "string"
         },
         "ed_beds_available": {
           "ge": 0,
-          "title": "Ed Beds Available",
           "type": "integer"
         },
         "facility_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Facility Id",
           "type": "string"
         },
         "kind": {
           "const": "hospital",
-          "title": "Kind",
           "type": "string"
         },
         "location": {
@@ -2334,19 +2143,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -2358,24 +2164,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "HospitalPreAlertSimulated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -2388,37 +2190,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/HospitalPreAlertSimulatedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -2455,33 +2251,28 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Capability Needed"
+          "default": null
         },
         "hospital_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Hospital Id",
           "type": "string"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "outbox_key": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Outbox Key",
           "type": "string"
         },
         "simulated": {
           "const": true,
-          "title": "Simulated",
           "type": "boolean"
         }
       },
@@ -2501,7 +2292,6 @@
           "items": {
             "type": "string"
           },
-          "title": "Assumed Facts",
           "type": "array"
         },
         "category": {
@@ -2509,7 +2299,6 @@
         },
         "created_sim_time_s": {
           "ge": 0,
-          "title": "Created Sim Time S",
           "type": "integer"
         },
         "duplicate_candidate_of": {
@@ -2519,19 +2308,16 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Duplicate Candidate Of",
           "type": "array"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "kind": {
           "pattern": "^[a-z][a-z0-9_]*$",
-          "title": "Kind",
           "type": "string"
         },
         "location": {
@@ -2541,7 +2327,6 @@
           "items": {
             "$ref": "#/$defs/Need"
           },
-          "title": "Needs",
           "type": "array"
         },
         "report_ids": {
@@ -2551,7 +2336,6 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Report Ids",
           "type": "array"
         },
         "severity": {
@@ -2584,19 +2368,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -2608,24 +2389,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "IncidentAssessed",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -2638,37 +2415,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/IncidentPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -2708,19 +2479,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -2732,24 +2500,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "IncidentCategoryChanged",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -2762,37 +2526,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/IncidentCategoryChangedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -2827,14 +2585,12 @@
         },
         "reason": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Reason",
           "type": "string"
         },
         "triggering_fact_keys": {
           "items": {
             "type": "string"
           },
-          "title": "Triggering Fact Keys",
           "type": "array"
         }
       },
@@ -2854,19 +2610,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -2878,24 +2631,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "IncidentCreated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -2908,37 +2657,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/IncidentPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -2982,19 +2725,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -3006,24 +2746,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "IncidentResolved",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -3036,37 +2772,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/IncidentResolvedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -3097,7 +2827,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "invalidates_assignment_ids": {
@@ -3107,7 +2836,6 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Invalidates Assignment Ids",
           "type": "array"
         }
       },
@@ -3145,12 +2873,10 @@
             "type": "array"
           },
           "minItems": 2,
-          "title": "Coordinates",
           "type": "array"
         },
         "type": {
           "const": "LineString",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -3177,20 +2903,17 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "operator_reason": {
           "maxLength": 280,
           "minLength": 1,
-          "title": "Operator Reason",
           "type": "string"
         },
         "profile_ref": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Profile Ref",
           "type": "string"
         }
       },
@@ -3209,19 +2932,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -3233,24 +2953,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "MedicalProfileAccessDenied",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -3263,37 +2979,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/MedicalProfileAccessPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -3324,19 +3034,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -3348,24 +3055,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "MedicalProfileAccessGranted",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -3378,37 +3081,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/MedicalProfileAccessPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -3446,21 +3143,18 @@
             ],
             "type": "string"
           },
-          "title": "Granted Fields",
           "type": "array"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "profile_ref": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Profile Ref",
           "type": "string"
         },
         "reason": {
@@ -3473,8 +3167,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Reason"
+          "default": null
         }
       },
       "required": [
@@ -3499,19 +3192,16 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Profile Ref",
           "type": "string"
         },
         "subject_ref": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Subject Ref",
           "type": "string"
         },
         "synthetic": {
           "const": true,
-          "title": "Synthetic",
           "type": "boolean"
         }
       },
@@ -3532,19 +3222,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -3556,24 +3243,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "ModelAdapterDegraded",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -3586,37 +3269,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/ModelAdapterDegradedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -3649,12 +3326,10 @@
             "routing_provider",
             "solver"
           ],
-          "title": "Adapter",
           "type": "string"
         },
         "cause": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Cause",
           "type": "string"
         }
       },
@@ -3675,19 +3350,16 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Need Id",
           "type": "string"
         },
         "quantity": {
           "minimum": 1,
-          "title": "Quantity",
           "type": "integer"
         },
         "reasons": {
           "items": {
             "$ref": "#/$defs/ReasonFact"
           },
-          "title": "Reasons",
           "type": "array"
         },
         "type": {
@@ -3749,8 +3421,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Accepted Sequence"
+          "default": null
         },
         "bridges_need_id": {
           "anyOf": [
@@ -3764,8 +3435,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Bridges Need Id"
+          "default": null
         },
         "created_by": {
           "$ref": "#/$defs/Actor"
@@ -3774,7 +3444,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "incident_id": {
@@ -3789,8 +3458,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Incident Id"
+          "default": null
         },
         "kind": {
           "$ref": "#/$defs/OverrideKind"
@@ -3807,20 +3475,17 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "override_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Override Id",
           "type": "string"
         },
         "reason_text": {
           "maxLength": 280,
           "minLength": 1,
-          "title": "Reason Text",
           "type": "string"
         },
         "replaces_override_id": {
@@ -3835,8 +3500,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Replaces Override Id"
+          "default": null
         },
         "revokes_override_id": {
           "anyOf": [
@@ -3850,8 +3514,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Revokes Override Id"
+          "default": null
         },
         "status": {
           "$ref": "#/$defs/OverrideStatus"
@@ -3868,8 +3531,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unit Id"
+          "default": null
         },
         "zone_id": {
           "anyOf": [
@@ -3883,8 +3545,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Zone Id"
+          "default": null
         }
       },
       "required": [
@@ -3905,19 +3566,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -3929,24 +3587,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "OverrideAccepted",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -3959,37 +3613,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/OverridePayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -4028,26 +3676,22 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Bridges Need Id"
+          "default": null
         },
         "expected_plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Plan Id",
           "type": "string"
         },
         "expected_planning_sequence": {
           "minimum": 1,
-          "title": "Expected Planning Sequence",
           "type": "integer"
         },
         "expected_session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "incident_id": {
@@ -4062,8 +3706,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Incident Id"
+          "default": null
         },
         "kind": {
           "$ref": "#/$defs/OverrideKind"
@@ -4080,13 +3723,11 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "reason_text": {
           "maxLength": 280,
           "minLength": 1,
-          "title": "Reason Text",
           "type": "string"
         },
         "replaces_override_id": {
@@ -4101,8 +3742,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Replaces Override Id"
+          "default": null
         },
         "revokes_override_id": {
           "anyOf": [
@@ -4116,8 +3756,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Revokes Override Id"
+          "default": null
         },
         "unit_id": {
           "anyOf": [
@@ -4131,8 +3770,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unit Id"
+          "default": null
         },
         "zone_id": {
           "anyOf": [
@@ -4146,8 +3784,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Zone Id"
+          "default": null
         }
       },
       "required": [
@@ -4165,11 +3802,9 @@
       "properties": {
         "code": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Code",
           "type": "string"
         },
         "detail": {
-          "title": "Detail",
           "type": "string"
         },
         "override_id": {
@@ -4184,8 +3819,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Override Id"
+          "default": null
         },
         "unit_id": {
           "anyOf": [
@@ -4199,8 +3833,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unit Id"
+          "default": null
         }
       },
       "required": [
@@ -4217,12 +3850,10 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Override Id",
           "type": "string"
         },
         "reason": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Reason",
           "type": "string"
         }
       },
@@ -4240,19 +3871,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -4264,24 +3892,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "OverrideInvalidated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -4294,37 +3918,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/OverrideEndedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -4380,22 +3998,18 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Override Id",
           "type": "string"
         },
         "recompute": {
           "const": "computing",
-          "title": "Recompute",
           "type": "string"
         },
         "sequence": {
           "minimum": 1,
-          "title": "Sequence",
           "type": "integer"
         },
         "status": {
           "const": "active",
-          "title": "Status",
           "type": "string"
         }
       },
@@ -4415,19 +4029,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -4439,24 +4050,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "OverrideRejected",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -4469,37 +4076,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/OverrideRejectedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -4538,15 +4139,13 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Bridges Need Id"
+          "default": null
         },
         "conflicts": {
           "items": {
             "$ref": "#/$defs/OverrideConflict"
           },
           "minItems": 1,
-          "title": "Conflicts",
           "type": "array"
         },
         "incident_id": {
@@ -4561,8 +4160,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Incident Id"
+          "default": null
         },
         "kind": {
           "$ref": "#/$defs/OverrideKind"
@@ -4579,14 +4177,12 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "override_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Override Id",
           "type": "string"
         },
         "unit_id": {
@@ -4601,8 +4197,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unit Id"
+          "default": null
         }
       },
       "required": [
@@ -4620,19 +4215,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -4644,24 +4236,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "OverrideRevoked",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -4674,37 +4262,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/OverrideEndedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -4745,31 +4327,26 @@
           "items": {
             "$ref": "#/$defs/Assignment"
           },
-          "title": "Assignments",
           "type": "array"
         },
         "based_on_planning_sequence": {
           "minimum": 1,
-          "title": "Based On Planning Sequence",
           "type": "integer"
         },
         "coverage": {
           "items": {
             "$ref": "#/$defs/Coverage"
           },
-          "title": "Coverage",
           "type": "array"
         },
         "created_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Created At",
           "type": "string"
         },
         "created_sim_time_s": {
           "ge": 0,
-          "title": "Created Sim Time S",
           "type": "integer"
         },
         "diff": {
@@ -4779,43 +4356,36 @@
           "items": {
             "$ref": "#/$defs/FacilityAllocation"
           },
-          "title": "Facility Allocations",
           "type": "array"
         },
         "flags": {
           "items": {
             "$ref": "#/$defs/PolicyFlag"
           },
-          "title": "Flags",
           "type": "array"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         },
         "policy_version": {
-          "title": "Policy Version",
           "type": "string"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "soft_consequences": {
           "items": {
             "$ref": "#/$defs/SoftConsequence"
           },
-          "title": "Soft Consequences",
           "type": "array"
         },
         "solver": {
@@ -4836,18 +4406,15 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Supersedes Approved Plan Id"
+          "default": null
         },
         "unmet_needs": {
           "items": {
             "$ref": "#/$defs/UnmetNeed"
           },
-          "title": "Unmet Needs",
           "type": "array"
         },
         "version": {
-          "title": "Version",
           "type": "integer"
         }
       },
@@ -4880,19 +4447,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -4904,24 +4468,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "PlanApproved",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -4934,37 +4494,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/PlanApprovedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -4998,19 +4552,16 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Acknowledged Flag Ids",
           "type": "array"
         },
         "based_on_planning_sequence": {
           "minimum": 1,
-          "title": "Based On Planning Sequence",
           "type": "integer"
         },
         "desired_assignments": {
           "items": {
             "$ref": "#/$defs/DesiredAssignment"
           },
-          "title": "Desired Assignments",
           "type": "array"
         },
         "note_present": {
@@ -5022,8 +4573,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Note Present"
+          "default": null
         },
         "outbox_keys": {
           "items": {
@@ -5032,18 +4582,15 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Outbox Keys",
           "type": "array"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         },
         "version": {
-          "title": "Version",
           "type": "integer"
         }
       },
@@ -5065,7 +4612,6 @@
           "items": {
             "$ref": "#/$defs/DiffRow"
           },
-          "title": "Added",
           "type": "array"
         },
         "against_plan_id": {
@@ -5079,14 +4625,12 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Against Plan Id"
+          ]
         },
         "changed": {
           "items": {
             "$ref": "#/$defs/DiffRow"
           },
-          "title": "Changed",
           "type": "array"
         },
         "newly_unmet": {
@@ -5096,14 +4640,12 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Newly Unmet",
           "type": "array"
         },
         "released": {
           "items": {
             "$ref": "#/$defs/DiffRow"
           },
-          "title": "Released",
           "type": "array"
         },
         "totals": {
@@ -5111,7 +4653,6 @@
         },
         "unchanged_count": {
           "ge": 0,
-          "title": "Unchanged Count",
           "type": "integer"
         }
       },
@@ -5134,19 +4675,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -5158,24 +4696,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "PlanFailed",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -5188,37 +4722,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/PlanFailedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -5247,14 +4775,12 @@
       "properties": {
         "based_on_planning_sequence": {
           "minimum": 1,
-          "title": "Based On Planning Sequence",
           "type": "integer"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         },
         "reasons": {
@@ -5262,7 +4788,6 @@
             "pattern": "^[A-Z][A-Z0-9_]*$",
             "type": "string"
           },
-          "title": "Reasons",
           "type": "array"
         }
       },
@@ -5281,19 +4806,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -5305,24 +4827,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "PlanProposed",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -5335,37 +4853,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/PlanProposedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -5409,19 +4921,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -5433,24 +4942,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "PlanRevalidated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -5463,37 +4968,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/PlanRevalidatedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -5522,19 +5021,16 @@
       "properties": {
         "checked_planning_sequence": {
           "minimum": 1,
-          "title": "Checked Planning Sequence",
           "type": "integer"
         },
         "checked_sim_time_s": {
           "ge": 0,
-          "title": "Checked Sim Time S",
           "type": "integer"
         },
         "plan_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         }
       },
@@ -5567,19 +5063,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -5591,24 +5084,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "PlanSuperseded",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -5621,37 +5110,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/PlanSupersededPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -5682,12 +5165,10 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Plan Id",
           "type": "string"
         },
         "reason": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Reason",
           "type": "string"
         },
         "superseded_by_plan_id": {
@@ -5701,8 +5182,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Superseded By Plan Id"
+          ]
         }
       },
       "required": [
@@ -5720,19 +5200,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -5744,24 +5221,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "PlanningTickCommitted",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -5774,37 +5247,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/PlanningTickCommittedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -5833,14 +5300,12 @@
       "properties": {
         "tick_sim_time_s": {
           "ge": 0,
-          "title": "Tick Sim Time S",
           "type": "integer"
         },
         "units": {
           "items": {
             "$ref": "#/$defs/UnitPlanningState"
           },
-          "title": "Units",
           "type": "array"
         }
       },
@@ -5865,12 +5330,10 @@
               "type": "number"
             }
           ],
-          "title": "Coordinates",
           "type": "array"
         },
         "type": {
           "const": "Point",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -5896,7 +5359,6 @@
             ],
             "type": "string"
           },
-          "title": "Dangerous Values",
           "type": "object"
         },
         "limits": {
@@ -5904,29 +5366,24 @@
         },
         "max_debounce_ms": {
           "minimum": 0,
-          "title": "Max Debounce Ms",
           "type": "integer"
         },
         "near_arrival_lock_s": {
           "ge": 0,
-          "title": "Near Arrival Lock S",
           "type": "integer"
         },
         "objective_tiers": {
           "items": {
             "$ref": "#/$defs/ObjectiveTier"
           },
-          "title": "Objective Tiers",
           "type": "array"
         },
         "planning_tick_s": {
           "minimum": 1,
-          "title": "Planning Tick S",
           "type": "integer"
         },
         "policy_version": {
           "pattern": "^demo-\\d{4}\\.\\d+$",
-          "title": "Policy Version",
           "type": "string"
         },
         "severity_weights": {
@@ -5937,12 +5394,10 @@
           "propertyNames": {
             "$ref": "#/$defs/Severity"
           },
-          "title": "Severity Weights",
           "type": "object"
         },
         "solver_budget_ms": {
           "minimum": 1,
-          "title": "Solver Budget Ms",
           "type": "integer"
         }
       },
@@ -5966,27 +5421,22 @@
       "properties": {
         "als_on_bls": {
           "minimum": 0,
-          "title": "Als On Bls",
           "type": "integer"
         },
         "reassignment": {
           "minimum": 0,
-          "title": "Reassignment",
           "type": "integer"
         },
         "reserve_shortfall": {
           "minimum": 0,
-          "title": "Reserve Shortfall",
           "type": "integer"
         },
         "travel_cap_s": {
           "ge": 0,
-          "title": "Travel Cap S",
           "type": "integer"
         },
         "waiting_cap_s": {
           "ge": 0,
-          "title": "Waiting Cap S",
           "type": "integer"
         }
       },
@@ -6005,14 +5455,12 @@
       "properties": {
         "code": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Code",
           "type": "string"
         },
         "flag_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Flag Id",
           "type": "string"
         },
         "incident_id": {
@@ -6027,11 +5475,9 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Incident Id"
+          "default": null
         },
         "message": {
-          "title": "Message",
           "type": "string"
         },
         "need_id": {
@@ -6046,8 +5492,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "override_id": {
           "anyOf": [
@@ -6061,11 +5506,9 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Override Id"
+          "default": null
         },
         "requires_ack": {
-          "title": "Requires Ack",
           "type": "boolean"
         },
         "resource_type": {
@@ -6092,8 +5535,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Since Sim Time S"
+          "default": null
         },
         "zone_id": {
           "anyOf": [
@@ -6107,8 +5549,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Zone Id"
+          "default": null
         }
       },
       "required": [
@@ -6126,22 +5567,18 @@
       "properties": {
         "demand_quanta": {
           "minimum": 1,
-          "title": "Demand Quanta",
           "type": "integer"
         },
         "need_records": {
           "minimum": 1,
-          "title": "Need Records",
           "type": "integer"
         },
         "reserve_pairs": {
           "minimum": 1,
-          "title": "Reserve Pairs",
           "type": "integer"
         },
         "units": {
           "minimum": 1,
-          "title": "Units",
           "type": "integer"
         }
       },
@@ -6175,12 +5612,10 @@
             "type": "array"
           },
           "minItems": 1,
-          "title": "Coordinates",
           "type": "array"
         },
         "type": {
           "const": "Polygon",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -6197,7 +5632,6 @@
       "properties": {
         "code": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Code",
           "type": "string"
         },
         "conflicts": {
@@ -6213,8 +5647,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Conflicts"
+          "default": null
         },
         "current": {
           "anyOf": [
@@ -6226,8 +5659,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Current"
+          "default": null
         },
         "detail": {
           "anyOf": [
@@ -6238,8 +5670,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Detail"
+          "default": null
         },
         "errors": {
           "anyOf": [
@@ -6253,8 +5684,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Errors"
+          "default": null
         },
         "instance": {
           "anyOf": [
@@ -6265,8 +5695,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Instance"
+          "default": null
         },
         "missing_flag_ids": {
           "anyOf": [
@@ -6283,8 +5712,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Missing Flag Ids"
+          "default": null
         },
         "override_id": {
           "anyOf": [
@@ -6298,8 +5726,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Override Id"
+          "default": null
         },
         "reason": {
           "anyOf": [
@@ -6311,21 +5738,17 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Reason"
+          "default": null
         },
         "status": {
           "maximum": 599,
           "minimum": 400,
-          "title": "Status",
           "type": "integer"
         },
         "title": {
-          "title": "Title",
           "type": "string"
         },
         "type": {
-          "title": "Type",
           "type": "string"
         }
       },
@@ -6342,11 +5765,9 @@
       "additionalProperties": false,
       "properties": {
         "message": {
-          "title": "Message",
           "type": "string"
         },
         "pointer": {
-          "title": "Pointer",
           "type": "string"
         }
       },
@@ -6373,11 +5794,9 @@
         },
         "asked_sim_time_s": {
           "ge": 0,
-          "title": "Asked Sim Time S",
           "type": "integer"
         },
         "fact_key": {
-          "title": "Fact Key",
           "type": "string"
         }
       },
@@ -6394,7 +5813,6 @@
       "properties": {
         "code": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Code",
           "type": "string"
         },
         "params": {
@@ -6420,7 +5838,6 @@
               }
             ]
           },
-          "title": "Params",
           "type": "object"
         }
       },
@@ -6435,12 +5852,10 @@
       "properties": {
         "planning_sequence": {
           "minimum": 1,
-          "title": "Planning Sequence",
           "type": "integer"
         },
         "status": {
           "const": "computing",
-          "title": "Status",
           "type": "string"
         }
       },
@@ -6458,12 +5873,10 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "reason": {
           "const": "operator_requested",
-          "title": "Reason",
           "type": "string"
         }
       },
@@ -6482,7 +5895,6 @@
             "text_sim",
             "structured_sim"
           ],
-          "title": "Channel",
           "type": "string"
         },
         "linked_incident_id": {
@@ -6497,8 +5909,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Linked Incident Id"
+          "default": null
         },
         "location": {
           "$ref": "#/$defs/Point"
@@ -6509,26 +5920,22 @@
             "operator_entered",
             "fixture"
           ],
-          "title": "Location Source",
           "type": "string"
         },
         "received_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Received At",
           "type": "string"
         },
         "received_sim_time_s": {
           "ge": 0,
-          "title": "Received Sim Time S",
           "type": "integer"
         },
         "report_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Report Id",
           "type": "string"
         },
         "text_ref": {
@@ -6551,7 +5958,6 @@
       "additionalProperties": false,
       "properties": {
         "escalated": {
-          "title": "Escalated",
           "type": "boolean"
         },
         "incident_id": {
@@ -6565,19 +5971,16 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Incident Id"
+          ]
         },
         "report_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Report Id",
           "type": "string"
         },
         "sequence": {
           "minimum": 1,
-          "title": "Sequence",
           "type": "integer"
         }
       },
@@ -6598,14 +6001,12 @@
             "text_sim",
             "structured_sim"
           ],
-          "title": "Channel",
           "type": "string"
         },
         "expected_session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "location": {
@@ -6617,18 +6018,15 @@
             "operator_entered",
             "fixture"
           ],
-          "title": "Location Source",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         },
         "text": {
           "maxLength": 2000,
           "minLength": 1,
-          "title": "Text",
           "type": "string"
         }
       },
@@ -6650,19 +6048,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -6674,24 +6069,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "ReportLinkedToIncident",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -6704,37 +6095,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/ReportLinkedToIncidentPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -6765,14 +6150,12 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "report_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Report Id",
           "type": "string"
         },
         "resolution": {
@@ -6780,7 +6163,6 @@
             "linked",
             "kept_separate"
           ],
-          "title": "Resolution",
           "type": "string"
         }
       },
@@ -6799,19 +6181,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -6823,24 +6202,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "ReportReceived",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -6853,37 +6228,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/ReportReceivedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -6925,7 +6294,6 @@
       "properties": {
         "coverage_eta_s": {
           "ge": 0,
-          "title": "Coverage Eta S",
           "type": "integer"
         },
         "geometry": {
@@ -6946,14 +6314,12 @@
           "items": {
             "$ref": "#/$defs/UnitType"
           },
-          "title": "Required Types",
           "type": "array"
         },
         "zone_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Zone Id",
           "type": "string"
         }
       },
@@ -6973,19 +6339,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -6997,24 +6360,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "RoadClosureUpdated",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -7027,37 +6386,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/RoadClosureUpdatedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -7085,21 +6438,16 @@
       "additionalProperties": false,
       "properties": {
         "closed": {
-          "title": "Closed",
           "type": "boolean"
         },
         "closure_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Closure Id",
           "type": "string"
         },
-        "geometry": {
-          "title": "Geometry"
-        },
+        "geometry": {},
         "version": {
-          "title": "Version",
           "type": "integer"
         }
       },
@@ -7125,8 +6473,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Distance M"
+          ]
         },
         "duration_s": {
           "anyOf": [
@@ -7137,12 +6484,10 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Duration S"
+          ]
         },
         "flood_version": {
           "minimum": 0,
-          "title": "Flood Version",
           "type": "integer"
         },
         "from": {
@@ -7163,14 +6508,12 @@
             "fixture",
             "ors_directions"
           ],
-          "title": "Provider",
           "type": "string"
         },
         "route_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Route Id",
           "type": "string"
         },
         "route_status": {
@@ -7189,8 +6532,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unavailable Reason"
+          "default": null
         }
       },
       "required": [
@@ -7223,19 +6565,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -7247,24 +6586,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "SessionStarted",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -7277,37 +6612,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/SessionStartedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -7335,14 +6664,12 @@
       "additionalProperties": false,
       "properties": {
         "fixture": {
-          "title": "Fixture",
           "type": "string"
         },
         "initial_state": {
           "$ref": "#/$defs/StateSnapshot"
         },
         "seed": {
-          "title": "Seed",
           "type": "integer"
         }
       },
@@ -7369,23 +6696,19 @@
       "properties": {
         "capacity_persons": {
           "ge": 0,
-          "title": "Capacity Persons",
           "type": "integer"
         },
         "display_name": {
-          "title": "Display Name",
           "type": "string"
         },
         "facility_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Facility Id",
           "type": "string"
         },
         "kind": {
           "const": "shelter",
-          "title": "Kind",
           "type": "string"
         },
         "location": {
@@ -7393,7 +6716,6 @@
         },
         "occupied_persons": {
           "ge": 0,
-          "title": "Occupied Persons",
           "type": "integer"
         }
       },
@@ -7415,19 +6737,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -7439,24 +6758,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "SimulatedDispatchCancelled",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -7469,37 +6784,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/SimulatedDispatchEndedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -7536,19 +6845,16 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Attempts"
+          "default": null
         },
         "outbox_key": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Outbox Key",
           "type": "string"
         },
         "reason": {
           "pattern": "^[A-Z][A-Z0-9_]*$",
-          "title": "Reason",
           "type": "string"
         }
       },
@@ -7566,19 +6872,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -7590,24 +6893,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "SimulatedDispatchFailed",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -7620,37 +6919,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/SimulatedDispatchEndedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -7681,19 +6974,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -7705,24 +6995,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "SimulatedDispatchQueued",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -7735,37 +7021,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/SimulatedDispatchQueuedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -7809,19 +7089,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -7833,24 +7110,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "SimulatedDispatchSent",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -7863,37 +7136,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/SimulatedDispatchSentPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -7927,19 +7194,16 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Assignment Id",
           "type": "string"
         },
         "outbox_key": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Outbox Key",
           "type": "string"
         },
         "simulated": {
           "const": true,
-          "title": "Simulated",
           "type": "boolean"
         },
         "unit_after": {
@@ -7965,8 +7229,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Unit Id"
+          "default": null
         }
       },
       "required": [
@@ -7990,8 +7253,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Delta"
+          "default": null
         },
         "metric": {
           "enum": [
@@ -7999,7 +7261,6 @@
             "reserve_uncovered",
             "unmet_need"
           ],
-          "title": "Metric",
           "type": "string"
         },
         "need_id": {
@@ -8014,8 +7275,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Need Id"
+          "default": null
         },
         "override_id": {
           "anyOf": [
@@ -8029,8 +7289,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Override Id"
+          "default": null
         },
         "zone_id": {
           "anyOf": [
@@ -8044,8 +7303,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Zone Id"
+          "default": null
         }
       },
       "required": [
@@ -8061,7 +7319,6 @@
           "items": {
             "$ref": "#/$defs/ObjectiveTier"
           },
-          "title": "Completed Tiers",
           "type": "array"
         },
         "engine": {
@@ -8069,11 +7326,9 @@
             "ortools_cp_sat",
             "greedy_fallback"
           ],
-          "title": "Engine",
           "type": "string"
         },
         "lexicographic_complete": {
-          "title": "Lexicographic Complete",
           "type": "boolean"
         },
         "objective_vector": {
@@ -8083,28 +7338,23 @@
           },
           "maxItems": 6,
           "minItems": 6,
-          "title": "Objective Vector",
           "type": "array"
         },
         "seed": {
-          "title": "Seed",
           "type": "integer"
         },
         "status": {
           "$ref": "#/$defs/SolverStatus"
         },
         "tie_break_complete": {
-          "title": "Tie Break Complete",
           "type": "boolean"
         },
         "wall_time_ms": {
           "minimum": 0,
-          "title": "Wall Time Ms",
           "type": "integer"
         },
         "workers": {
           "minimum": 1,
-          "title": "Workers",
           "type": "integer"
         }
       },
@@ -8142,7 +7392,6 @@
           "items": {
             "$ref": "#/$defs/Override"
           },
-          "title": "Active Overrides",
           "type": "array"
         },
         "approved_plan": {
@@ -8157,7 +7406,6 @@
         },
         "as_of_sequence": {
           "minimum": 0,
-          "title": "As Of Sequence",
           "type": "integer"
         },
         "current_proposal": {
@@ -8188,14 +7436,12 @@
               }
             ]
           },
-          "title": "Facilities",
           "type": "array"
         },
         "flood": {
           "items": {
             "$ref": "#/$defs/FloodZone"
           },
-          "title": "Flood",
           "type": "array"
         },
         "historical_plans": {
@@ -8210,26 +7456,22 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Historical Plans"
+          "default": null
         },
         "incidents": {
           "items": {
             "$ref": "#/$defs/Incident"
           },
-          "title": "Incidents",
           "type": "array"
         },
         "outbox": {
           "items": {
             "$ref": "#/$defs/DispatchCommand"
           },
-          "title": "Outbox",
           "type": "array"
         },
         "planning_sequence": {
           "minimum": 0,
-          "title": "Planning Sequence",
           "type": "integer"
         },
         "policy": {
@@ -8239,44 +7481,37 @@
           "items": {
             "$ref": "#/$defs/Report"
           },
-          "title": "Reports",
           "type": "array"
         },
         "reserve_zones": {
           "items": {
             "$ref": "#/$defs/ReserveZone"
           },
-          "title": "Reserve Zones",
           "type": "array"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         },
         "triage_facts": {
           "items": {
             "$ref": "#/$defs/TriageFacts"
           },
-          "title": "Triage Facts",
           "type": "array"
         },
         "units": {
           "items": {
             "$ref": "#/$defs/Unit"
           },
-          "title": "Units",
           "type": "array"
         }
       },
@@ -8308,7 +7543,6 @@
       "properties": {
         "length_chars": {
           "ge": 0,
-          "title": "Length Chars",
           "type": "integer"
         },
         "report_id": {
@@ -8323,17 +7557,14 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Report Id"
+          "default": null
         },
         "store": {
           "const": "report_text",
-          "title": "Store",
           "type": "string"
         },
         "text_sha256": {
           "pattern": "^[0-9a-f]{64}$",
-          "title": "Text Sha256",
           "type": "string"
         }
       },
@@ -8370,11 +7601,9 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Coercion Reason"
+          "default": null
         },
         "confirmed_by_operator": {
-          "title": "Confirmed By Operator",
           "type": "boolean"
         },
         "conflict": {
@@ -8386,8 +7615,7 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Conflict"
+          "default": null
         },
         "count": {
           "anyOf": [
@@ -8404,12 +7632,10 @@
           "items": {
             "$ref": "#/$defs/EvidenceSpan"
           },
-          "title": "Evidence",
           "type": "array"
         },
         "key": {
           "pattern": "^[a-z][a-z0-9_]*$",
-          "title": "Key",
           "type": "string"
         },
         "source": {
@@ -8417,7 +7643,6 @@
         },
         "updated_sim_time_s": {
           "ge": 0,
-          "title": "Updated Sim Time S",
           "type": "integer"
         },
         "value": {
@@ -8449,19 +7674,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -8473,24 +7695,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "TriageFactConfirmed",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -8503,37 +7721,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/TriageFactConfirmedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -8567,7 +7779,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         }
       },
@@ -8585,7 +7796,6 @@
           "items": {
             "type": "string"
           },
-          "title": "Applicable Facts",
           "type": "array"
         },
         "escalation": {
@@ -8595,25 +7805,21 @@
           "items": {
             "$ref": "#/$defs/TriageFact"
           },
-          "title": "Facts",
           "type": "array"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "policy_version": {
-          "title": "Policy Version",
           "type": "string"
         },
         "questions_asked": {
           "items": {
             "$ref": "#/$defs/QuestionAsked"
           },
-          "title": "Questions Asked",
           "type": "array"
         }
       },
@@ -8635,19 +7841,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -8659,24 +7862,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "TriageFactsExtracted",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -8689,37 +7888,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/TriageFactsExtractedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -8761,7 +7954,6 @@
       "properties": {
         "capacity_persons": {
           "ge": 0,
-          "title": "Capacity Persons",
           "type": "integer"
         },
         "current_task": {
@@ -8784,18 +7976,15 @@
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Desired Revision"
+          "default": null
         },
         "display_name": {
-          "title": "Display Name",
           "type": "string"
         },
         "home_zone_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Home Zone Id",
           "type": "string"
         },
         "position": {
@@ -8803,7 +7992,6 @@
         },
         "position_sim_time_s": {
           "ge": 0,
-          "title": "Position Sim Time S",
           "type": "integer"
         },
         "status": {
@@ -8816,7 +8004,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -8850,8 +8037,7 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Lock"
+          ]
         },
         "position": {
           "$ref": "#/$defs/Point"
@@ -8865,14 +8051,12 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Remaining Route S"
+          ]
         },
         "unit_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -8892,19 +8076,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -8916,24 +8097,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "UnitPositionObserved",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -8946,37 +8123,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/UnitPositionObservedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -9005,7 +8176,6 @@
       "properties": {
         "observed_sim_time_s": {
           "ge": 0,
-          "title": "Observed Sim Time S",
           "type": "integer"
         },
         "position": {
@@ -9015,7 +8185,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -9052,12 +8221,10 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Invalidated Assignment Ids",
           "type": "array"
         },
         "sequence": {
           "minimum": 1,
-          "title": "Sequence",
           "type": "integer"
         },
         "status": {
@@ -9067,7 +8234,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Unit Id",
           "type": "string"
         }
       },
@@ -9087,19 +8253,16 @@
           "$ref": "#/$defs/Actor"
         },
         "affects_planning": {
-          "title": "Affects Planning",
           "type": "boolean"
         },
         "aggregate_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Aggregate Id",
           "type": "string"
         },
         "aggregate_type": {
           "pattern": "^[a-z_]+$",
-          "title": "Aggregate Type",
           "type": "string"
         },
         "causation_id": {
@@ -9111,24 +8274,20 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Causation Id"
+          ]
         },
         "correlation_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Correlation Id",
           "type": "string"
         },
         "event_id": {
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-          "title": "Event Id",
           "type": "string"
         },
         "event_type": {
           "const": "UnitStatusChanged",
-          "title": "Event Type",
           "type": "string"
         },
         "idempotency_key": {
@@ -9141,37 +8300,31 @@
             {
               "type": "null"
             }
-          ],
-          "title": "Idempotency Key"
+          ]
         },
         "occurred_at": {
           "examples": [
             "2026-09-30T09:10:00.000Z"
           ],
-          "title": "Occurred At",
           "type": "string"
         },
         "payload": {
           "$ref": "#/$defs/UnitStatusChangedPayload"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "sequence": {
-          "title": "Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         }
       },
@@ -9205,7 +8358,6 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "type": "string"
           },
-          "title": "Invalidates Assignment Ids",
           "type": "array"
         },
         "unit": {
@@ -9226,7 +8378,6 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Expected Session Id",
           "type": "string"
         },
         "position": {
@@ -9242,7 +8393,6 @@
         },
         "sim_time_s": {
           "ge": 0,
-          "title": "Sim Time S",
           "type": "integer"
         },
         "to_status": {
@@ -9279,33 +8429,28 @@
             "$ref": "#/$defs/BridgeCandidate"
           },
           "maxItems": 3,
-          "title": "Bridge Candidates",
           "type": "array"
         },
         "incident_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Incident Id",
           "type": "string"
         },
         "need_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Need Id",
           "type": "string"
         },
         "quantity_unmet": {
           "minimum": 1,
-          "title": "Quantity Unmet",
           "type": "integer"
         },
         "reasons": {
           "items": {
             "$ref": "#/$defs/ReasonFact"
           },
-          "title": "Reasons",
           "type": "array"
         },
         "severity": {
@@ -9316,7 +8461,6 @@
         },
         "waiting_s": {
           "ge": 0,
-          "title": "Waiting S",
           "type": "integer"
         }
       },
@@ -9339,12 +8483,10 @@
       "properties": {
         "head_sequence": {
           "minimum": 0,
-          "title": "Head Sequence",
           "type": "integer"
         },
         "type": {
           "const": "caught_up",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -9505,12 +8647,10 @@
             {
               "$ref": "#/$defs/ModelAdapterDegradedEvent"
             }
-          ],
-          "title": "Event"
+          ]
         },
         "type": {
           "const": "event",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -9526,12 +8666,10 @@
       "properties": {
         "head_sequence": {
           "minimum": 0,
-          "title": "Head Sequence",
           "type": "integer"
         },
         "type": {
           "const": "heartbeat",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -9547,23 +8685,19 @@
       "properties": {
         "head_sequence": {
           "minimum": 0,
-          "title": "Head Sequence",
           "type": "integer"
         },
         "schema_version": {
-          "title": "Schema Version",
           "type": "string"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "type": {
           "const": "hello",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -9603,7 +8737,8 @@
         {
           "$ref": "#/$defs/WsCaughtUp"
         }
-      ]
+      ],
+      "title": "WsServerMessage"
     },
     "WsSnapshotRequired": {
       "additionalProperties": false,
@@ -9612,12 +8747,10 @@
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "type": {
           "const": "snapshot_required",
-          "title": "Type",
           "type": "string"
         }
       },
@@ -9633,19 +8766,16 @@
       "properties": {
         "after_sequence": {
           "minimum": 0,
-          "title": "After Sequence",
           "type": "integer"
         },
         "session_id": {
           "maxLength": 128,
           "minLength": 1,
           "pattern": "^[A-Za-z0-9_:.\\-]+$",
-          "title": "Session Id",
           "type": "string"
         },
         "type": {
           "const": "subscribe",
-          "title": "Type",
           "type": "string"
         }
       },
