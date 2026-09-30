@@ -113,6 +113,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -124,7 +125,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -211,7 +212,7 @@
             "title": "Destination Facility Id"
           },
           "eta_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Eta S",
             "type": "integer"
           },
@@ -259,7 +260,7 @@
           "persons": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -326,7 +327,7 @@
             "type": "array"
           },
           "eta_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Eta S",
             "type": "integer"
           },
@@ -586,7 +587,7 @@
           "eta_s": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -702,22 +703,22 @@
         "additionalProperties": false,
         "properties": {
           "needs_unmet": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Needs Unmet",
             "type": "integer"
           },
           "units_added": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Units Added",
             "type": "integer"
           },
           "units_moved": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Units Moved",
             "type": "integer"
           },
           "units_released": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Units Released",
             "type": "integer"
           },
@@ -726,7 +727,7 @@
             "type": "integer"
           },
           "zones_uncovered": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Zones Uncovered",
             "type": "integer"
           }
@@ -932,6 +933,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -943,7 +945,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -1083,6 +1085,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -1094,7 +1097,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -1164,7 +1167,7 @@
           "sim_time_s": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -1185,7 +1188,7 @@
         "additionalProperties": false,
         "properties": {
           "end": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "End",
             "type": "integer"
           },
@@ -1197,7 +1200,7 @@
             "type": "string"
           },
           "start": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Start",
             "type": "integer"
           }
@@ -1228,7 +1231,7 @@
             "type": "string"
           },
           "free_after_persons": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Free After Persons",
             "type": "integer"
           },
@@ -1354,6 +1357,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -1365,7 +1369,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -1440,7 +1444,7 @@
           "value": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -1502,6 +1506,7 @@
             "type": "integer"
           },
           "version": {
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -1522,7 +1527,7 @@
             "type": "boolean"
           },
           "effective_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Effective Sim Time S",
             "type": "integer"
           },
@@ -1544,6 +1549,7 @@
             "$ref": "#/components/schemas/Polygon"
           },
           "version": {
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -1567,7 +1573,7 @@
             "type": "boolean"
           },
           "effective_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Effective Sim Time S",
             "type": "integer"
           },
@@ -1590,6 +1596,7 @@
             "type": "string"
           },
           "version": {
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -1686,6 +1693,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -1697,7 +1705,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -1811,7 +1819,7 @@
             "type": "string"
           },
           "ed_beds_available": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Ed Beds Available",
             "type": "integer"
           },
@@ -1923,6 +1931,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -1934,7 +1943,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -2024,7 +2033,7 @@
             "$ref": "#/components/schemas/IncidentCategory"
           },
           "created_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Created Sim Time S",
             "type": "integer"
           },
@@ -2174,6 +2183,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -2185,7 +2195,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -2300,6 +2310,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -2311,7 +2322,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -2448,6 +2459,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -2459,7 +2471,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -2578,6 +2590,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -2589,7 +2602,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -2656,13 +2669,22 @@
         "properties": {
           "coordinates": {
             "items": {
+              "items": {
+                "type": "number"
+              },
               "maxItems": 2,
               "minItems": 2,
               "prefixItems": [
                 {
+                  "description": "longitude",
+                  "maximum": 180.0,
+                  "minimum": -180.0,
                   "type": "number"
                 },
                 {
+                  "description": "latitude",
+                  "maximum": 90.0,
+                  "minimum": -90.0,
                   "type": "number"
                 }
               ],
@@ -2775,6 +2797,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -2786,7 +2809,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -2892,6 +2915,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -2903,7 +2927,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -3061,6 +3085,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -3072,7 +3097,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -3428,6 +3453,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -3439,7 +3465,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -3616,6 +3642,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -3627,7 +3654,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -3758,6 +3785,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -3769,7 +3797,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -3961,6 +3989,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -3972,7 +4001,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -4038,7 +4067,7 @@
             "type": "string"
           },
           "created_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Created Sim Time S",
             "type": "integer"
           },
@@ -4117,6 +4146,7 @@
             "type": "array"
           },
           "version": {
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -4224,6 +4254,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -4235,7 +4266,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -4314,6 +4345,7 @@
             "type": "string"
           },
           "version": {
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -4381,7 +4413,7 @@
             "$ref": "#/components/schemas/DiffTotals"
           },
           "unchanged_count": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Unchanged Count",
             "type": "integer"
           }
@@ -4479,6 +4511,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -4490,7 +4523,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -4628,6 +4661,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -4639,7 +4673,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -4758,6 +4792,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -4769,7 +4804,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -4803,7 +4838,7 @@
             "type": "integer"
           },
           "checked_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Checked Sim Time S",
             "type": "integer"
           },
@@ -4918,6 +4953,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -4929,7 +4965,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -5073,6 +5109,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -5084,7 +5121,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -5113,7 +5150,7 @@
         "additionalProperties": false,
         "properties": {
           "tick_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Tick Sim Time S",
             "type": "integer"
           },
@@ -5136,13 +5173,22 @@
         "additionalProperties": false,
         "properties": {
           "coordinates": {
+            "items": {
+              "type": "number"
+            },
             "maxItems": 2,
             "minItems": 2,
             "prefixItems": [
               {
+                "description": "longitude",
+                "maximum": 180.0,
+                "minimum": -180.0,
                 "type": "number"
               },
               {
+                "description": "latitude",
+                "maximum": 90.0,
+                "minimum": -90.0,
                 "type": "number"
               }
             ],
@@ -5189,7 +5235,7 @@
             "type": "integer"
           },
           "near_arrival_lock_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Near Arrival Lock S",
             "type": "integer"
           },
@@ -5261,12 +5307,12 @@
             "type": "integer"
           },
           "travel_cap_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Travel Cap S",
             "type": "integer"
           },
           "waiting_cap_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Waiting Cap S",
             "type": "integer"
           }
@@ -5362,7 +5408,7 @@
           "since_sim_time_s": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -5435,13 +5481,22 @@
           "coordinates": {
             "items": {
               "items": {
+                "items": {
+                  "type": "number"
+                },
                 "maxItems": 2,
                 "minItems": 2,
                 "prefixItems": [
                   {
+                    "description": "longitude",
+                    "maximum": 180.0,
+                    "minimum": -180.0,
                     "type": "number"
                   },
                   {
+                    "description": "latitude",
+                    "maximum": 90.0,
+                    "minimum": -90.0,
                     "type": "number"
                   }
                 ],
@@ -5638,7 +5693,7 @@
             ]
           },
           "asked_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Asked Sim Time S",
             "type": "integer"
           },
@@ -5742,7 +5797,7 @@
             "type": "string"
           },
           "received_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Received Sim Time S",
             "type": "integer"
           },
@@ -5850,6 +5905,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -5861,7 +5917,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -6001,6 +6057,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -6012,7 +6069,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -6054,7 +6111,7 @@
         "additionalProperties": false,
         "properties": {
           "coverage_eta_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Coverage Eta S",
             "type": "integer"
           },
@@ -6176,6 +6233,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -6187,7 +6245,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -6230,6 +6288,7 @@
             "title": "Geometry"
           },
           "version": {
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -6250,7 +6309,7 @@
           "distance_m": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -6262,7 +6321,7 @@
           "duration_s": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -6427,6 +6486,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -6438,7 +6498,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -6500,7 +6560,7 @@
         "additionalProperties": false,
         "properties": {
           "capacity_persons": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Capacity Persons",
             "type": "integer"
           },
@@ -6524,7 +6584,7 @@
             "$ref": "#/components/schemas/Point"
           },
           "occupied_persons": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Occupied Persons",
             "type": "integer"
           }
@@ -6621,6 +6681,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -6632,7 +6693,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -6773,6 +6834,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -6784,7 +6846,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -6890,6 +6952,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -6901,7 +6964,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -7020,6 +7083,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -7031,7 +7095,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -7394,7 +7458,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           },
@@ -7440,7 +7504,7 @@
         "description": "Reference to caller text held in the separate, revocable report store (0005).",
         "properties": {
           "length_chars": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Length Chars",
             "type": "integer"
           },
@@ -7544,7 +7608,7 @@
             "$ref": "#/components/schemas/FactSource"
           },
           "updated_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Updated Sim Time S",
             "type": "integer"
           },
@@ -7650,6 +7714,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -7661,7 +7726,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -7838,6 +7903,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -7849,7 +7915,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -7891,7 +7957,7 @@
         "additionalProperties": false,
         "properties": {
           "capacity_persons": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Capacity Persons",
             "type": "integer"
           },
@@ -7932,7 +7998,7 @@
             "$ref": "#/components/schemas/Point"
           },
           "position_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Position Sim Time S",
             "type": "integer"
           },
@@ -7989,7 +8055,7 @@
           "remaining_route_s": {
             "anyOf": [
               {
-                "ge": 0,
+                "minimum": 0.0,
                 "type": "integer"
               },
               {
@@ -8096,6 +8162,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -8107,7 +8174,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -8136,7 +8203,7 @@
         "additionalProperties": false,
         "properties": {
           "observed_sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Observed Sim Time S",
             "type": "integer"
           },
@@ -8293,6 +8360,7 @@
             "type": "string"
           },
           "sequence": {
+            "minimum": 1.0,
             "title": "Sequence",
             "type": "integer"
           },
@@ -8304,7 +8372,7 @@
             "type": "string"
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           }
@@ -8374,7 +8442,7 @@
             ]
           },
           "sim_time_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Sim Time S",
             "type": "integer"
           },
@@ -8448,7 +8516,7 @@
             "$ref": "#/components/schemas/NeedType"
           },
           "waiting_s": {
-            "ge": 0,
+            "minimum": 0.0,
             "title": "Waiting S",
             "type": "integer"
           }
