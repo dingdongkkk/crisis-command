@@ -23,7 +23,7 @@ jobs:
 
   backend:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: backend
@@ -44,6 +44,16 @@ jobs:
         run: uv run pytest
       - name: Generated contracts are current
         run: uv run python -m app.contracts.export --check
+      - name: Lint evaluation harnesses
+        run: uv run ruff check ../evals
+      - name: Scripted scenario T+0 to T+10 with replay equality
+        run: uv run python -m app.scenario
+      - name: Triage evaluation (fails on any unsafe downgrade)
+        run: uv run python ../evals/triage/run_eval.py
+      - name: Adversarial probes (approvals, replay, privacy, overrides)
+        run: uv run python ../evals/adversarial/run_probes.py
+      - name: Benchmark smoke (3 seeds; full 100-seed run is manual)
+        run: uv run python ../evals/benchmark/run_benchmark.py --seeds 3
 
   frontend:
     runs-on: ubuntu-latest

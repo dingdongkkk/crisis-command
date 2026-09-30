@@ -123,6 +123,12 @@ export function reasonText(r: ReasonFact): string {
       return `${param(r, 'unit_id')} is out of service (${unitStatusLabel(param(r, 'status'))})`
     case 'NO_ALS_AVAILABLE':
       return 'No ALS unit is available'
+    case 'NO_ELIGIBLE_CAPACITY':
+      return 'No eligible unit is free'
+    case 'NO_REACHABLE_UNIT':
+      return `No eligible unit can reach it by road (${param(r, 'eligible_units')} eligible, none with a usable route)`
+    case 'WATER_ACCESS_NOT_MODELLED':
+      return 'Water access is not modelled — boat routes cannot be verified, so no ETA is given'
     case 'ALS_UNREACHABLE':
     case 'ROUTE_UNAVAILABLE':
       return `${param(r, 'unit_id')} has no usable route (flood version ${param(r, 'flood_version')})`

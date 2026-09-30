@@ -26,3 +26,13 @@ describe('flagSubject', () => {
     expect(flagSubject(base, [])).toBeNull()
   })
 })
+
+describe('reasonText for unmet needs (CC-11 F4)', () => {
+  it('says unreachable and water access, not "no unit"', async () => {
+    const { reasonText } = await import('./labels')
+    expect(reasonText({ code: 'NO_REACHABLE_UNIT', params: { eligible_units: 2 } })).toBe(
+      'No eligible unit can reach it by road (2 eligible, none with a usable route)',
+    )
+    expect(reasonText({ code: 'WATER_ACCESS_NOT_MODELLED', params: {} })).toMatch(/no ETA/)
+  })
+})
