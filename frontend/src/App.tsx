@@ -9,6 +9,7 @@ import { FleetList } from './components/FleetList'
 import { IncidentQueue } from './components/IncidentQueue'
 import { KeyboardHelp } from './components/KeyboardHelp'
 import { KpiStrip } from './components/KpiStrip'
+import { CommandFooter, CommandHeader } from './components/CommandHeader'
 import { MapView } from './components/MapView'
 import { OverrideDialog, type OverridePrefill } from './components/OverrideDialog'
 import { PlanPanel } from './components/PlanPanel'
@@ -375,6 +376,7 @@ export function App({ api, mapTiles = true }: AppProps) {
     return (
       <div className="app app-narrow">
         {chrome}
+        <CommandHeader snapshot={snapshot} />
         <div className="sticky-plan" role="status">
           <span>{planView.kind === 'proposed' ? `PROPOSED v${planView.plan.version} — not dispatched` : planView.kind.replace('_', ' ').toUpperCase()}</span>
           {tab !== 'Plan' && (
@@ -399,8 +401,11 @@ export function App({ api, mapTiles = true }: AppProps) {
   return (
     <div className="app">
       {chrome}
+      <CommandHeader snapshot={snapshot} />
+      <KpiStrip snapshot={snapshot} />
       <main className="console">
         <aside className="rail rail-left" aria-label="Incidents and fleet">
+          <div className="module-heading"><span className="mono">01 / INCOMING SIGNALS</span><span className="module-cross" aria-hidden="true">+</span></div>
           <div className="rail-tabs" aria-label="Left panel">
             <button type="button" aria-pressed={leftTab === 'incidents'} onClick={() => setLeftTab('incidents')}>
               Incidents <span className="seg-count mono">{emergencies.length}</span>
@@ -412,7 +417,7 @@ export function App({ api, mapTiles = true }: AppProps) {
           <div className="rail-scroll">{leftTab === 'incidents' ? queue : fleet}</div>
         </aside>
         <section className="stage" aria-label="Situation">
-          <KpiStrip snapshot={snapshot} />
+          <div className="module-heading map-heading"><span className="mono">02 / TACTICAL OVERVIEW</span><span className="mono">BLR · METRO</span></div>
           <div className="stage-map">{map}</div>
           <Timeline incidents={snapshot.incidents} simTimeS={snapshot.sim_time_s} selectedId={state.selectedIncidentId} onSelect={select} />
           <div className={`detail-dock${selected ? ' open' : ''}`}>
@@ -428,9 +433,11 @@ export function App({ api, mapTiles = true }: AppProps) {
           </div>
         </section>
         <aside className="rail rail-right" aria-label="Plan">
+          <div className="module-heading"><span className="mono">03 / RESPONSE CONTROL</span><span className="module-cross" aria-hidden="true">+</span></div>
           {planPanel}
         </aside>
       </main>
+      <CommandFooter sessionId={snapshot.session_id} />
       {dialogs}
     </div>
   )
