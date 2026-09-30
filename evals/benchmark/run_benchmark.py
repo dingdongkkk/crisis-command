@@ -316,7 +316,7 @@ def metadata() -> dict[str, Any]:
     return dict(
         generated_at=datetime.now(UTC).isoformat(timespec="seconds"),
         commit=git("rev-parse", "HEAD"),
-        dirty=bool(git("status", "--porcelain")),
+        dirty=bool(git("status", "--porcelain", "--untracked-files=no")),
         python=platform.python_version(),
         ortools=ortools.__version__,
         platform=platform.platform(),
