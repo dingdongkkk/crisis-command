@@ -53,7 +53,7 @@
     {
       "incident_id": "inc_0001",
       "category": "emergency",
-      "kind": "fixture_incident",
+      "kind": "cardiac_chest_pain",
       "severity": "critical",
       "assumed_facts": [],
       "location": {
@@ -80,7 +80,7 @@
     {
       "incident_id": "inc_0003",
       "category": "emergency",
-      "kind": "fixture_incident",
+      "kind": "flood_stranded_vehicle",
       "severity": "high",
       "assumed_facts": [],
       "location": {
@@ -107,7 +107,7 @@
     {
       "incident_id": "inc_0004",
       "category": "emergency",
-      "kind": "fixture_incident",
+      "kind": "road_accident_injuries",
       "severity": "critical",
       "assumed_facts": [
         "conscious",
@@ -144,7 +144,7 @@
     {
       "incident_id": "inc_0005",
       "category": "emergency",
-      "kind": "fixture_incident",
+      "kind": "gas_leak_evacuation",
       "severity": "high",
       "assumed_facts": [],
       "location": {
