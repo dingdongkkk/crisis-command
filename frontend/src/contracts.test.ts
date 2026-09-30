@@ -46,3 +46,14 @@ describe('UI mocks validate against the backend-generated schema', () => {
     expect(validateContract('TriageFact', fact).valid).toBe(false)
   })
 })
+
+describe('schema bounds reach runtime validation', () => {
+  it('rejects negative seconds and out-of-range coordinates', () => {
+    const plan = load('plan.valid.json') as { assignments: { eta_s: number }[] }
+    const negative = structuredClone(plan)
+    negative.assignments = negative.assignments.map((a, i) => (i === 0 ? { ...a, eta_s: -5 } : a))
+    expect(validateContract('Plan', negative).valid).toBe(false)
+    expect(validateContract('Point', { type: 'Point', coordinates: [12.9, 177.6] }).valid).toBe(false)
+    expect(validateContract('Point', { type: 'Point', coordinates: [77.6, 12.9] }).valid).toBe(true)
+  })
+})

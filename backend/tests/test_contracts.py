@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from typing import Any
 
@@ -162,3 +163,14 @@ def test_negative_cases_fail_with_named_error(case: dict[str, Any]) -> None:
 def test_all_named_contracts_have_adapters() -> None:
     for name in ["EventEnvelope", "WsServerMessage", "Plan", "StateSnapshot", "Problem"]:
         assert name in ADAPTERS
+
+
+def test_exported_schema_uses_only_real_keywords() -> None:
+    """Regression: validator ordering once leaked `ge`/`le` and untyped coordinates."""
+    from app.contracts.export import build_schema
+
+    text = json.dumps(build_schema())
+    assert '"ge":' not in text and '"le":' not in text
+    point = build_schema()["$defs"]["Point"]["properties"]["coordinates"]
+    assert point["items"] == {"type": "number"} and point["minItems"] == point["maxItems"] == 2
+    assert point["prefixItems"][0]["maximum"] == 180 and point["prefixItems"][1]["maximum"] == 90
