@@ -1,0 +1,22 @@
+name: Implementation task
+description: Define a bounded task and its handoff
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome and acceptance criteria
+      description: Describe observable behavior and how it will be verified.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and ownership
+      description: List prerequisite tasks, Claude or Codex, and owned paths.
+    validations:
+      required: true
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Handoff
+      description: Name the next agent and the artifacts they require.

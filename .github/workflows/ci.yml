@@ -1,0 +1,22 @@
+name: Repository checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  setup-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate setup and dependency graph
+        run: python scripts/validate_setup.py
+      - name: Test task handoff transitions
+        run: python -m unittest discover -s tests -v
+      - name: Show initial graph (not live status)
+        run: python scripts/taskboard.py --offline

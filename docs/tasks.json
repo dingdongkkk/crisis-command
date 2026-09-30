@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "repository": "dingdongkkk/crisis-command",
+  "tasks": [
+    {
+      "id": "CC-01",
+      "title": "Finalize MVP specification and operator flow",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [],
+      "paths": [
+        "docs/BRIEF.md",
+        "docs/ARCHITECTURE.md",
+        "contracts/README.md",
+        "docs/decisions/"
+      ],
+      "acceptance": [
+        "Review the draft architecture and record decisions for unknown triage facts, conflicting overrides, ALS shortage and hard versus soft reserve rules.",
+        "Define screen states and acceptance scenarios for intake, plan diff, approval, override and replay.",
+        "Publish entity/event/API examples with coordinate, time, capacity, idempotency and stale-version semantics. Codex reviews implementation feasibility."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-02",
+      "title": "Create runnable scaffold and canonical contracts",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-01"
+      ],
+      "paths": [
+        "backend/",
+        "frontend/",
+        "contracts/",
+        ".github/workflows/"
+      ],
+      "acceptance": [
+        "Create Python 3.12 FastAPI and React/TypeScript/Vite apps with pinned lockfiles and exact setup commands.",
+        "Implement canonical models and generate JSON Schema/OpenAPI and TypeScript consumers with valid/invalid contract tests.",
+        "Add backend lint/type/test and frontend lint/type/test/build CI jobs; health endpoint and frontend smoke check pass from a clean install."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-03",
+      "title": "Build event store and synthetic world state",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-02"
+      ],
+      "paths": [
+        "backend/app/storage/",
+        "backend/app/domain/",
+        "backend/app/api/",
+        "evals/fixtures/"
+      ],
+      "acceptance": [
+        "Append idempotent events transactionally and project incidents, fleet, facilities, flood state and plan versions.",
+        "Provide state snapshot, event replay, WebSocket sequence and reconnect protocol plus seeded synthetic Bengaluru data.",
+        "Test duplicate commands, concurrent version checks, restart/replay equivalence and simulation reset boundaries."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-04",
+      "title": "Build operator console against contract mocks",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [
+        "CC-02"
+      ],
+      "paths": [
+        "frontend/"
+      ],
+      "acceptance": [
+        "Implement map, incident queue, fleet, triage facts, plan diff, policy flags and approval/override screens using schema-valid mocks.",
+        "Cover keyboard interaction, loading/empty/error/disconnected states and clear proposed versus approved simulation status.",
+        "Add UI interaction tests and screenshots at desktop and narrow widths; show required map attribution."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-05",
+      "title": "Implement assessment and constrained allocation",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-03"
+      ],
+      "paths": [
+        "backend/app/domain/",
+        "backend/app/planning/",
+        "evals/"
+      ],
+      "acceptance": [
+        "Implement versioned assessment/needs rules, waiting-age priority and integer-scaled CP-SAT objectives.",
+        "Enforce membership, availability, resource type, one task per unit, route reachability, facility capacity and locks; retain explicit unmet demand.",
+        "Test shortage, zero fleet, equal-cost ties, infeasible overrides, unavailable locked units and solver timeout; return structured reasons and solver status."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-06",
+      "title": "Implement typed text intake and safe explanations",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [
+        "CC-03",
+        "CC-04"
+      ],
+      "paths": [
+        "backend/app/intake/",
+        "evals/triage/"
+      ],
+      "acceptance": [
+        "Implement template/rule adapters and an optional Gemini adapter behind merged interfaces; no API key required for the default demo.",
+        "Extract yes/no/unknown facts with evidence, ask targeted questions and escalate human requests/critical uncertainty independent of model success.",
+        "Validate schema, timeouts and prompt-injection cases; derive explanations only from validated facts. Add held-out English/Hindi/Hinglish examples with no silent critical-to-no conversions."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-07",
+      "title": "Implement flood-aware routing and capacity inputs",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-05"
+      ],
+      "paths": [
+        "backend/app/routing/",
+        "backend/app/domain/",
+        "evals/routing/"
+      ],
+      "acceptance": [
+        "Build fixture and ORS Directions adapters with explicit seconds/metres, bounded calls and cache invalidation by flood version.",
+        "Check routes against closure polygons and facility reachability; never treat no-route or provider failure as an ordinary road ETA.",
+        "Test polygon crossings, isolated incidents/facilities, stale cache, tow-to-emergency upgrade inputs and boat eligibility."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-08",
+      "title": "Wire replanning policy gate and simulated dispatch",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-07"
+      ],
+      "paths": [
+        "backend/app/planning/",
+        "backend/app/api/",
+        "backend/app/storage/"
+      ],
+      "acceptance": [
+        "Connect event changes through impact analysis, locks, routes, allocation, invariant validation and versioned plan diffs.",
+        "Bind approve/override to plan and event version in a transaction; implement idempotent simulated outbox and watchdog feedback.",
+        "Test breakdown plus new critical incident, late approvals, conflicting overrides, duplicate dispatch, replay without resend and visible unmet ALS/reserve flags."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-09",
+      "title": "Integrate console and intake with the live backend",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [
+        "CC-04",
+        "CC-06",
+        "CC-08"
+      ],
+      "paths": [
+        "frontend/",
+        "backend/app/intake/"
+      ],
+      "acceptance": [
+        "Replace screen mocks with the real API, intake and WebSocket stream using generated types.",
+        "Demonstrate report to plan to operator decision to simulated dispatch; why-not results reference actual solver facts.",
+        "Add end-to-end tests for reconnect/sequence gaps, stale approvals, model failure and the breakdown scenario. Coordinate backend fixes with Codex."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-10",
+      "title": "Add Medical ID duplicate reports and scenario runner",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-09"
+      ],
+      "paths": [
+        "backend/",
+        "evals/",
+        "frontend/"
+      ],
+      "acceptance": [
+        "Implement synthetic opt-in profiles with caller-is-patient check, active-incident access and audited reads; separate profiles from immutable event payloads.",
+        "Add spatial/time duplicate candidate blocking and optional E5 similarity while preserving conflict/provenance and distinct incidents.",
+        "Implement deterministic T+0/T+2/T+5/T+10 scenario runner, hospital matching and simulated pre-alerts; wire required UI controls after Claude lane is merged."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-11",
+      "title": "Run adversarial review and benchmark evaluation",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [
+        "CC-10"
+      ],
+      "paths": [
+        "evals/",
+        "docs/reviews/"
+      ],
+      "acceptance": [
+        "Independently run and record 100 seeded scenarios against a nearest eligible available-unit baseline with identical constraints.",
+        "Report weighted response time, critical-under-eight-minute share, unmet needs, reassignments, uncovered zones and p50/p95 replanning latency with machine/commit metadata.",
+        "Run held-out triage tests and approval/replay/privacy failure cases; deliver reproducible prioritized findings for Codex. Complete the review task even if it finds defects; CC-12 is the repair gate."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-12",
+      "title": "Resolve review findings and package the demo",
+      "owner": "codex",
+      "reviewer": "claude",
+      "depends_on": [
+        "CC-11"
+      ],
+      "paths": [
+        "backend/",
+        "frontend/",
+        "evals/",
+        ".github/",
+        "docs/"
+      ],
+      "acceptance": [
+        "Fix all release-blocking CC-11 findings with regression coverage; Claude verifies repairs at the final commit.",
+        "Provide clean-machine setup and run instructions, persistent data behavior, simulated dispatch boundaries and no-key offline fixtures.",
+        "Pass full application CI and the scripted scenario, document remaining limitations and measured performance. No public deployment is required."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-13",
+      "title": "Prepare demo narrative and release acceptance",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [
+        "CC-12"
+      ],
+      "paths": [
+        "docs/demo/"
+      ],
+      "acceptance": [
+        "Write a timed presentation script showing T+0 through T+10, plan diff, approval/override and offline fallback.",
+        "Prepare claims/evidence table, screenshots and fallback runbook; distinguish measured outcomes from hypotheses.",
+        "User can reproduce the complete demo from documented commands and decides whether to publish/deploy."
+      ],
+      "optional": false
+    },
+    {
+      "id": "CC-14",
+      "title": "Evaluate optional Laya and voice extensions",
+      "owner": "claude",
+      "reviewer": "codex",
+      "depends_on": [
+        "CC-13"
+      ],
+      "paths": [
+        "backend/app/intake/",
+        "evals/triage/",
+        "docs/experiments/"
+      ],
+      "acceptance": [
+        "Only after core acceptance: pin Laya checkpoint/license, measure hardware latency, evaluate held-out triage recall/calibration and compare to baseline.",
+        "If time permits, benchmark multilingual Whisper/browser speech with text fallback; select a local LLM only after memory/latency checks.",
+        "Keep new adapters optional and disabled by default until tests justify adoption; record negative results without blocking the completed core demo."
+      ],
+      "optional": true
+    }
+  ]
+}

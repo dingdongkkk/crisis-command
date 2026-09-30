@@ -1,0 +1,33 @@
+name: Agent handoffs
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened, reopened, closed, labeled, unlabeled]
+  push:
+    branches: [main]
+    paths:
+      - docs/tasks.json
+      - .github/task-map.json
+      - scripts/taskboard.py
+      - .github/workflows/handoffs.yml
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: agent-handoff-labels
+  cancel-in-progress: false
+jobs:
+  dependency-queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh readiness and show next agents
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/taskboard.py --sync >> "$GITHUB_STEP_SUMMARY"
