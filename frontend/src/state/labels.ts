@@ -3,7 +3,7 @@
  * (plus icon), never colour alone. Unknown values render as "Unrecognised (...)"
  * and are reported so the UI can refuse to approve what it cannot display (0001).
  */
-import type { ReasonFact } from '../contracts'
+import type { Incident, Plan, ReasonFact } from '../contracts'
 
 const SEVERITY: Record<string, string> = { critical: 'CRITICAL', high: 'HIGH', medium: 'MEDIUM', low: 'LOW' }
 const SEVERITY_ICON: Record<string, string> = { critical: '▲▲', high: '▲', medium: '◆', low: '●' }
@@ -157,4 +157,30 @@ export function conflictText(c: { code: string; unit_id?: string | null; detail:
   const who = c.unit_id ?? 'This override'
   const what = CONFLICT[c.code] ?? c.code.replaceAll('_', ' ').toLowerCase()
   return `${who} ${what}. ${c.detail}`
+}
+
+/** Incident kind as a title, e.g. `cardiac_chest_pain` → "Cardiac chest pain". */
+export function kindLabel(kind: string): string {
+  const text = kind.replaceAll('_', ' ')
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+/**
+ * What a plan flag refers to. The server's `message` is a bare code ("ALS UNMET"), so a
+ * list of acknowledgements would otherwise be indistinguishable; the operator must know
+ * which incident or zone each one covers before accepting it.
+ */
+export function flagSubject(flag: Plan['flags'][number], incidents: Incident[]): string | null {
+  const parts: string[] = []
+  if (flag.incident_id) {
+    const incident = incidents.find((i) => i.incident_id === flag.incident_id)
+    const need = incident?.needs.find((n) => n.need_id === flag.need_id)
+    if (need) parts.push(`${needTypeLabel(need.type)} need`)
+    parts.push(incident ? `${kindLabel(incident.kind)} (${flag.incident_id})` : flag.incident_id)
+  }
+  if (flag.zone_id) {
+    parts.push(`${flag.resource_type ? `${needTypeLabel(flag.resource_type)} reserve · ` : ''}${flag.zone_id.replace(/^zone_/, '')} zone`)
+  }
+  if (flag.override_id) parts.push(`override ${flag.override_id}`)
+  return parts.length > 0 ? parts.join(' · ') : null
 }

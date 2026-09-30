@@ -2,6 +2,7 @@ import { PhoneIncoming, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
 import type { ConsoleApi, RouteCandidatesView } from './api/types'
 import { ApproveDialog } from './components/ApproveDialog'
+import { Dialog } from './components/Dialog'
 import { ConnectionBanner, SimulationBanner, TopBar } from './components/Banners'
 import { FleetList } from './components/FleetList'
 import { IncidentQueue } from './components/IncidentQueue'
@@ -29,7 +30,8 @@ const TABS = ['Queue', 'Map', 'Plan', 'Triage', 'Fleet'] as const
 type Tab = (typeof TABS)[number]
 type DialogState =
   | null
-  | { kind: 'approve' }
+  /** Bound to the version the operator opened, so a newer proposal can never inherit the confirmation. */
+  | { kind: 'approve'; planId: string; version: number }
   | { kind: 'override'; prefill?: OverridePrefill }
   | { kind: 'keys' }
   | { kind: 'report' }
@@ -250,11 +252,12 @@ export function App({ api, mapTiles = true }: AppProps) {
     <PlanPanel
       ref={planHeaderRef}
       view={planView}
+      incidents={snapshot.incidents}
       action={state.planAction}
       acked={state.acks.flagIds}
       commandsEnabled={enabled}
       onAck={ack}
-      onApprove={() => setDialog({ kind: 'approve' })}
+      onApprove={() => plan && setDialog({ kind: 'approve', planId: plan.plan_id, version: plan.version })}
       onOverride={(prefill) => setDialog({ kind: 'override', prefill })}
       onDismissNotice={clearPlanAction}
       approveRef={approveRef}
@@ -263,9 +266,21 @@ export function App({ api, mapTiles = true }: AppProps) {
 
   const dialogs = (
     <>
-      {dialog?.kind === 'approve' && plan && (
+      {dialog?.kind === 'approve' && !(plan && planView?.kind === 'proposed' && plan.plan_id === dialog.planId && plan.version === dialog.version) && (
+        <Dialog title="Plan changed — nothing approved" onClose={() => setDialog(null)}>
+          <p role="alert">
+            Plan v{dialog.version} changed while you were reviewing it
+            {plan && plan.version !== dialog.version ? ` (now v${plan.version})` : ''}. Nothing was approved. Review the current plan and its flags.
+          </p>
+          <div className="dialog-actions">
+            <button type="button" className="primary" onClick={() => setDialog(null)}>Review current plan</button>
+          </div>
+        </Dialog>
+      )}
+      {dialog?.kind === 'approve' && plan && planView?.kind === 'proposed' && plan.plan_id === dialog.planId && plan.version === dialog.version && (
         <ApproveDialog
           plan={plan}
+          incidents={snapshot.incidents}
           onCancel={() => setDialog(null)}
           onConfirm={(note) => {
             setDialog(null)
