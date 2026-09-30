@@ -78,6 +78,8 @@ Open Codex in `../crisis-codex` and Claude Code in `../crisis-claude`. Do not re
 
 Use your existing subscriptions interactively. Fully unattended cross-provider execution would be a separate integration with authentication, spending limits and failure recovery; it is not configured here.
 
+Private-repository branch protection is unavailable on the current GitHub plan. The merge rules above must be followed manually; see [the verified GitHub setup](GITHUB.md).
+
 ## Human review areas
 
 The source brief suggests Anubhav for frontend/AI, Shrihari for decision engines and Kavyadeep for backend/data. GitHub CODEOWNERS currently names only the authenticated repository owner. Add other users after their handles and repository access are known.

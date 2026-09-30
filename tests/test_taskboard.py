@@ -1,10 +1,11 @@
 import copy
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from taskboard import classify, validate_graph
+from taskboard import classify, sync_labels, validate_graph
 
 
 def task(id, deps):
@@ -68,6 +69,21 @@ class HandoffTests(unittest.TestCase):
             validate_graph(bad)
         with self.assertRaises(ValueError):
             validate_graph(self.tasks + [self.tasks[0]])
+
+    def test_sync_is_noop_when_labels_are_current(self):
+        issues = {'CC-01': {'labels': [{'name': 'status:ready'}, {'name': 'agent:claude'}]}}
+        with patch('taskboard.gh') as api:
+            sync_labels('owner/repo', {'CC-01': 1}, issues, {'CC-01': 'ready'})
+            api.assert_not_called()
+
+    def test_sync_changes_only_managed_status_labels(self):
+        issues = {'CC-01': {'labels': [{'name': 'status:blocked'}, {'name': 'agent:claude'}]}}
+        with patch('taskboard.gh') as api:
+            sync_labels('owner/repo', {'CC-01': 1}, issues, {'CC-01': 'ready'})
+            self.assertEqual(api.call_count, 2)
+            first, second = api.call_args_list
+            self.assertEqual(first.kwargs['payload'], {'labels': ['status:ready']})
+            self.assertEqual(second.args[-1], 'repos/owner/repo/issues/1/labels/status%3Ablocked')
 
 
 if __name__ == '__main__':
