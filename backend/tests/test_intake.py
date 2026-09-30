@@ -140,6 +140,14 @@ def test_two_not_sure_answers_escalate_critical_uncertainty() -> None:
     assert s.next_question(31) is None  # an operator owns the conversation now
 
 
+@pytest.mark.parametrize("start", [0, 100])
+def test_time_limit_boundary_including_a_t0_start(start: int) -> None:
+    """Regression (Codex review): a start at T+0 was treated as unset, so 60 s never elapsed."""
+    s = _session("A wall collapsed at the site", sim=start)
+    assert "CRITICAL_UNCERTAINTY" not in s.escalation_reasons(start + 59)
+    assert "CRITICAL_UNCERTAINTY" in s.escalation_reasons(start + 60)
+
+
 def test_time_limit_escalates_even_without_answers() -> None:
     s = _session("A wall collapsed at the site", sim=100)
     assert "CRITICAL_UNCERTAINTY" not in s.escalation_reasons(150)
