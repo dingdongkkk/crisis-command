@@ -27,6 +27,10 @@ target-version = "py312"
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "RUF"]
 
+[tool.ruff.lint.per-file-ignores]
+# Multilingual regex phrase tables: long literal patterns and Devanagari digits are intended.
+"app/intake/lexicon.py" = ["E501", "RUF001"]
+
 [tool.mypy]
 python_version = "3.12"
 strict = true
