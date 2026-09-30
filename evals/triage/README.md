@@ -6,7 +6,7 @@ Labelled synthetic caller texts for the rule-based intake (`backend/app/intake/`
 | --- | --- | --- | --- |
 | `cases.dev.jsonl` | 24 | English, Hindi (Devanagari), Hinglish | used while writing the lexicon |
 | `cases.heldout.jsonl` | 30 | English, Hindi, Hinglish | not used to tune rules; regression floor 27/30 |
-| `cases.cc11.jsonl` | 30 | English, Hindi, Hinglish | CC-11 held-out set (SMS, typos, long calls, corrections); first result recorded before any fix in `docs/reviews/CC-11-review.md` |
+| `cases.cc11.jsonl` | 30 | English, Hindi, Hinglish | CC-11 held-out set (SMS, typos, long calls, corrections). Held-out result **18/30** recorded before any fix (`docs/reviews/CC-11-review.md`); CC-12 then tuned the lexicon on it (29/30), so it is now a regression set, not held-out |
 | `report.json` | — | — | latest run of all sets |
 
 Families: cardiac, medical, accident, structural collapse, fire, gas, flood, information request, tyre/breakdown, human request, prompt injection, negation, conflict, ambiguous.

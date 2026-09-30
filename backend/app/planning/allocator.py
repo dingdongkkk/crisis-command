@@ -462,11 +462,12 @@ def allocate(
                     basis=need.basis,
                     waiting_s=age,
                     reasons=[
-                        dict(
-                            code="NO_ALS_AVAILABLE"
-                            if need.type == "als"
-                            else "NO_ELIGIBLE_CAPACITY",
-                            params={},
+                        unmet_reason(
+                            state,
+                            routes,
+                            inc,
+                            need,
+                            any(c.need.need_id == need.need_id for c in rows),
                         )
                     ],
                 )
@@ -651,8 +652,39 @@ def allocate(
         soft_consequences=[],
     )
     plan = Plan.model_validate(data)
-    validate_plan(state, plan)
+    validate_plan(state, plan, routes)
     return plan
+
+
+def unmet_reason(
+    state: StateSnapshot, routes: Routes, incident: Incident, need: Need, has_candidate: bool
+) -> dict[str, Any]:
+    """Why a need is unmet, without conflating "no unit" with "no road" (CC-11 F4).
+
+    Only a need with no candidate at all can be unreachable; otherwise an eligible unit was
+    reachable but committed elsewhere. Routes are probed only in that case, so the common
+    shortage path adds no routing work to a replan.
+    """
+    if need.type == "water_rescue":
+        return dict(code="WATER_ACCESS_NOT_MODELLED", params={})
+    if has_candidate:
+        return dict(
+            code="NO_ALS_AVAILABLE" if need.type == "als" else "NO_ELIGIBLE_CAPACITY", params={}
+        )
+    eligible = [
+        u
+        for u in state.units
+        if u.type in ELIGIBLE_UNIT_TYPES[need.type]
+        and u.status not in UNAVAILABLE
+        and u.status != "at_facility"
+    ]
+    if eligible and all(
+        _route(routes, state, u.position, incident.location).route_status != "ok" for u in eligible
+    ):
+        return dict(code="NO_REACHABLE_UNIT", params={"eligible_units": len(eligible)})
+    return dict(
+        code="NO_ALS_AVAILABLE" if need.type == "als" else "NO_ELIGIBLE_CAPACITY", params={}
+    )
 
 
 def unit_id(c: Candidate) -> str:
@@ -720,12 +752,12 @@ def greedy(state: StateSnapshot, rows: list[Candidate]) -> list[int]:
     return selected
 
 
-def validate_plan(state: StateSnapshot, plan: Plan) -> None:
+def validate_plan(state: StateSnapshot, plan: Plan, routes: Routes | None = None) -> None:
     from app.contracts.validation import plan_world_errors
 
     state = effective_state(state)
 
-    validate_capacity_and_locks(state, plan)
+    validate_capacity_and_locks(state, plan, routes)
     errors = plan_world_errors(plan, state.units, state.incidents, state.policy)
     units = {u.unit_id: u for u in state.units}
     for a in plan.assignments:
@@ -740,7 +772,9 @@ def validate_plan(state: StateSnapshot, plan: Plan) -> None:
         raise DomainError(409, "NO_VALID_PLAN", ", ".join(sorted(errors)))
 
 
-def validate_capacity_and_locks(state: StateSnapshot, plan: Plan) -> None:
+def validate_capacity_and_locks(
+    state: StateSnapshot, plan: Plan, routes: Routes | None = None
+) -> None:
     """Independent gate: recompute membership, quantities and reservations from output."""
     errors: set[str] = set()
     units = {u.unit_id: u for u in state.units}
@@ -830,8 +864,19 @@ def validate_capacity_and_locks(state: StateSnapshot, plan: Plan) -> None:
         if not unit or unit.status in UNAVAILABLE or unit.current_task is None:
             continue
         target = assigned.get(unit.unit_id)
-        is_locked = unit.status in ("on_scene", "transporting") or (
-            unit.status == "en_route" and old.eta_s <= state.policy.near_arrival_lock_s
+        # One lock definition shared with the allocator (CC-11 F7): near arrival is judged on
+        # the unit's current route to its task, not the ETA recorded at approval time.
+        incident = next((i for i in state.incidents if i.incident_id == old.incident_id), None)
+        current = (
+            _route(routes, state, unit.position, incident.location)
+            if routes is not None and incident is not None
+            else None
+        )
+        is_locked = (
+            lock_for(state, unit, current) is not None
+            if current is not None
+            else unit.status in ("on_scene", "transporting")
+            or (unit.status == "en_route" and old.eta_s <= state.policy.near_arrival_lock_s)
         )
         if is_locked and (target is None or target.assignment_id != old.assignment_id):
             errors.add("LOCK_VIOLATION")
