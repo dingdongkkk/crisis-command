@@ -256,7 +256,7 @@ class Planner:
                 lambda _: (409, problem(error)),
             )
         assert plan is not None
-        validate_plan(state, plan)
+        validate_plan(state, plan, self.routes)
         units = {u.unit_id: u for u in state.units}
         commands: list[DispatchCommand] = []
         desired = []

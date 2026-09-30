@@ -58,6 +58,7 @@ from app.intake.model_adapter import FactModel
 from app.intake.service import IntakeService
 from app.intake.session import IntakeSession
 from app.planning.allocator import allocate
+from app.planning.override_checks import override_conflicts
 from app.planning.service import Planner, event
 from app.storage.event_store import Decision, problem
 
@@ -543,6 +544,7 @@ def override(
     target = initial.current_proposal or initial.approved_plan
     oid = f"override_{uuid.uuid4().hex[:12]}"
     rejection: DomainError | None = None
+    conflicts: list[dict[str, Any]] = []
     proposed: Plan | None = None
     record: Override | None = None
     try:
@@ -579,6 +581,11 @@ def override(
                 u.unit_id for u in trial.units
             }:
                 raise DomainError(409, "UNKNOWN_UNIT", "Unknown unit")
+            conflicts = override_conflicts(trial, command, planner(request).routes)
+            if conflicts:
+                raise DomainError(
+                    409, "OVERRIDE_CONFLICT", "Override conflicts with a hard constraint"
+                )
             if command.kind == "forbid" and command.incident_id not in {
                 i.incident_id for i in trial.incidents
             }:
@@ -597,17 +604,29 @@ def override(
         if state.planning_sequence != command.expected_planning_sequence:
             error = DomainError(409, "STALE_PLAN", "World changed during override validation")
         if error:
+            coded = (
+                conflicts
+                if error.code == "OVERRIDE_CONFLICT" and conflicts
+                else [dict(code=error.code, detail=error.title)]
+            )
             payload = OverrideRejectedPayload.model_validate(
                 dict(
                     override_id=oid,
                     kind=command.kind,
                     unit_id=command.unit_id,
-                    conflicts=[dict(code=error.code, detail=error.title)],
+                    need_id=command.need_id,
+                    incident_id=command.incident_id,
+                    bridges_need_id=command.bridges_need_id,
+                    conflicts=coded,
                 )
             )
+            body = problem(error)
+            if error.code == "OVERRIDE_CONFLICT":
+                # 0004: the operator sees each broken constraint, as recorded in the event.
+                body.update(override_id=oid, conflicts=payload.model_dump(mode="json")["conflicts"])
             return Decision(
                 [event(state, "OverrideRejected", payload)],
-                lambda _: (error.status, problem(error)),
+                lambda _: (error.status, body),
             )
         events = []
         for old in (command.replaces_override_id, command.revokes_override_id):

@@ -88,10 +88,11 @@ FACT_PATTERNS: dict[str, dict[str, tuple[re.Pattern[str], ...]]] = {
             r"\bpain in (?:his|her|my|the) chest\b",
             r"\bheart attack\b",
             r"\bchest (?:is )?hurting\b",
-            r"\bseene? (?:mein|me|mai) dard\b",
-            r"\bchhati (?:mein|me|mai) dard\b",
+            r"\bseene? (?:mein|me|mai) (?:\w+ )?dard\b",
+            r"\bchhati (?:mein|me|mai) (?:\w+ )?dard\b",
+            r"\bchest (?:is )?(?:tight|hurts|hurting)\b",
             r"\bdil ka daura\b",
-            r"सीने में दर्द",
+            r"सीने में (?:\S+ )?दर्द",
             r"छाती में दर्द",
             r"दिल का दौरा",
         ),
@@ -112,7 +113,13 @@ FACT_PATTERNS: dict[str, dict[str, tuple[re.Pattern[str], ...]]] = {
             r"खून बह",
             r"खून निकल",
         ),
-        "no": _p(r"\bno bleeding\b", r"\bnot bleeding\b", r"\bkhoon (?:nahi|nahin)\b", r"खून नहीं"),
+        "no": _p(
+            r"\bno bleeding\b",
+            r"\bnot bleeding\b",
+            r"\b(?:small|minor|little|tiny|slight) (?:cut|scratch|graze|wound)\b",
+            r"\bkhoon (?:nahi|nahin)\b",
+            r"खून नहीं",
+        ),
     },
     "trapped": {
         "yes": _p(
@@ -123,6 +130,8 @@ FACT_PATTERNS: dict[str, dict[str, tuple[re.Pattern[str], ...]]] = {
             r"\bunable to get out\b",
             r"\bburied\b",
             r"\bstuck in (?:the )?(?:water|flood\w*|mud)\b",
+            r"\bstuck (?:on|at) the (?:\w+ )?(?:floor|roof|terrace|balcony)\b",
+            r"\b(?:under|beneath) (?:the )?(?:debris|rubble)\b",
             r"\bpaani (?:mein|me) phans\w*",
             r"पानी में फंस",
             r"\bphans(?:e|a|i|ay)\b",
@@ -175,7 +184,7 @@ FACT_PATTERNS: dict[str, dict[str, tuple[re.Pattern[str], ...]]] = {
     },
     "water_rising": {
         "yes": _p(
-            r"\bwater (?:is )?rising\b",
+            r"\bwater (?:is )?(?:still )?rising\b",
             r"\bwater level (?:is )?(?:rising|increasing|going up)\b",
             r"\bflood(?:ing|ed)?\b",
             r"\bwater (?:is )?(?:entering|coming in(?:side|to)?)\b",
@@ -194,6 +203,10 @@ FACT_PATTERNS: dict[str, dict[str, tuple[re.Pattern[str], ...]]] = {
             r"\bi am (?:trapped|stuck|in danger)\b",
             r"\bi'?m (?:trapped|stuck|in danger)\b",
             r"\bwe are (?:trapped|stuck|in danger)\b",
+            r"\bfollowing (?:me|us)\b",
+            r"\b(?:attacking|threatening|chasing) (?:me|us)\b",
+            r"\bwith a (?:knife|gun|weapon)\b",
+            r"\b(?:i'?m|i am|we are|we'?re) hiding\b",
             r"\bmujhe bachao\b",
             r"\bhume bachao\b",
             r"\bbachao\b",
@@ -297,6 +310,10 @@ KIND_RULES: tuple[KindRule, ...] = (
             r"\b(?:can|should) (?:we|i) (?:take|use)\b.{0,40}\b(?:road|route|ORR|flyover|highway)\b",
             r"\b(?:road|route|ORR|flyover|highway|underpass)\b.{0,30}\b(?:can|should) (?:we|i) (?:take|use)\b",
             r"\broad status\b",
+            r"\b(?:any|is there)\b.{0,15}\b(?:waterlogging|traffic|jam|congestion|diversion|road ?block)\b.{0,60}\?",
+            r"\bwhen will (?:the )?(?:power|electricity|current|water supply)\b",
+            r"\bkya\b.{0,40}\b(?:jam|traffic|band|khula)\b.{0,10}\bhai\b.{0,5}\?",
+            r"क्या .{0,40}(?:जाम|ट्रैफिक|बंद|खुला|खुली) है",
             r"\bwhich (?:road|route)\b",
             r"\btraffic (?:update|status)\b",
             r"\b(?:road|rasta|raasta) .{0,20}(?:khula|band) hai\b",
@@ -349,7 +366,14 @@ KIND_RULES: tuple[KindRule, ...] = (
         ),
     ),
     KindRule(
-        "fire", "emergency", _p(r"\bon fire\b", r"\bfire\b(?! brigade)", r"\baag lag\w*", r"आग लग")
+        "fire",
+        "emergency",
+        _p(
+            r"\bon fire\b",
+            r"(?<!\bno )(?<!\bnot a )\bfire\b(?! brigade)",
+            r"\baag lag\w*",
+            r"आग लग",
+        ),
     ),
     KindRule(
         "cardiac_chest_pain",
@@ -392,6 +416,10 @@ KIND_RULES: tuple[KindRule, ...] = (
             r"\b(?:tyre|tire) (?:is )?(?:flat|burst|puncture\w*)\b",
             r"\bbreak ?down\b",
             r"\bbroke down\b",
+            r"\b(?:battery|engine) (?:is )?(?:dead|died|down|failed)\b",
+            r"\bjump ?start\b",
+            r"\bout of (?:fuel|petrol|diesel)\b",
+            r"\btree (?:fell|has fallen) on (?:my|the|a|our) (?:parked )?(?:car|bike|vehicle)\b",
             r"\bpankchar\b",
             r"पंक्चर",
         ),
@@ -447,7 +475,7 @@ NUMBER_WORDS = {
 }
 PEOPLE_NOUNS = (
     r"people|persons?|children|kids|students|injured|residents|passengers|victims|workers|men|women|adults|"
-    r"log|logo|bacche|bachche|aadmi|yatri|लोग|बच्चे|आदमी|यात्री|घायल"
+    r"log|logo|bacche|bachche|aadmi|yatri|लोग|बच्चे|आदमी|यात्री|घायल|of us|of them"
 )
 _DIGITS = str.maketrans("०१२३४५६७८९", "0123456789")
 COUNT_PATTERN = re.compile(
