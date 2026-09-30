@@ -1,4 +1,7 @@
 import type { StateSnapshot } from '../contracts'
+import { Activity, TriangleAlert, Truck, Wrench, CircleAlert, MapPin } from 'lucide-react'
+
+const metricIcons = [Activity, TriangleAlert, Truck, Wrench, CircleAlert, MapPin]
 
 /** Counts of server-reported state only; the browser does not recompute any policy. */
 export function KpiStrip({ snapshot }: { snapshot: StateSnapshot }) {
@@ -19,13 +22,16 @@ export function KpiStrip({ snapshot }: { snapshot: StateSnapshot }) {
   ]
   return (
     <ul className="statbar" aria-label="Situation summary">
-      {cells.map((c, index) => (
+      {cells.map((c, index) => {
+        const Icon = metricIcons[index]
+        return (
         <li key={c.label} className={`stat${c.tone ? ` stat-${c.tone}` : ''}`}>
-          <span className="stat-index mono" aria-hidden="true">0{index + 1}</span>
+          {Icon && <Icon className="stat-icon" size={15} aria-hidden="true" />}
           <span className="kv-label">{c.label}</span>
           <span className="stat-value mono">{c.value}</span>
         </li>
-      ))}
+        )
+      })}
     </ul>
   )
 }

@@ -105,7 +105,7 @@ export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, 
             <path d="M8 5 11 8 8 11 5 8Z" fill="currentColor" />
           </svg>
         </span>
-        <div><h1>Crisis Command</h1><p className="brand-subtitle mono">INTEGRATED RESPONSE SYSTEM</p></div>
+        <div><h1>Crisis Command</h1><p className="brand-subtitle">Response coordination</p></div>
       </div>
       <nav className="crumbs" aria-label="Context">
         <span>Bengaluru</span>
