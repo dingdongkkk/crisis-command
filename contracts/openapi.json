@@ -594,6 +594,34 @@
         "title": "CurrentTask",
         "type": "object"
       },
+      "DemoAdvanceCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_session_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Expected Session Id",
+            "type": "string"
+          },
+          "to_step": {
+            "enum": [
+              "T+0",
+              "T+2",
+              "T+5",
+              "T+10"
+            ],
+            "title": "To Step",
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_session_id",
+          "to_step"
+        ],
+        "title": "DemoAdvanceCommand",
+        "type": "object"
+      },
       "DemoResetCommand": {
         "additionalProperties": false,
         "properties": {
@@ -5995,6 +6023,110 @@
         "title": "ProblemFieldError",
         "type": "object"
       },
+      "ProfileRead": {
+        "additionalProperties": false,
+        "properties": {
+          "caller_is_patient": {
+            "title": "Caller Is Patient",
+            "type": "boolean"
+          },
+          "expected_session_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Expected Session Id",
+            "type": "string"
+          },
+          "operator_reason": {
+            "maxLength": 280,
+            "minLength": 1,
+            "title": "Operator Reason",
+            "type": "string"
+          },
+          "profile_ref": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Profile Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_session_id",
+          "profile_ref",
+          "caller_is_patient",
+          "operator_reason"
+        ],
+        "title": "ProfileRead",
+        "type": "object"
+      },
+      "ProfileWrite": {
+        "additionalProperties": false,
+        "properties": {
+          "allergies": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Allergies",
+            "type": "array"
+          },
+          "conditions": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Conditions",
+            "type": "array"
+          },
+          "consent_granted": {
+            "title": "Consent Granted",
+            "type": "boolean"
+          },
+          "emergency_contacts": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 5,
+            "title": "Emergency Contacts",
+            "type": "array"
+          },
+          "expected_session_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Expected Session Id",
+            "type": "string"
+          },
+          "medications": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Medications",
+            "type": "array"
+          },
+          "scope": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Scope",
+            "type": "array"
+          },
+          "synthetic": {
+            "default": true,
+            "title": "Synthetic",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expected_session_id",
+          "consent_granted",
+          "scope"
+        ],
+        "title": "ProfileWrite",
+        "type": "object"
+      },
       "QuestionAsked": {
         "additionalProperties": false,
         "properties": {
@@ -9084,6 +9216,110 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/demo/advance": {
+      "post": {
+        "operationId": "advance_demo_demo_advance_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoAdvanceCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Advance Demo"
+      }
+    },
     "/demo/reset": {
       "post": {
         "operationId": "post_demo_reset_demo_reset_post",
@@ -9706,6 +9942,232 @@
           }
         },
         "summary": "Confirm"
+      }
+    },
+    "/incidents/{incident_id}/medical-profile/access": {
+      "post": {
+        "operationId": "access_profile_incidents__incident_id__medical_profile_access_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileRead"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Access Profile"
+      }
+    },
+    "/medical-profiles/{profile_ref}": {
+      "put": {
+        "operationId": "put_profile_medical_profiles__profile_ref__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profile_ref",
+            "required": true,
+            "schema": {
+              "title": "Profile Ref",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Put Profile"
       }
     },
     "/overrides": {

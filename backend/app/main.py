@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from .api import operations, routes, ws
+from .api import operations, privacy, routes, ws
 from .config import Settings
 from .contracts import SCHEMA_VERSION
 from .contracts.commands import HealthResponse
@@ -73,6 +73,7 @@ def create_app(
     routes.install(app)
     app.include_router(ws.router)
     app.include_router(operations.router)
+    app.include_router(privacy.router)
     return app
 
 
