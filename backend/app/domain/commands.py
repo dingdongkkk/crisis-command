@@ -34,7 +34,7 @@ TASK_BOUND = frozenset(
 )
 
 
-@dataclass(frozen=True)
+@dataclass
 class DomainError(Exception):
     """A business rejection, rendered as RFC 9457 problem details by the API."""
 
@@ -114,6 +114,8 @@ def unit_status(state: StateSnapshot, unit_id: str, command: UnitStatusCommand) 
     if command.position is not None:
         updated.position = command.position
         updated.position_sim_time_s = command.sim_time_s
+    if target in UNAVAILABLE:
+        updated.desired_revision = (unit.desired_revision or 0) + 1
     if (target in UNAVAILABLE or target in RELEASING) and unit.current_task is not None:
         invalidated.append(unit.current_task.assignment_id)
         updated.current_task = None

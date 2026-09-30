@@ -29,6 +29,8 @@ from app.domain.projection import apply, fold
 
 RESET_SCOPE = "*"
 SCHEMA = """
+CREATE TABLE IF NOT EXISTS report_text (report_id TEXT PRIMARY KEY, content TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS profiles (profile_ref TEXT PRIMARY KEY, data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS sessions (
     session_id TEXT PRIMARY KEY, fixture TEXT NOT NULL, seed INTEGER NOT NULL,
@@ -39,8 +41,8 @@ CREATE TABLE IF NOT EXISTS events (
     event_type TEXT NOT NULL, affects_planning INTEGER NOT NULL, idempotency_key TEXT,
     envelope TEXT NOT NULL, PRIMARY KEY (session_id, sequence)
 );
-CREATE UNIQUE INDEX IF NOT EXISTS events_effect
-    ON events (session_id, idempotency_key) WHERE idempotency_key IS NOT NULL;
+DROP INDEX IF EXISTS events_effect;
+-- Receipts, scoped by session/method/path/key, enforce command idempotency.
 CREATE TABLE IF NOT EXISTS projections (
     session_id TEXT PRIMARY KEY, as_of_sequence INTEGER NOT NULL, state TEXT NOT NULL
 );
@@ -70,6 +72,7 @@ class Decision:
 
     events: list[NewEvent]
     respond: Callable[[list[EnvelopeBase]], tuple[int, dict[str, Any]]]
+    write_private: Callable[[sqlite3.Connection], None] | None = None
 
 
 Decide = Callable[[StateSnapshot], Decision]
@@ -140,6 +143,12 @@ class EventStore:
             conn.execute("COMMIT")
         finally:
             conn.close()
+
+    @contextmanager
+    def private_read(self) -> Iterator[tuple[sqlite3.Connection, StateSnapshot]]:
+        """Serialize revocable-value authorization with consent/session mutations."""
+        with self._write() as conn:
+            yield conn, self._projection(conn, self._active(conn))
 
     # --- listeners --------------------------------------------------------------------
 
@@ -254,6 +263,8 @@ class EventStore:
                 self._save_receipt(conn, active, method, path, key, request_hash, result)
                 return result
             appended = self._append(conn, state, decision.events, key, actor)
+            if decision.write_private is not None:
+                decision.write_private(conn)
             status, response = decision.respond(appended)
             result = CommandResult(status, response, False, tuple(appended))
             self._save_receipt(conn, active, method, path, key, request_hash, result)
