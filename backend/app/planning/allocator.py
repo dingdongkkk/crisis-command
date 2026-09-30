@@ -435,9 +435,17 @@ def allocate(
     missing_rows: list[dict[str, Any]] = []
     counts = [0, 0, 0, 0]
     waiting = 0
+    flagged_duplicates: set[str] = set()
     for inc, need in needs:
         fulfilled = sum(v for c, v in chosen if c.need.need_id == need.need_id and not c.bridge)
         missing = need.quantity - fulfilled
+        if inc.duplicate_candidate_of and inc.incident_id not in flagged_duplicates:
+            # Possibly the same emergency counted twice: visible and acknowledged, never merged
+            # automatically (0007 AS-07). Resolving it clears the flag.
+            flagged_duplicates.add(inc.incident_id)
+            flag(
+                "DUPLICATE_CANDIDATE_UNRESOLVED", incident_id=inc.incident_id, need_id=need.need_id
+            )
         if need.basis == "provisional_unknown":
             flag("PROVISIONAL_NEED", incident_id=inc.incident_id, need_id=need.need_id)
         if missing:

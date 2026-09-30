@@ -26,6 +26,7 @@ from app.contracts.commands import (
     ApprovalAccepted,
     ApproveCommand,
     DemoAdvanceCommand,
+    DuplicateResolveCommand,
     FactConfirmCommand,
     OverrideCommand,
     OverrideRecorded,
@@ -44,6 +45,7 @@ from app.contracts.events import (
     OverridePayload,
     OverrideRejectedPayload,
     PlanProposedPayload,
+    ReportLinkedToIncidentPayload,
     ReportReceivedPayload,
     TriageFactConfirmedPayload,
     TriageFactsExtractedPayload,
@@ -60,6 +62,10 @@ from app.planning.service import Planner, event
 from app.storage.event_store import Decision, problem
 
 router = APIRouter()
+
+# Facts only an operator records (not asked by intake, not used for allocation). 0008: the
+# Medical ID gate reads ``caller_is_patient``; missing or unknown denies access.
+OPERATOR_ONLY_FACTS = frozenset({"caller_is_patient"})
 
 
 def planner(request: Request) -> Planner:
@@ -254,6 +260,16 @@ def answer(
         if report is None or incident is None or saved is None:
             raise DomainError(404, "NOT_FOUND", "Unknown report or no active intake")
         intake = IntakeSession.from_state(saved)
+        current = next(
+            (f for f in state.triage_facts if f.incident_id == incident.incident_id), None
+        )
+        confirmed = [f for f in current.facts if f.confirmed_by_operator] if current else []
+        # Operator confirmations outrank intake answers and must survive this re-extraction.
+        for f in confirmed:
+            if f.key in intake.facts and f.value is not None:
+                intake.facts[f.key].value = f.value
+                intake.facts[f.key].source = "operator"
+                intake.facts[f.key].confirmed_by_operator = True
         pending = intake.pending_question()
         if pending is None or pending.fact_key != command.fact_key:
             raise DomainError(
@@ -269,6 +285,10 @@ def answer(
             intake.answer(command.fact_key, command.answer, state.sim_time_s)
         intake.next_question(state.sim_time_s)
         facts = intake.triage_facts(state.sim_time_s)
+        by_key = {f.key: f for f in confirmed}
+        facts.facts = [by_key.get(f.key, f) for f in facts.facts] + [
+            f for f in confirmed if f.key not in {x.key for x in facts.facts}
+        ]
         assessed = assess(incident, facts, state.policy)
         events = [
             event(
@@ -326,6 +346,64 @@ def answer(
     return _result_response(result)
 
 
+@router.post("/incidents/{incident_id}/duplicates/{report_id}/resolve", responses=PROBLEM_RESPONSES)
+def resolve_duplicate(
+    request: Request,
+    incident_id: str,
+    report_id: str,
+    command: DuplicateResolveCommand,
+    idempotency_key: IdempotencyKey = None,
+) -> JSONResponse:
+    """Operator decision on a duplicate candidate; never automatic (0007 AS-07, 0008).
+
+    ``incident_id`` is the original incident; ``report_id`` is the report whose incident was
+    flagged as a possible duplicate of it.
+    """
+
+    def decide(state: StateSnapshot) -> Decision:
+        active = {i.incident_id: i for i in state.incidents if i.status == "active"}
+        report = next((r for r in state.reports if r.report_id == report_id), None)
+        candidate = active.get(report.linked_incident_id or "") if report else None
+        if incident_id not in active or report is None or candidate is None:
+            raise DomainError(404, "NOT_FOUND", "Unknown active incident or report")
+        if incident_id not in candidate.duplicate_candidate_of:
+            raise DomainError(
+                409,
+                "NOT_A_DUPLICATE_CANDIDATE",
+                "This report's incident is not a duplicate candidate of that incident",
+                current={"duplicate_candidate_of": list(candidate.duplicate_candidate_of)},
+            )
+        payload = ReportLinkedToIncidentPayload(
+            report_id=report_id, incident_id=incident_id, resolution=command.resolution
+        )
+        return Decision(
+            [event(state, "ReportLinkedToIncident", payload, "report", report_id)],
+            lambda es: (
+                200,
+                dict(
+                    incident_id=incident_id,
+                    report_id=report_id,
+                    candidate_incident_id=candidate.incident_id,
+                    resolution=command.resolution,
+                    sequence=es[-1].sequence,
+                ),
+            ),
+        )
+
+    result = _store(request).execute(
+        method="POST",
+        path=f"/incidents/{incident_id}/duplicates/{report_id}/resolve",
+        key=_require_key(idempotency_key),
+        body=command.model_dump(mode="json"),
+        expected_session_id=command.expected_session_id,
+        decide=decide,
+        actor=OPERATOR,
+    )
+    if result.status == 200:
+        planner(request).recompute()
+    return _result_response(result)
+
+
 @router.get("/plans/{plan_id}", response_model=Plan, responses=PROBLEM_RESPONSES)
 def get_plan(request: Request, plan_id: str) -> Plan:
     state = _store(request).state()
@@ -335,7 +413,12 @@ def get_plan(request: Request, plan_id: str) -> Plan:
     raise DomainError(404, "NOT_FOUND", "Unknown current plan")
 
 
-@router.post("/plans/recompute", response_model=RecomputeAccepted, responses=PROBLEM_RESPONSES)
+@router.post(
+    "/plans/recompute",
+    status_code=202,
+    response_model=RecomputeAccepted,
+    responses=PROBLEM_RESPONSES,
+)
 def recompute(
     request: Request, command: RecomputeCommand, idempotency_key: IdempotencyKey = None
 ) -> JSONResponse:
@@ -346,11 +429,11 @@ def recompute(
         body=command.model_dump(mode="json"),
         expected_session_id=command.expected_session_id,
         decide=lambda state: Decision(
-            [], lambda _: (200, dict(status="computing", planning_sequence=state.planning_sequence))
+            [], lambda _: (202, dict(status="computing", planning_sequence=state.planning_sequence))
         ),
         actor=OPERATOR,
     )
-    if result.status == 200:
+    if result.status == 202:
         planner(request).recompute()
     return _result_response(result)
 
@@ -390,7 +473,12 @@ def confirm(
             (f.model_copy(deep=True) for f in state.triage_facts if f.incident_id == incident_id),
             None,
         )
-        if incident is None or facts is None or fact_key not in {f.key for f in facts.facts}:
+        known = {f.key for f in facts.facts} if facts else set()
+        if (
+            incident is None
+            or facts is None
+            or (fact_key not in known and fact_key not in OPERATOR_ONLY_FACTS)
+        ):
             raise DomainError(404, "NOT_FOUND", "Unknown active incident or fact")
         data: dict[str, Any] = dict(
             key=fact_key,
@@ -408,7 +496,10 @@ def confirm(
         else:
             raise DomainError(422, "VALIDATION_FAILED", "Tri-state value required")
         fact = TriageFact.model_validate(data)
-        facts.facts = [fact if f.key == fact_key else f for f in facts.facts]
+        if fact_key in known:
+            facts.facts = [fact if f.key == fact_key else f for f in facts.facts]
+        else:
+            facts.facts = [*facts.facts, fact]
         assessed = assess(incident, facts, state.policy)
         return Decision(
             [

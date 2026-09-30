@@ -4,7 +4,10 @@ import type {
   ApproveCommand,
   DemoAdvanceResult,
   DemoResetResult,
+  DuplicateResolveCommand,
+  FactConfirmCommand,
   HealthResponse,
+  MedicalProfileAccessCommand,
   ReportAccepted,
   ReportCommand,
   OverrideCommand,
@@ -59,6 +62,13 @@ export interface ConsoleApi {
     /** The caller's Yes / No / Not sure answer to the pending intake question. */
     answer(reportId: string, body: AnswerCommand, key: string): Promise<ApiResult<ReportAccepted>>
   }
+  /** Operator decisions on an incident (CC-10). */
+  incidents?: {
+    confirmFact(incidentId: string, factKey: string, body: FactConfirmCommand, key: string): Promise<ApiResult<{ sequence: number }>>
+    resolveDuplicate(originalId: string, reportId: string, body: DuplicateResolveCommand, key: string): Promise<ApiResult<{ sequence: number }>>
+    /** Consent-gated synthetic Medical ID read; values are shown once and never stored. */
+    medicalAccess(incidentId: string, body: MedicalProfileAccessCommand, key: string): Promise<ApiResult<MedicalValues>>
+  }
   /** Providers and degraded causes (model/routing), polled alongside state. */
   health?(): Promise<ApiResult<HealthResponse>>
 }
@@ -70,3 +80,8 @@ export const DEMO_STEPS: { step: DemoStep; simTimeS: number }[] = [
   { step: 'T+5', simTimeS: 300 },
   { step: 'T+10', simTimeS: 600 },
 ]
+
+export interface MedicalValues {
+  profile_ref: string
+  values: Partial<Record<'conditions' | 'medications' | 'allergies' | 'emergency_contacts', string[]>>
+}

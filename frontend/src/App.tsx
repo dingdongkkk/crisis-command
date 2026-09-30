@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
 import type { ConsoleApi, RouteCandidatesView } from './api/types'
 import { ApproveDialog } from './components/ApproveDialog'
 import { Dialog } from './components/Dialog'
+import { DuplicateDialog, MedicalIdDialog } from './components/IncidentDialogs'
 import { ConnectionBanner, SimulationBanner, TopBar } from './components/Banners'
 import { FleetList } from './components/FleetList'
 import { IncidentQueue } from './components/IncidentQueue'
@@ -36,6 +37,8 @@ type DialogState =
   | { kind: 'override'; prefill?: OverridePrefill }
   | { kind: 'keys' }
   | { kind: 'report' }
+  | { kind: 'duplicate'; incidentId: string }
+  | { kind: 'medical'; incidentId: string }
 
 function useNarrow(): boolean {
   const query = '(max-width: 1099px)'
@@ -59,6 +62,7 @@ export function App({ api, mapTiles = true }: AppProps) {
   const { state, planView, select, ack, approve, submitOverride, clearPlanAction } = useConsole(api)
   const [dialog, setDialog] = useState<DialogState>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const [info, setInfo] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Queue')
   const [leftTab, setLeftTab] = useState<'incidents' | 'fleet'>('incidents')
   const [theme, toggleTheme] = useTheme()
@@ -220,6 +224,12 @@ export function App({ api, mapTiles = true }: AppProps) {
         <p className="notice notice-strip" role="alert">Simulation was reset. The console now shows the new session.</p>
       )}
       {dialog?.kind === 'keys' && <KeyboardHelp onClose={() => setDialog(null)} />}
+      {info && (
+        <p className="notice notice-strip" role="status">
+          {info}{' '}
+          <button type="button" className="link" onClick={() => setInfo(null)}>Dismiss</button>
+        </p>
+      )}
       {notice && (
         <p className="notice notice-error notice-strip" role="alert">
           {notice}{' '}
@@ -267,7 +277,15 @@ export function App({ api, mapTiles = true }: AppProps) {
   const queue = <IncidentQueue incidents={snapshot.incidents} proposal={snapshot.current_proposal ?? snapshot.approved_plan} selectedId={state.selectedIncidentId} onSelect={select} />
   const fleet = <FleetList units={snapshot.units} />
   const map = <MapView snapshot={snapshot} proposal={snapshot.current_proposal} candidates={candidateRoutes} focusedUnitId={focusedUnitId} selectedId={state.selectedIncidentId} onSelect={select} theme={theme} tiles={mapTiles} />
-  const triage = <TriagePanel ref={triageRef} incident={selected} facts={selectedFacts} onAnswer={api.reports ? answerQuestion : undefined} answerEnabled={enabled} />
+  const triage = <TriagePanel
+      ref={triageRef}
+      incident={selected}
+      facts={selectedFacts}
+      onAnswer={api.reports ? answerQuestion : undefined}
+      answerEnabled={enabled}
+      onResolveDuplicate={api.incidents ? (i) => setDialog({ kind: 'duplicate', incidentId: i.incident_id }) : undefined}
+      onMedicalId={api.incidents ? (i) => setDialog({ kind: 'medical', incidentId: i.incident_id }) : undefined}
+    />
   const reinforcements = (
     <ReinforcementsPanel state={routes} focusedUnitId={focusedUnitId} onFocus={setFocusedUnitId} snapshotSequence={snapshot.as_of_sequence} />
   )
@@ -311,6 +329,25 @@ export function App({ api, mapTiles = true }: AppProps) {
           }}
         />
       )}
+      {dialog?.kind === 'duplicate' && api.incidents && snapshot && (() => {
+        const candidate = snapshot.incidents.find((i) => i.incident_id === dialog.incidentId && i.duplicate_candidate_of.length > 0)
+        return candidate ? (
+          <DuplicateDialog
+            api={api.incidents}
+            snapshot={snapshot}
+            candidate={candidate}
+            onClose={() => setDialog(null)}
+            onDone={(message) => {
+              setDialog(null)
+              setInfo(message)
+            }}
+          />
+        ) : null
+      })()}
+      {dialog?.kind === 'medical' && api.incidents && snapshot && (() => {
+        const incident = snapshot.incidents.find((i) => i.incident_id === dialog.incidentId)
+        return incident ? <MedicalIdDialog api={api.incidents} snapshot={snapshot} incident={incident} onClose={() => setDialog(null)} /> : null
+      })()}
       {dialog?.kind === 'override' && overridePlan && (
         <OverrideDialog snapshot={snapshot} plan={overridePlan} prefill={dialog.prefill} onSubmit={submitOverride} onClose={() => setDialog(null)} />
       )}

@@ -1154,6 +1154,39 @@
         "title": "DuplicateCandidateFlaggedPayload",
         "type": "object"
       },
+      "DuplicateResolveCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_session_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Expected Session Id",
+            "type": "string"
+          },
+          "reason_text": {
+            "maxLength": 280,
+            "minLength": 1,
+            "title": "Reason Text",
+            "type": "string"
+          },
+          "resolution": {
+            "enum": [
+              "linked",
+              "kept_separate"
+            ],
+            "title": "Resolution",
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_session_id",
+          "resolution",
+          "reason_text"
+        ],
+        "title": "DuplicateResolveCommand",
+        "type": "object"
+      },
       "EscalatedToHumanEvent": {
         "additionalProperties": false,
         "properties": {
@@ -2911,6 +2944,38 @@
         ],
         "title": "LockReason",
         "type": "string"
+      },
+      "MedicalProfileAccessCommand": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_session_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Expected Session Id",
+            "type": "string"
+          },
+          "operator_reason": {
+            "maxLength": 280,
+            "minLength": 1,
+            "title": "Operator Reason",
+            "type": "string"
+          },
+          "profile_ref": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Profile Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_session_id",
+          "profile_ref",
+          "operator_reason"
+        ],
+        "title": "MedicalProfileAccessCommand",
+        "type": "object"
       },
       "MedicalProfileAccessDeniedEvent": {
         "additionalProperties": false,
@@ -6050,43 +6115,6 @@
         "title": "ProblemFieldError",
         "type": "object"
       },
-      "ProfileRead": {
-        "additionalProperties": false,
-        "properties": {
-          "caller_is_patient": {
-            "title": "Caller Is Patient",
-            "type": "boolean"
-          },
-          "expected_session_id": {
-            "maxLength": 128,
-            "minLength": 1,
-            "pattern": "^[A-Za-z0-9_:.\\-]+$",
-            "title": "Expected Session Id",
-            "type": "string"
-          },
-          "operator_reason": {
-            "maxLength": 280,
-            "minLength": 1,
-            "title": "Operator Reason",
-            "type": "string"
-          },
-          "profile_ref": {
-            "maxLength": 128,
-            "minLength": 1,
-            "pattern": "^[A-Za-z0-9_:.\\-]+$",
-            "title": "Profile Ref",
-            "type": "string"
-          }
-        },
-        "required": [
-          "expected_session_id",
-          "profile_ref",
-          "caller_is_patient",
-          "operator_reason"
-        ],
-        "title": "ProfileRead",
-        "type": "object"
-      },
       "ProfileWrite": {
         "additionalProperties": false,
         "properties": {
@@ -6124,6 +6152,20 @@
             "pattern": "^[A-Za-z0-9_:.\\-]+$",
             "title": "Expected Session Id",
             "type": "string"
+          },
+          "linked_incident_id": {
+            "anyOf": [
+              {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_:.\\-]+$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Linked Incident Id"
           },
           "medications": {
             "items": {
@@ -9849,6 +9891,129 @@
         "summary": "Health"
       }
     },
+    "/incidents/{incident_id}/duplicates/{report_id}/resolve": {
+      "post": {
+        "description": "Operator decision on a duplicate candidate; never automatic (0007 AS-07, 0008).\n\n``incident_id`` is the original incident; ``report_id`` is the report whose incident was\nflagged as a possible duplicate of it.",
+        "operationId": "resolve_duplicate_incidents__incident_id__duplicates__report_id__resolve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "title": "Report Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuplicateResolveCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Resolve Duplicate"
+      }
+    },
     "/incidents/{incident_id}/facts/{fact_key}/confirm": {
       "post": {
         "operationId": "confirm_incidents__incident_id__facts__fact_key__confirm_post",
@@ -9971,7 +10136,7 @@
         "summary": "Confirm"
       }
     },
-    "/incidents/{incident_id}/medical-profile/access": {
+    "/incidents/{incident_id}/medical-profile-access": {
       "post": {
         "operationId": "access_profile_incidents__incident_id__medical_profile_access_post",
         "parameters": [
@@ -10005,7 +10170,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProfileRead"
+                "$ref": "#/components/schemas/MedicalProfileAccessCommand"
               }
             }
           },
@@ -10335,7 +10500,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "202": {
             "content": {
               "application/json": {
                 "schema": {

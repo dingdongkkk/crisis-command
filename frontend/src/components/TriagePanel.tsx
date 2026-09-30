@@ -19,6 +19,8 @@ interface TriagePanelProps {
   /** Records the (synthetic) caller's answer; resolves to an error message or null. */
   onAnswer?: (reportId: string, factKey: string, answer: 'yes' | 'no' | 'unknown') => Promise<string | null>
   answerEnabled?: boolean
+  onResolveDuplicate?: (incident: Incident) => void
+  onMedicalId?: (incident: Incident) => void
 }
 
 function PendingQuestion({ incident, factKey, onAnswer, enabled }: {
@@ -61,7 +63,7 @@ function valueText(fact: TriageFact): string {
 
 const isUnknown = (fact: TriageFact) => (fact.count ? fact.count.status === 'unknown' : fact.value === 'unknown')
 
-export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(function TriagePanel({ incident, facts, onAnswer, answerEnabled = false }, ref) {
+export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(function TriagePanel({ incident, facts, onAnswer, answerEnabled = false, onResolveDuplicate, onMedicalId }, ref) {
   if (!incident) {
     return (
       <section className="triage" aria-labelledby="triage-title">
@@ -90,6 +92,23 @@ export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(func
         {incident.kind.replaceAll('_', ' ')} · {categoryLabel(incident.category)}
       </p>
       {incident.category !== 'emergency' && <p className="notice">No emergency unit needed · {categoryLabel(incident.category)}</p>}
+      {incident.duplicate_candidate_of.length > 0 && (
+        <div className="notice notice-duplicate" role="note">
+          Possible duplicate of {incident.duplicate_candidate_of.join(', ')} — both are planned for until an operator decides.{' '}
+          {onResolveDuplicate && (
+            <button type="button" className="link" disabled={!answerEnabled} onClick={() => onResolveDuplicate(incident)}>
+              Resolve…
+            </button>
+          )}
+        </div>
+      )}
+      {onMedicalId && incident.category === 'emergency' && (
+        <p>
+          <button type="button" className="link" disabled={!answerEnabled} onClick={() => onMedicalId(incident)}>
+            Medical ID (consent-gated)…
+          </button>
+        </p>
+      )}
       {escalation?.escalated && (
         <p className="escalated" role="note">
           With operator — reason: {escalation.reasons.map(escalationLabel).join(', ')}

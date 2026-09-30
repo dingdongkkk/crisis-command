@@ -103,6 +103,16 @@ const clickInDialog = (label) => page(`(() => {
   if (!b) return false
   b.click(); return true
 })()`)
+/** Set a React-controlled input/textarea inside the open dialog by its label text. */
+const fill = (labelStart, value) => page(`(() => {
+  const label = [...document.querySelectorAll('[role=dialog] label')].find((l) => l.textContent.trim().startsWith(${JSON.stringify(labelStart)}))
+  const el = label?.querySelector('input, textarea')
+  if (!el) return false
+  const proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype
+  Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, ${JSON.stringify(value)})
+  el.dispatchEvent(new Event('input', { bubbles: true }))
+  return true
+})()`)
 const ackAll = () => page(`(() => { let n = 0; for (const b of document.querySelectorAll('input[id^="ack-"]')) if (!b.checked && !b.disabled) { b.click(); n++ } return n })()`)
 
 async function shot(name) {
@@ -244,6 +254,58 @@ try {
     await synced('after dispatch')
     await shot('03-dispatched')
     return `${acked} flags acknowledged; v${current.version} dispatched (simulated), outbox ${s.outbox.length}`
+  })
+
+  await check('an operator resolves a duplicate report from the console (linked)', async () => {
+    const s0 = await state()
+    const candidate = s0.incidents.find((i) => i.status === 'active' && i.duplicate_candidate_of.length > 0)
+    if (!candidate) throw new Error('no duplicate candidate at T+10')
+    const original = candidate.duplicate_candidate_of[0]
+    const flagged = (s0.current_proposal ?? s0.approved_plan)?.flags.some((f) => f.code === 'DUPLICATE_CANDIDATE_UNRESOLVED' && f.incident_id === candidate.incident_id)
+    await page(`document.querySelector('[data-incident-id="${candidate.incident_id}"]')?.click()`)
+    await waitFor('Resolve button', () => clickButton('Resolve…'))
+    await waitFor('duplicate dialog', async () => (await text()).includes('Possible duplicate'))
+    await fill('Reason', 'Same stranded car reported twice')
+    await shot('07-duplicate-dialog')
+    await clickInDialog('Same emergency — link')
+    const s = await waitFor('merged', async () => {
+      const st = await state()
+      return st.incidents.find((i) => i.incident_id === candidate.incident_id)?.status === 'merged_duplicate' && st
+    })
+    const next = await waitFor('replan without the duplicate', async () => {
+      const p = (await state()).current_proposal
+      return p && p.based_on_planning_sequence >= s.planning_sequence && p
+    }, 30_000)
+    if (next.unmet_needs.some((n) => n.incident_id === candidate.incident_id)) throw new Error('merged incident still has unmet needs')
+    if (next.flags.some((f) => f.code === 'DUPLICATE_CANDIDATE_UNRESOLVED')) throw new Error('duplicate flag still present')
+    await synced('after duplicate resolution')
+    return `${candidate.incident_id} → ${original} (flag before: ${flagged ? 'yes' : 'no'}); v${next.version} has no duplicate demand`
+  })
+
+  await check('Medical ID is denied until caller-is-patient is confirmed, then shown once', async () => {
+    const s0 = await state()
+    const cardiac = s0.incidents.find((i) => i.kind === 'cardiac_chest_pain' && i.status === 'active')
+    await page(`document.querySelector('[data-incident-id="${cardiac.incident_id}"]')?.click()`)
+    await waitFor('Medical ID button', () => clickButton('Medical ID (consent-gated)…'))
+    await waitFor('medical dialog', async () => (await text()).includes(`Medical ID · ${cardiac.incident_id}`))
+    await fill('Medical ID reference', 'mprof_syn_0001')
+    await fill('Reason for access', 'Check allergies before treatment advice')
+    await clickInDialog('Request access')
+    await waitFor('denial', async () => (await text()).includes('CALLER_IS_PATIENT_UNKNOWN'))
+    await clickInDialog('Confirm yes')
+    await waitFor('fact confirmed', async () => {
+      const f = (await state()).triage_facts.find((t) => t.incident_id === cardiac.incident_id)?.facts.find((x) => x.key === 'caller_is_patient')
+      return f?.value === 'yes'
+    })
+    await clickInDialog('Request access')
+    await waitFor('values shown', async () => (await text()).includes('SYNTHETIC: penicillin'))
+    await shot('08-medical-id-granted')
+    await clickInDialog('Close')
+    const events = await fetch(`${api}/events?after_sequence=0&session_id=${session}&limit=500`).then((r) => r.json())
+    const audits = events.filter((e) => e.event_type.startsWith('MedicalProfileAccess')).map((e) => e.event_type)
+    if (JSON.stringify(events).includes('penicillin')) throw new Error('profile value leaked into the event log')
+    if ((await text()).includes('penicillin')) throw new Error('value still on screen after close')
+    return `audit: ${audits.join(', ')}; no values in the log or on screen after close`
   })
 
   await check('a simulated call creates a triaged incident', async () => {
