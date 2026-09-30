@@ -1,6 +1,7 @@
 import type { Incident, Plan } from '../contracts'
 import { categoryLabel, severityIcon, severityLabel, simClock } from '../state/labels'
 import { sortEmergencies } from '../state/queue'
+import { IncidentKindIcon } from './icons'
 
 interface IncidentQueueProps {
   incidents: Incident[]
@@ -18,8 +19,11 @@ export function IncidentQueue({ incidents, proposal, selectedId, onSelect }: Inc
   }
 
   return (
-    <section className="panel" aria-labelledby="queue-title">
-      <h2 id="queue-title">Incidents <span className="count">({emergencies.length})</span></h2>
+    <section className="rail-section" aria-labelledby="queue-title">
+      <h2 id="queue-title" className="section-title">
+        Incidents <span className="count">({emergencies.length})</span>
+        <span className="section-hint">by severity, then waiting</span>
+      </h2>
       {emergencies.length === 0 ? (
         <p className="empty">No active emergency incidents.</p>
       ) : (
@@ -36,20 +40,28 @@ export function IncidentQueue({ incidents, proposal, selectedId, onSelect }: Inc
                   data-incident-id={incident.incident_id}
                   onClick={() => onSelect(incident.incident_id)}
                 >
-                  <span className="sev-badge">
-                    <span aria-hidden="true">{severityIcon(incident.severity)} </span>
-                    {severityLabel(incident.severity)}
+                  <span className="queue-line">
+                    <span className="queue-icon" aria-hidden="true"><IncidentKindIcon kind={incident.kind} size={14} /></span>
+                    <span className="queue-main">
+                      <strong>{incident.kind.replaceAll('_', ' ')}</strong>
+                    </span>
+                    <span className="mono queue-id">{incident.incident_id}</span>
                   </span>
-                  <span className="queue-main">
-                    <strong>{incident.kind.replaceAll('_', ' ')}</strong>
-                    <span className="muted"> · {incident.incident_id} · since {simClock(incident.created_sim_time_s)}</span>
+                  <span className="queue-meta">
+                    <span className="sev-badge">
+                      <span aria-hidden="true">{severityIcon(incident.severity)} </span>
+                      {severityLabel(incident.severity)}
+                    </span>
+                    <span className="muted mono"> · since {simClock(incident.created_sim_time_s)}</span>
                   </span>
-                  <span className="tags">
-                    {incident.assumed_facts.length > 0 && <span className="tag tag-provisional">PROVISIONAL</span>}
-                    {unmet?.map((t) => (
-                      <span key={t} className="tag tag-unmet">{t} UNMET</span>
-                    ))}
-                  </span>
+                  {(incident.assumed_facts.length > 0 || unmet) && (
+                    <span className="tags">
+                      {incident.assumed_facts.length > 0 && <span className="tag tag-provisional">PROVISIONAL</span>}
+                      {unmet?.map((t) => (
+                        <span key={t} className="tag tag-unmet">{t} UNMET</span>
+                      ))}
+                    </span>
+                  )}
                 </button>
               </li>
             )

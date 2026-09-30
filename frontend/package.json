@@ -16,10 +16,12 @@
     "gen:contracts": "json2ts -i ../contracts/schema/crisis-command.schema.json -o src/generated/contracts.ts --unreachableDefinitions --no-additionalProperties --bannerComment \"/* Generated from contracts/schema/crisis-command.schema.json by npm run gen:contracts. Do not edit. */\""
   },
   "dependencies": {
-    "leaflet": "1.9.4",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "lucide-react": "1.49.0",
+    "maplibre-gl": "6.11.2",
     "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "react-leaflet": "5.0.0"
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
@@ -27,7 +29,7 @@
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
     "@testing-library/user-event": "14.6.7",
-    "@types/leaflet": "1.9.22",
+    "@types/geojson": "7946.0.16",
     "@types/node": "26.6.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

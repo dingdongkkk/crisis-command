@@ -180,11 +180,10 @@ describe('keyboard', () => {
     const { user } = setup()
     await ready()
     await user.keyboard('j')
-    const first = screen.getAllByRole('button', { current: true })[0]
-    expect(first).toHaveFocus()
+    await waitFor(() => expect(screen.getAllByRole('button', { current: true })[0]).toHaveFocus())
     await user.keyboard('j')
     await user.keyboard('j')
-    expect(document.activeElement).toHaveAttribute('data-incident-id', 'inc_0006')
+    await waitFor(() => expect(document.activeElement).toHaveAttribute('data-incident-id', 'inc_0006'))
     await user.keyboard('{Enter}')
     await waitFor(() => expect(screen.getByRole('heading', { name: 'Triage · inc_0006' })).toHaveFocus())
     await user.keyboard('a')
@@ -244,10 +243,35 @@ describe('unrecognised values', () => {
 })
 
 describe('layout', () => {
-  it('shows OpenStreetMap attribution with tiles enabled', async () => {
+  it('uses a key-less vector base map with an expanded attribution control', async () => {
+    const { created } = await import('./test/maplibreMock')
+    created.length = 0
     setup('demo', { tiles: true })
     await ready()
-    expect(document.querySelector('.leaflet-control-attribution')).toHaveTextContent('OpenStreetMap contributors')
+    const map = created.at(-1)
+    expect(map?.options.style).toBe('https://tiles.openfreemap.org/styles/dark')
+    expect(map?.options.attributionControl).toBe(false)
+    const attribution = map?.controls.find((c) => (c as { constructor: { name: string } }).constructor.name === 'AttributionControl') as { options: unknown }
+    expect(attribution.options).toEqual({ compact: false })
+  })
+
+  it('renders incident and unit markers and swaps the base style with the theme', async () => {
+    const { created } = await import('./test/maplibreMock')
+    created.length = 0
+    const { user } = setup('demo', { tiles: true })
+    await ready()
+    expect(document.querySelectorAll('.marker-incident')).toHaveLength(5)
+    expect(document.querySelectorAll('.marker-unit')).toHaveLength(9)
+    expect(document.querySelector('.pin.sev-critical .pin-ring')).not.toBeNull()
+    await user.click(screen.getByRole('button', { name: 'Switch to light theme' }))
+    await waitFor(() => expect(created.at(-1)?.styles.at(-1)).toBe('https://tiles.openfreemap.org/styles/positron'))
+    await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }))
+  })
+
+  it('shows a clear notice when the base map is disabled', async () => {
+    setup('demo', { tiles: false })
+    await ready()
+    expect(screen.getByText(/Base map unavailable/)).toBeInTheDocument()
   })
 
   it('uses tabs and a sticky plan status on narrow screens', async () => {

@@ -1,3 +1,4 @@
+import { CircleCheck, CircleDashed, Clock, OctagonAlert, Send } from 'lucide-react'
 import { forwardRef } from 'react'
 import type { Assignment, DiffRow, Plan } from '../contracts'
 import type { PlanView } from '../state/planView'
@@ -45,6 +46,23 @@ function headerText(view: PlanView, action: PlanAction): string {
       return `DISPATCH PARTIALLY FAILED (simulated) v${view.plan.version}`
     case 'unrecognised':
       return `Unrecognised plan state (${view.state}) — cannot be approved here`
+  }
+}
+
+function statusIcon(view: PlanView) {
+  switch (view.kind) {
+    case 'proposed':
+      return <CircleDashed size={16} />
+    case 'stale':
+    case 'partial_failed':
+    case 'unrecognised':
+      return <OctagonAlert size={16} />
+    case 'approved':
+      return <Send size={16} />
+    case 'dispatched':
+      return <CircleCheck size={16} />
+    default:
+      return <Clock size={16} />
   }
 }
 
@@ -220,13 +238,16 @@ export const PlanPanel = forwardRef<HTMLHeadingElement, PlanPanelProps>(function
   const approveLabel = blockedReason ? `Approve and dispatch (simulated) — ${blockedReason}` : 'Approve and dispatch (simulated)'
 
   return (
-    <section className={`panel plan plan-${view.kind}`} aria-labelledby="plan-title">
-      <h2 id="plan-title" ref={headerRef} tabIndex={-1}>
+    <section className={`plan plan-${view.kind}`} aria-labelledby="plan-title">
+      <h2 id="plan-title" className="section-title" ref={headerRef} tabIndex={-1}>
         Plan
       </h2>
-      <p className="plan-status" role="status" aria-live="polite">
-        {headerText(view, action)}
-      </p>
+      <div className="plan-status-row">
+        <span className="plan-status-icon" aria-hidden="true">{statusIcon(view)}</span>
+        <p className="plan-status" role="status" aria-live="polite">
+          {headerText(view, action)}
+        </p>
+      </div>
       {action.kind === 'rejected' && (
         <div className="notice notice-error" role="alert">
           {action.message} <span className="muted">({action.problem.code})</span>{' '}
@@ -243,6 +264,12 @@ export const PlanPanel = forwardRef<HTMLHeadingElement, PlanPanelProps>(function
         <PlanBody plan={plan} view={view} acked={acked} onAck={onAck} onOverride={onOverride} editable={commandsEnabled && !pending && view.kind === 'proposed'} />
       )}
       <div className="plan-actions">
+        {view.kind === 'proposed' && needed.length > 0 && (
+          <div className="ack-progress" aria-hidden="true">
+            <span>{needed.length - missing.length} of {needed.length} flags acknowledged</span>
+            <span className="ack-bar"><span style={{ width: `${((needed.length - missing.length) / needed.length) * 100}%` }} /></span>
+          </div>
+        )}
         {view.kind === 'proposed' || view.kind === 'stale' ? (
           // aria-disabled (not disabled) keeps the button focusable so keyboard and screen
           // reader users reach it and hear why approval is blocked.
@@ -255,7 +282,6 @@ export const PlanPanel = forwardRef<HTMLHeadingElement, PlanPanelProps>(function
             onClick={() => canApprove && onApprove()}
           >
             Approve &amp; dispatch (simulated)
-            {missing.length > 0 && <span className="ack-count"> · {missing.length} to acknowledge</span>}
           </button>
         ) : null}
         <button type="button" disabled={!commandsEnabled || pending || view.kind === 'computing' || view.kind === 'stale' || !plan} onClick={() => onOverride()}>

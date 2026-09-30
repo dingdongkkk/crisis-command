@@ -30,8 +30,8 @@ const isUnknown = (fact: TriageFact) => (fact.count ? fact.count.status === 'unk
 export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(function TriagePanel({ incident, facts }, ref) {
   if (!incident) {
     return (
-      <section className="panel" aria-labelledby="triage-title">
-        <h2 id="triage-title" ref={ref} tabIndex={-1}>Triage</h2>
+      <section className="triage" aria-labelledby="triage-title">
+        <h2 id="triage-title" className="section-title" ref={ref} tabIndex={-1}>Triage</h2>
         <p className="empty">Select an incident to see its facts.</p>
       </section>
     )
@@ -42,8 +42,8 @@ export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(func
   const escalation = facts?.escalation
 
   return (
-    <section className="panel" aria-labelledby="triage-title">
-      <h2 id="triage-title" ref={ref} tabIndex={-1}>
+    <section className="triage" aria-labelledby="triage-title">
+      <h2 id="triage-title" className="section-title" ref={ref} tabIndex={-1}>
         Triage · {incident.incident_id}
       </h2>
       <p>
