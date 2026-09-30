@@ -27,11 +27,16 @@ def active_closures(state: StateSnapshot) -> list[Closure]:
 
 
 class RouteService:
-    def __init__(self, graph: RoadGraph | None = None) -> None:
+    def __init__(self, graph: RoadGraph | None = None, *, ors_key: str | None = None) -> None:
+        from .ors import OrsDirections
+
+        self.ors = OrsDirections(ors_key) if ors_key is not None else None
         self.graph = graph or load_default_graph()
         self.router = Router(self.graph)
 
     def route(self, state: StateSnapshot, origin: Coord, destination: Coord) -> Route:
+        if self.ors is not None:
+            return self.ors.route(state, origin, destination)
         return self.router.route(origin, destination, active_closures(state))
 
     def candidates(self, state: StateSnapshot, incident_id: str) -> RouteCandidates:
@@ -43,9 +48,7 @@ class RouteService:
         closures = active_closures(state)
         rows = []
         for unit in state.units:
-            route = self.router.route(
-                unit.position.coordinates, incident.location.coordinates, closures
-            )
+            route = self.route(state, unit.position.coordinates, incident.location.coordinates)
             rows.append(
                 RouteCandidate(
                     unit_id=unit.unit_id, unit_type=unit.type, unit_status=unit.status, route=route
@@ -67,4 +70,21 @@ class RouteService:
             graph_version=self.graph.version,
             routing_policy_version=ROUTING_POLICY_VERSION,
             candidates=rows,
+        )
+
+    def boat_route(self, state: StateSnapshot, origin: Coord, destination: Coord) -> Route:
+        """Road graph is not a water navigation graph. Unsupported rescues stay unmet."""
+        return Route.model_validate(
+            {
+                "route_id": "water_unavailable",
+                "from": {"type": "Point", "coordinates": origin},
+                "to": {"type": "Point", "coordinates": destination},
+                "route_status": "unavailable",
+                "provider": "fixture",
+                "flood_version": flood_version(active_closures(state)),
+                "duration_s": None,
+                "distance_m": None,
+                "geometry": None,
+                "unavailable_reason": "WATER_ROUTE_NOT_CONFIGURED",
+            }
         )
