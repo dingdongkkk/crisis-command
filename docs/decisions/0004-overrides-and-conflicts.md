@@ -1,6 +1,6 @@
 # 0004 — Operator overrides and conflicts
 
-Status: accepted (CC-01). Consumers: CC-05, CC-08, CC-04/CC-09 override dialog.
+Status: accepted (CC-01), revised after Codex review — see [0009](0009-review-resolutions.md). Consumers: CC-05, CC-08, CC-04/CC-09 override dialog.
 
 ## Decision
 
@@ -14,14 +14,14 @@ Overrides are operator **constraints on future planning**, not direct edits of a
 | `forbid` | `unit_id`, `incident_id` | Unit may not serve incident. |
 | `hold_unit` | `unit_id`, `zone_id?` | Unit gets no task (hard reserve chosen by a human). |
 | `approve_bls_bridge` | `unit_id`, `bridges_need_id` | Adds a bridge task (0003). |
-| `downgrade_need` | `need_id`, `reason_text` | Removes a provisional need from allocation; original need event retained. |
+| `downgrade_need` | `need_id`, `reason_text` | Suppresses only a provisional contribution; cannot suppress a confirmed life threat (0002). Original need event retained. |
 | `revoke` | `override_id` | Ends an active override. |
 
-Every override body carries `expected_plan_id`, `expected_planning_sequence`, `reason_text` (≤ 280 chars, no medical detail beyond need type) and requires `Idempotency-Key`.
+Every override body carries `expected_session_id`, `expected_plan_id`, `expected_planning_sequence`, `reason_text` (≤ 280 chars, no medical detail beyond need type) and requires `Idempotency-Key`.
 
 ### Validation order (single transaction)
 
-1. `expected_planning_sequence` must equal current `planning_sequence`, else `409 STALE_PLAN` (the operator was looking at an old world). Stale overrides are recorded as `OverrideRejected{reason: "STALE"}`.
+1. Apply the receipt/session guard in 0001. Require `expected_plan_id` to identify the current proposal, or the approved plan when no current proposal exists. Then `expected_planning_sequence` must equal current `planning_sequence`, else `409 STALE_PLAN` (the operator was looking at an old world). Stale overrides are recorded as `OverrideRejected{reason: "STALE"}`.
 2. Structural checks: IDs exist, need/unit types compatible.
 3. Hard-constraint checks against current state plus all **active** overrides:
 

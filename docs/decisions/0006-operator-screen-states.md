@@ -1,6 +1,6 @@
 # 0006 — Operator console and intake screen states
 
-Status: accepted (CC-01). Consumers: CC-04 (mocks), CC-06 (intake), CC-09 (live wiring).
+Status: accepted (CC-01), revised after Codex review — see [0009](0009-review-resolutions.md). Consumers: CC-04 (mocks), CC-06 (intake), CC-09 (live wiring).
 
 ## Layout (desktop ≥ 1280 px)
 
@@ -30,9 +30,10 @@ Narrow (< 900 px): tabs `Queue · Map · Plan · Triage · Fleet`; the banner an
 | --- | --- | --- | --- |
 | `connecting` | initial load | skeletons, "Connecting…" | disabled |
 | `live` | hello + subscribed | "Live · seq 61 · sim T+10:00" | enabled |
-| `resyncing` | sequence gap / new session | "Resyncing from server…" last good data dimmed | disabled |
+| `resyncing` | sequence gap / new session / backlog not yet caught up | "Resyncing from server…" last good data dimmed | disabled until server confirms catch-up |
 | `disconnected` | 30 s silence / socket closed | "Disconnected — data as of seq 61, 00:42 ago. Retrying in 4 s" + Retry | disabled |
 | `degraded` | `ModelAdapterDegraded`, routing fixture fallback, solver fallback | "Degraded: language model unavailable — rule intake active" (one line per cause) | enabled |
+| `world_changing` | material events arriving faster than a proposal can be reviewed | "World changing — plan v8 recomputing" + Pause scenario | Approve disabled; Pause enabled |
 | `replay` | operator enters replay | "REPLAY · read-only · seq 42 of 118" | disabled except replay controls |
 | `error` | snapshot fetch fails | problem `title` + `code`, Retry | disabled |
 
@@ -64,9 +65,12 @@ Critical `unknown` facts are listed first with "Not established — treated as p
 | `approving` | "Approving v7…" | disabled (spinner) | disabled |
 | `approved` | "APPROVED v7 — dispatch queued (simulated)" | hidden | enabled |
 | `dispatched` | "DISPATCHED (simulated) v7" per assignment ✓ | hidden | enabled |
-| `dispatch_partial_failed` | per-assignment ✓/✕ with reason | hidden | enabled; "Recompute" |
+| `dispatch_partial_failed` | per-command ✓ sent / ✕ failed / ⊘ cancelled (e.g. unit broke down before delivery) with reason | hidden | enabled; "Recompute" |
 | `failed` | "No valid plan could be computed. Approved plan v6 remains in force." + reason codes | hidden | enabled |
 | `approval_rejected` | toast + inline: "Not approved: plan changed (now v8). Review the new plan." | returns to `proposed` v8 | — |
+| `revalidated` | "Approved plan v7 still current (checked at seq 72)" | hidden | enabled |
+| `session_changed` | "Simulation was reset. Your action was not applied." (`STALE_SESSION`) then full resync | disabled | disabled |
+| `database_busy` | "Server busy — retrying" (`DATABASE_BUSY`); the client retries the **same** idempotency key after `Retry-After` | disabled (spinner) | disabled |
 
 ### Diff presentation
 
@@ -78,7 +82,7 @@ Each flag row: severity text, message, `requires_ack` checkbox labelled with the
 
 ## Approval dialog
 
-Summary of changes and flags → "Approve & dispatch (simulated)" / Cancel. Sent with `expected_plan_version`, `expected_planning_sequence`, `acknowledged_flag_ids`. On `STALE_PLAN` the dialog closes, the panel switches to the new version and focus moves to its header. The client never retries an approval automatically against a different version.
+Summary of changes and flags → "Approve & dispatch (simulated)" / Cancel. Sent with `expected_session_id`, `expected_plan_version`, `expected_planning_sequence`, `acknowledged_flag_ids`. On `STALE_PLAN` the dialog closes, the panel switches to the new version and focus moves to its header. The client never retries an approval automatically against a different version.
 
 ## Override dialog
 
@@ -101,4 +105,4 @@ Active overrides list with Revoke; rejected and invalidated overrides remain vis
 
 ## Map
 
-Incidents (shape by category + severity text label), units (type glyph + ID + status), flood polygons with version label, reserve zones (outline; hatched when uncovered), route polylines for proposed (dashed) vs approved (solid). Required OpenStreetMap/tile attribution always visible. If tiles fail, a plain-coordinate fallback canvas still shows features and "Map tiles unavailable".
+Incidents (shape by category + severity text label), units (type glyph + ID + status; raw observed position shown distinct from the planning-tick position used for ETAs), flood polygons with version label, reserve zones (outline; hatched when uncovered), route polylines for proposed (dashed) vs approved (solid). Required OpenStreetMap/tile attribution always visible. If tiles fail, a plain-coordinate fallback canvas still shows features and "Map tiles unavailable".
