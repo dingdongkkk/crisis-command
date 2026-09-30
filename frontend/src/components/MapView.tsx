@@ -32,6 +32,25 @@ function blankStyle(theme: Theme): StyleSpecification {
   }
 }
 
+function styleTacticalBasemap(map: MapLibreMap, theme: Theme): void {
+  if (theme !== 'dark') return
+  // Only style provider base layers, before operational overlays are added.
+  for (const layer of map.getStyle().layers) {
+    const sourceLayer = 'source-layer' in layer ? layer['source-layer'] : ''
+    if (layer.type === 'background') map.setPaintProperty(layer.id, 'background-color', '#07121b')
+    if (layer.type === 'fill') {
+      map.setPaintProperty(layer.id, 'fill-color', sourceLayer === 'water' ? '#0c2636' : '#0b1b26')
+    }
+    if (layer.type === 'line' && sourceLayer === 'transportation') {
+      map.setPaintProperty(layer.id, 'line-color', layer.id.includes('casing') ? '#10212d' : '#294652')
+    }
+    if (layer.type === 'symbol' && layer.layout?.['text-field']) {
+      map.setPaintProperty(layer.id, 'text-color', '#7897a7')
+      map.setPaintProperty(layer.id, 'text-halo-color', '#07121b')
+    }
+  }
+}
+
 
 export interface CandidateRoute {
   unitId: string
@@ -212,6 +231,7 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
     let styleLoadedOnce = false
     map.on('style.load', () => {
       styleLoadedOnce = true
+      styleTacticalBasemap(map, themeRef.current)
       addOverlayLayers(map, dataRef.current, themeRef.current)
     })
     // A missing style server must not hide incidents: if the base style never loads,
