@@ -1,36 +1,133 @@
 :root {
   color-scheme: light dark;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --bg: #f7f7f5;
+  font-size: 15px;
+  line-height: 1.4;
+  --bg: #f6f6f3;
+  --panel: #ffffff;
   --fg: #1c1c1a;
-  --muted: #5f5f5a;
+  --muted: #5d5d57;
+  --border: #d8d8d2;
+  --accent: #1f4fbf;
   --banner-bg: #fff4d6;
   --banner-fg: #5a4300;
+  --crit: #a3121b;
+  --high: #b45309;
+  --medium: #6b5a00;
+  --low: #3f5f3f;
+  --ok: #17663a;
+  --warn-bg: #fff1e0;
+  --err-bg: #fde8e8;
+  --focus: #1f4fbf;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161615;
+    --bg: #141413;
+    --panel: #1d1d1b;
     --fg: #ececea;
-    --muted: #a3a39d;
+    --muted: #a6a69f;
+    --border: #3a3a36;
+    --accent: #8fb0ff;
     --banner-bg: #3a2f10;
     --banner-fg: #ffe7a3;
+    --crit: #ff8b8f;
+    --high: #ffb86b;
+    --medium: #e8d36b;
+    --low: #9fd39f;
+    --ok: #7fdca4;
+    --warn-bg: #3a2a14;
+    --err-bg: #3a1a1a;
+    --focus: #8fb0ff;
   }
 }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--fg);
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); }
+button, select, textarea, input { font: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+h1 { font-size: 1.3rem; margin: 0; }
+h2 { font-size: 1.05rem; margin: 0 0 8px; }
+h3 { font-size: 0.95rem; margin: 12px 0 6px; }
+h4 { font-size: 0.9rem; margin: 8px 0 4px; }
+ul, ol { padding-left: 18px; margin: 4px 0; }
+.muted { color: var(--muted); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sim-banner { background: var(--banner-bg); color: var(--banner-fg); padding: 6px 16px; font-weight: 600; }
+.conn-banner { padding: 6px 16px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.conn-live { color: var(--ok); }
+.conn-disconnected, .conn-error { background: var(--err-bg); }
+.conn-degraded, .conn-world_changing, .conn-resyncing { background: var(--warn-bg); }
+.app-header { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; padding: 10px 16px; }
+.grid {
+  display: grid; gap: 12px; padding: 0 16px 16px;
+  grid-template-columns: minmax(260px, 1fr) minmax(360px, 1.6fr) minmax(360px, 1.4fr);
+  grid-template-areas: 'queue map plan' 'triage fleet plan';
 }
-.sim-banner {
-  background: var(--banner-bg);
-  color: var(--banner-fg);
-  padding: 8px 16px;
-  font-weight: 600;
+.area-queue { grid-area: queue; } .area-map { grid-area: map; } .area-plan { grid-area: plan; }
+.area-triage { grid-area: triage; } .area-fleet { grid-area: fleet; }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 12px; min-width: 0; }
+.count { color: var(--muted); font-weight: normal; }
+.empty { color: var(--muted); font-style: italic; }
+.queue { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.queue-item { width: 100%; text-align: left; display: grid; gap: 2px; padding: 8px; border: 1px solid var(--border); border-left-width: 6px; border-radius: 4px; background: var(--panel); color: var(--fg); cursor: pointer; }
+.queue-item.selected { outline: 2px solid var(--accent); }
+.sev-critical { border-left-color: var(--crit); } .sev-high { border-left-color: var(--high); }
+.sev-medium { border-left-color: var(--medium); } .sev-low { border-left-color: var(--low); }
+.sev-badge { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.03em; }
+.sev-badge.sev-critical, .queue-item.sev-critical .sev-badge { color: var(--crit); }
+.sev-badge.sev-high, .queue-item.sev-high .sev-badge { color: var(--high); }
+.tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 1px 5px; border: 1px solid var(--border); border-radius: 3px; margin-left: 4px; }
+.tag-unmet { border-color: var(--crit); color: var(--crit); }
+.tag-provisional { border-style: dashed; }
+.tag-conflict { border-color: var(--high); color: var(--high); }
+.link { background: none; border: none; color: var(--accent); text-decoration: underline; cursor: pointer; padding: 0; }
+.notice { padding: 8px; border-radius: 4px; background: var(--warn-bg); }
+.notice-error { background: var(--err-bg); }
+.escalated { font-weight: 700; padding: 6px 8px; border-left: 4px solid var(--crit); background: var(--err-bg); }
+.unknown-critical { border: 1px dashed var(--high); padding: 6px 8px; border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.fact-unknown { font-weight: 700; color: var(--high); }
+.evidence { font-size: 0.78rem; }
+.map-frame { height: 360px; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.map-legend { font-size: 0.8rem; margin: 6px 0 0; }
+.unit-marker span { display: inline-block; background: var(--panel); color: var(--fg); border: 1px solid var(--fg); border-radius: 3px; font-size: 11px; font-weight: 700; padding: 0 3px; }
+.unit-marker.unit-broken_down span, .unit-marker.unit-out_of_service span { text-decoration: line-through; }
+.plan-status { font-weight: 700; font-size: 1rem; padding: 6px 8px; border-radius: 4px; background: var(--bg); }
+.plan-proposed .plan-status { border: 2px dashed var(--high); }
+.plan-stale .plan-status { border: 2px solid var(--crit); }
+.plan-approved .plan-status, .plan-dispatched .plan-status { border: 2px solid var(--ok); }
+.flags ul, .unmet > ul { list-style: none; padding: 0; }
+.flag { padding: 6px 8px; margin-bottom: 4px; border-radius: 4px; border-left: 4px solid var(--border); }
+.flag-critical { border-left-color: var(--crit); background: var(--err-bg); }
+.flag-warning { border-left-color: var(--high); background: var(--warn-bg); }
+.flag-sev { font-weight: 700; font-size: 0.8rem; }
+.ack { display: block; margin-top: 4px; font-size: 0.88rem; }
+.unmet > ul > li { border: 1px solid var(--crit); border-radius: 4px; padding: 6px 8px; margin-bottom: 6px; }
+.why-not, .bridges { margin-top: 4px; font-size: 0.88rem; }
+.bridge { border-left: 3px dashed var(--high); padding-left: 6px; }
+.totals { font-size: 0.85rem; color: var(--muted); }
+.plan-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; position: sticky; bottom: 0; background: var(--panel); padding-top: 8px; }
+button { padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border); background: var(--panel); color: var(--fg); cursor: pointer; }
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+button:disabled, button[aria-disabled='true'] { opacity: 0.5; cursor: not-allowed; }
+.dialog-backdrop { position: fixed; inset: 0; background: rgb(0 0 0 / 45%); display: grid; place-items: center; z-index: 2000; padding: 16px; }
+.dialog { background: var(--panel); color: var(--fg); border-radius: 8px; padding: 16px; width: min(560px, 100%); max-height: 90vh; overflow: auto; }
+.dialog label { display: grid; gap: 4px; margin: 8px 0; }
+.dialog fieldset { border: none; padding: 0; margin: 0; }
+.dialog textarea { min-height: 64px; }
+.dialog-actions { display: flex; gap: 8px; margin-top: 12px; }
+.loading { padding: 16px; }
+.skeleton { height: 240px; border-radius: 6px; background: linear-gradient(90deg, var(--panel), var(--border), var(--panel)); }
+.tabs { display: flex; overflow-x: auto; border-bottom: 1px solid var(--border); padding: 0 16px; }
+.tabs [role='tab'] { border: none; border-bottom: 3px solid transparent; border-radius: 0; background: none; }
+.tabs [role='tab'][aria-selected='true'] { border-bottom-color: var(--accent); font-weight: 700; }
+.narrow-main { padding: 12px 16px 16px; }
+.sticky-plan { position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; gap: 8px; padding: 6px 16px; background: var(--panel); border-bottom: 1px solid var(--border); font-weight: 700; }
+@media (max-width: 1279px) and (min-width: 900px) {
+  .grid { grid-template-columns: 1fr 1fr; grid-template-areas: 'queue plan' 'map plan' 'triage fleet'; }
 }
-main {
-  padding: 16px;
-  max-width: 960px;
-}
-.muted {
-  color: var(--muted);
-}
+/* Keep the tall plan column from stretching the queue/map rows: it scrolls on its own. */
+.grid { align-items: start; }
+.area-plan { position: sticky; top: 8px; max-height: calc(100vh - 16px); overflow: auto; }
+.area-plan .panel { min-height: 100%; }
