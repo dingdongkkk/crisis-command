@@ -26,8 +26,9 @@ Read `docs/BRIEF.md`, `docs/WORKFLOW.md` and your task in `docs/tasks.json`. For
 
 ## Checks
 
-Current setup: `python3 scripts/validate_setup.py` and `python3 -m unittest discover -s tests -v`.
-CC-02 must establish and document backend lint/type/test and frontend lint/type/test/build commands, lock dependencies, and add them to CI. Run checks relevant to each subsequent change. Include the exact commands and outcomes in the handoff; never claim an unrun test passed.
+Setup: `python3 scripts/validate_setup.py` and `python3 -m unittest discover -s tests -v`.
+Backend (`backend/README.md`): `uv sync --frozen`, `uv run ruff check .`, `uv run ruff format --check .`, `uv run mypy`, `uv run pytest`, `uv run python -m app.contracts.export --check`.
+Frontend (`frontend/README.md`): `npm ci`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`; regenerate types with `npm run gen:contracts`. All run in CI. Run checks relevant to each change. Include the exact commands and outcomes in the handoff; never claim an unrun test passed.
 
 ## Code review rules
 

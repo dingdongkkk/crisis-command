@@ -1,0 +1,36 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bg: #f7f7f5;
+  --fg: #1c1c1a;
+  --muted: #5f5f5a;
+  --banner-bg: #fff4d6;
+  --banner-fg: #5a4300;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161615;
+    --fg: #ececea;
+    --muted: #a3a39d;
+    --banner-bg: #3a2f10;
+    --banner-fg: #ffe7a3;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+.sim-banner {
+  background: var(--banner-bg);
+  color: var(--banner-fg);
+  padding: 8px 16px;
+  font-weight: 600;
+}
+main {
+  padding: 16px;
+  max-width: 960px;
+}
+.muted {
+  color: var(--muted);
+}
