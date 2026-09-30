@@ -1,6 +1,14 @@
-# Contract gate (CC-01 specified; CC-02 implements)
+# Contracts (CC-01 specified; CC-02 implemented)
 
-Canonical Pydantic models are the single definition. CC-02 exports JSON Schema/OpenAPI from them and generates TypeScript types for the frontend. Do not hand-maintain competing definitions. UI mocks validate against the same generated schemas as the backend.
+Canonical Pydantic models in `backend/app/contracts/` are the single definition. Everything else is generated:
+
+```
+backend/app/contracts/*.py
+  └─ uv run python -m app.contracts.export  → contracts/schema/crisis-command.schema.json, contracts/openapi.json
+       └─ npm run gen:contracts             → frontend/src/generated/contracts.ts
+```
+
+CI fails if either generated artifact is stale. UI mocks validate at runtime against the same JSON Schema (`frontend/src/contracts.ts`, AJV draft 2020-12). Contract tests (`backend/tests/test_contracts.py`, `frontend/src/contracts.test.ts`) validate every CC-01 example and require each negative case to fail with its named error code. Examples still live in `docs/decisions/examples/` until CC-01 merges; move them here afterwards without changing content.
 
 ## Specification
 

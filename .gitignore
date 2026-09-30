@@ -19,3 +19,6 @@ output/
 .claude/settings.local.json
 *.pem
 *.key
+.mypy_cache/
+*.tsbuildinfo
+data/
