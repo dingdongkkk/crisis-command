@@ -1,8 +1,10 @@
 import type {
+  AnswerCommand,
   ApprovalAccepted,
   ApproveCommand,
   DemoAdvanceResult,
   DemoResetResult,
+  HealthResponse,
   ReportAccepted,
   ReportCommand,
   OverrideCommand,
@@ -54,7 +56,11 @@ export interface ConsoleApi {
   /** Synthetic caller reports (text intake). */
   reports?: {
     submit(body: ReportCommand, key: string): Promise<ApiResult<ReportAccepted>>
+    /** The caller's Yes / No / Not sure answer to the pending intake question. */
+    answer(reportId: string, body: AnswerCommand, key: string): Promise<ApiResult<ReportAccepted>>
   }
+  /** Providers and degraded causes (model/routing), polled alongside state. */
+  health?(): Promise<ApiResult<HealthResponse>>
 }
 
 export type DemoStep = 'T+0' | 'T+2' | 'T+5' | 'T+10'

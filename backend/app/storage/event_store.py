@@ -31,6 +31,8 @@ RESET_SCOPE = "*"
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS report_text (report_id TEXT PRIMARY KEY, content TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS profiles (profile_ref TEXT PRIMARY KEY, data TEXT NOT NULL);
+-- Intake dialogue working state (facts, questions asked); no report text. Keyed session:incident.
+CREATE TABLE IF NOT EXISTS intake_sessions (key TEXT PRIMARY KEY, data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS sessions (
     session_id TEXT PRIMARY KEY, fixture TEXT NOT NULL, seed INTEGER NOT NULL,
@@ -212,6 +214,15 @@ class EventStore:
                 "SELECT 1 FROM sessions WHERE session_id=?", (session_id,)
             ).fetchone()
         return row is not None
+
+    def intake_state(self, session_id: str, incident_id: str) -> dict[str, Any] | None:
+        """Committed intake dialogue state. Writers change it only under the writer lock, so a
+        read inside ``decide`` sees the value the current transaction is based on."""
+        with closing(self._connect()) as conn:
+            row = conn.execute(
+                "SELECT data FROM intake_sessions WHERE key=?", (f"{session_id}:{incident_id}",)
+            ).fetchone()
+        return None if row is None else dict(json.loads(row["data"]))
 
     def state_at(self, session_id: str, sequence: int) -> StateSnapshot:
         """Replay: fold the session log from sequence 1 without calling any provider."""

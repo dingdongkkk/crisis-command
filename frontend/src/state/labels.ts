@@ -184,3 +184,24 @@ export function flagSubject(flag: Plan['flags'][number], incidents: Incident[]):
   if (flag.override_id) parts.push(`override ${flag.override_id}`)
   return parts.length > 0 ? parts.join(' · ') : null
 }
+
+/** English text of the intake's targeted questions (backend `app/intake/questions.py`). */
+const QUESTION: Record<string, string> = {
+  conscious: 'Is the person conscious and responding to you?',
+  breathing_normally: 'Is the person breathing normally?',
+  chest_pain: 'Is there chest pain?',
+  severe_bleeding: 'Is anyone bleeding heavily?',
+  trapped: 'Is anyone trapped or unable to get out?',
+  fire_or_smoke: 'Is there any fire or smoke?',
+  gas_smell: 'Can you smell gas?',
+  water_rising: 'Is the water rising?',
+  caller_in_danger: 'Are you in danger where you are right now?',
+  people_count: 'How many people are affected?',
+}
+export const questionText = (key: string) => QUESTION[key] ?? `${factName(key)}?`
+
+const DEGRADED: Record<string, string> = {
+  MODEL_UNAVAILABLE: 'Model adapter unavailable — intake is rules-only; critical uncertainty escalates to an operator.',
+  ROUTING_DEGRADED: 'Routing provider degraded — plans use fixture road routes; unreachable routes carry no ETA.',
+}
+export const degradedText = (code: string) => DEGRADED[code] ?? `Degraded: ${code}`

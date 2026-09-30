@@ -24,6 +24,7 @@ from .lexicon import FACT_PATTERNS
 
 DEFAULT_TIMEOUT_S = 4.0
 DEFAULT_MODEL = "gemini-3.8-flash"
+DEFAULT_ENDPOINT = "https://generativelanguage.googleapis.com"
 
 
 class ModelUnavailableError(Exception):
@@ -116,24 +117,36 @@ class GeminiAdapter:
 
     name = "gemini"
 
-    def __init__(self, api_key: str, model: str = DEFAULT_MODEL, post: Post = _urllib_post) -> None:
+    def __init__(
+        self,
+        api_key: str,
+        model: str = DEFAULT_MODEL,
+        post: Post = _urllib_post,
+        endpoint: str = DEFAULT_ENDPOINT,
+    ) -> None:
         if not api_key:
             raise ModelUnavailableError("NO_API_KEY")
         self._key = api_key
         self._model = model
         self._post = post
+        # Overridable so failure drills can point at a local, unreachable address.
+        self._endpoint = endpoint.rstrip("/")
 
     @classmethod
     def from_env(cls) -> GeminiAdapter | None:
         if os.environ.get("LLM_PROVIDER", "template") != "gemini":
             return None
         key = os.environ.get("GEMINI_API_KEY", "")
-        return cls(key, os.environ.get("GEMINI_MODEL", DEFAULT_MODEL)) if key else None
+        if not key:
+            return None
+        return cls(
+            key,
+            os.environ.get("GEMINI_MODEL", DEFAULT_MODEL),
+            endpoint=os.environ.get("GEMINI_ENDPOINT", DEFAULT_ENDPOINT),
+        )
 
     def extract(self, text: str, *, timeout_s: float = DEFAULT_TIMEOUT_S) -> ModelExtraction:
-        url = (
-            f"https://generativelanguage.googleapis.com/v1beta/models/{self._model}:generateContent"
-        )
+        url = f"{self._endpoint}/v1beta/models/{self._model}:generateContent"
         body = json.dumps(
             {
                 "systemInstruction": {"parts": [{"text": INSTRUCTION}]},
@@ -215,3 +228,22 @@ def validate_model_facts(text: str, extraction: ModelExtraction) -> list[Validat
             continue
         out.append(ValidatedModelFact(fact.key, fact.value, span))
     return out
+
+
+class RecordedModel:
+    """Replays one model outcome obtained before the write transaction.
+
+    The network call must not run under the event-store writer lock, so the command handler
+    calls the adapter first and the intake session inside the transaction sees this result.
+    """
+
+    name = "recorded"
+
+    def __init__(self, extraction: ModelExtraction | None, failure: str | None = None) -> None:
+        self._extraction = extraction
+        self._failure = failure
+
+    def extract(self, text: str, *, timeout_s: float = DEFAULT_TIMEOUT_S) -> ModelExtraction:
+        if self._extraction is None:
+            raise ModelUnavailableError(self._failure or "TRANSPORT_ERROR")
+        return self._extraction

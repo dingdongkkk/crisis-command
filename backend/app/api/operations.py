@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sqlite3
 import uuid
+from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Any
 
@@ -20,6 +22,7 @@ from app.api.routes import (
     _store,
 )
 from app.contracts.commands import (
+    AnswerCommand,
     ApprovalAccepted,
     ApproveCommand,
     DemoAdvanceCommand,
@@ -36,6 +39,7 @@ from app.contracts.events import (
     DuplicateCandidateFlaggedPayload,
     EscalatedToHumanPayload,
     IncidentPayload,
+    ModelAdapterDegradedPayload,
     OverrideEndedPayload,
     OverridePayload,
     OverrideRejectedPayload,
@@ -48,6 +52,8 @@ from app.contracts.plan import Plan
 from app.contracts.state import StateSnapshot
 from app.domain.assessment import assess
 from app.domain.commands import DomainError, NewEvent
+from app.intake.model_adapter import FactModel
+from app.intake.service import IntakeService
 from app.intake.session import IntakeSession
 from app.planning.allocator import allocate
 from app.planning.service import Planner, event
@@ -61,12 +67,31 @@ def planner(request: Request) -> Planner:
     return result
 
 
-def report_decision(state: StateSnapshot, command: ReportCommand) -> Decision:
+def intake_service(request: Request) -> IntakeService:
+    result: IntakeService = request.app.state.intake
+    return result
+
+
+def _save_intake(session_id: str, intake: IntakeSession) -> Callable[[sqlite3.Connection], None]:
+    data = json.dumps(intake.to_state(), sort_keys=True)
+
+    def write(conn: sqlite3.Connection) -> None:
+        conn.execute(
+            "INSERT OR REPLACE INTO intake_sessions VALUES (?, ?)",
+            (f"{session_id}:{intake.incident_id}", data),
+        )
+
+    return write
+
+
+def report_decision(
+    state: StateSnapshot, command: ReportCommand, model: FactModel | None = None
+) -> Decision:
     if command.sim_time_s < state.sim_time_s:
         raise DomainError(409, "INVALID_TRANSITION", "Simulation time went backwards")
     number = state.as_of_sequence + 1
     report_id, incident_id = f"report_{number}", f"incident_{number}"
-    intake = IntakeSession(incident_id)
+    intake = IntakeSession(incident_id, model=model)
     intake.add_report(report_id, command.text, command.sim_time_s)
     intake.next_question(command.sim_time_s)
     facts = intake.triage_facts(command.sim_time_s)
@@ -143,6 +168,18 @@ def report_decision(state: StateSnapshot, command: ReportCommand) -> Decision:
                 command.sim_time_s,
             )
         )
+    if intake.model_status == "unavailable":
+        events.append(
+            NewEvent(
+                "ModelAdapterDegraded",
+                "incident",
+                incident_id,
+                ModelAdapterDegradedPayload(
+                    adapter="model_adapter", cause=intake.model_failure or "TRANSPORT_ERROR"
+                ),
+                command.sim_time_s,
+            )
+        )
     if facts.escalation.escalated:
         events.append(
             NewEvent(
@@ -153,12 +190,14 @@ def report_decision(state: StateSnapshot, command: ReportCommand) -> Decision:
                 command.sim_time_s,
             )
         )
+    save_intake = _save_intake(state.session_id, intake)
 
     def save_text(conn: sqlite3.Connection) -> None:
         conn.execute(
             "INSERT INTO report_text VALUES (?, ?)",
             (f"{state.session_id}:{report_id}", command.text),
         )
+        save_intake(conn)
 
     return Decision(
         events,
@@ -181,15 +220,109 @@ def report_decision(state: StateSnapshot, command: ReportCommand) -> Decision:
 def reports(
     request: Request, command: ReportCommand, idempotency_key: IdempotencyKey = None
 ) -> JSONResponse:
+    key = _require_key(idempotency_key)
+    # The optional model runs here, before the writer lock; its outcome is replayed inside.
+    model = intake_service(request).prefetch(command.text)
     result = _store(request).execute(
         method="POST",
         path="/reports",
-        key=_require_key(idempotency_key),
+        key=key,
         body=command.model_dump(mode="json", by_alias=True),
         expected_session_id=command.expected_session_id,
-        decide=lambda state: report_decision(state, command),
+        decide=lambda state: report_decision(state, command, model),
         actor=OPERATOR,
     )
+    return _result_response(result)
+
+
+@router.post(
+    "/reports/{report_id}/answers", response_model=ReportAccepted, responses=PROBLEM_RESPONSES
+)
+def answer(
+    request: Request, report_id: str, command: AnswerCommand, idempotency_key: IdempotencyKey = None
+) -> JSONResponse:
+    store = _store(request)
+
+    def decide(state: StateSnapshot) -> Decision:
+        report = next((r for r in state.reports if r.report_id == report_id), None)
+        incident_id = report.linked_incident_id if report else None
+        incident = next(
+            (i for i in state.incidents if i.incident_id == incident_id and i.status == "active"),
+            None,
+        )
+        saved = store.intake_state(state.session_id, incident_id) if incident_id else None
+        if report is None or incident is None or saved is None:
+            raise DomainError(404, "NOT_FOUND", "Unknown report or no active intake")
+        intake = IntakeSession.from_state(saved)
+        pending = intake.pending_question()
+        if pending is None or pending.fact_key != command.fact_key:
+            raise DomainError(
+                409,
+                "NO_PENDING_QUESTION",
+                "That question is not awaiting an answer",
+                current={"pending_fact_key": pending.fact_key if pending else None},
+            )
+        was_escalated = bool(intake.escalation_reasons(state.sim_time_s))
+        if command.fact_key == "people_count":
+            intake.answer_count(None, state.sim_time_s)  # counts are confirmed by the operator
+        else:
+            intake.answer(command.fact_key, command.answer, state.sim_time_s)
+        intake.next_question(state.sim_time_s)
+        facts = intake.triage_facts(state.sim_time_s)
+        assessed = assess(incident, facts, state.policy)
+        events = [
+            event(
+                state,
+                "TriageFactsExtracted",
+                TriageFactsExtractedPayload(triage_facts=facts),
+                "incident",
+                incident.incident_id,
+            ),
+            event(
+                state,
+                "IncidentAssessed",
+                IncidentPayload(incident=assessed),
+                "incident",
+                incident.incident_id,
+            ),
+        ]
+        if facts.escalation.escalated and not was_escalated:
+            events.append(
+                event(
+                    state,
+                    "EscalatedToHuman",
+                    EscalatedToHumanPayload(
+                        incident_id=incident.incident_id, reasons=facts.escalation.reasons
+                    ),
+                    "incident",
+                    incident.incident_id,
+                )
+            )
+        return Decision(
+            events,
+            lambda es: (
+                200,
+                dict(
+                    report_id=report_id,
+                    incident_id=incident.incident_id,
+                    sequence=es[-1].sequence,
+                    escalated=facts.escalation.escalated,
+                ),
+            ),
+            _save_intake(state.session_id, intake),
+        )
+
+    result = store.execute(
+        method="POST",
+        path=f"/reports/{report_id}/answers",
+        key=_require_key(idempotency_key),
+        body=command.model_dump(mode="json"),
+        expected_session_id=command.expected_session_id,
+        decide=decide,
+        actor=OPERATOR,
+    )
+    if result.status == 200:
+        planner(request).recompute()
     return _result_response(result)
 
 
