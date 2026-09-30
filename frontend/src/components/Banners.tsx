@@ -91,9 +91,11 @@ interface TopBarProps {
   theme: Theme
   onToggleTheme: () => void
   onShowKeys: () => void
+  /** Simulation controls (scenario steps, simulated call) when the backend offers them. */
+  controls?: React.ReactNode
 }
 
-export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, onShowKeys }: TopBarProps) {
+export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, onShowKeys, controls }: TopBarProps) {
   return (
     <header className="topbar">
       <div className="brand">
@@ -113,6 +115,7 @@ export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, 
         <span>Operator console</span>
       </nav>
       <div className="topbar-right">
+        {controls}
         {simTimeS != null && (
           <div className="sim-clock" aria-label={`Simulation time ${simClock(simTimeS)}`}>
             <span className="kv-label">SIM TIME</span>

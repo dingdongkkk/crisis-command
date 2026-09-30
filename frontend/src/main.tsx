@@ -1,21 +1,26 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './map/worker'
-import { App } from './App'
-import { MockConsoleApi, scenarioFromLocation } from './mocks/mockApi'
 import '@fontsource-variable/inter'
 import '@fontsource/ibm-plex-mono/400.css'
 import '@fontsource/ibm-plex-mono/500.css'
 import '@fontsource/ibm-plex-mono/600.css'
+import './map/worker'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { App } from './App'
+import { LiveConsoleApi } from './api/liveApi'
+import type { ConsoleApi } from './api/types'
+import { MockConsoleApi, scenarioFromLocation } from './mocks/mockApi'
 import './styles.css'
 
 const root = document.getElementById('root')
 if (!root) throw new Error('Missing #root element')
 
-// CC-04 runs against contract-valid mocks (?mock=demo|stale|busy|loading|error|empty|disconnected|degraded|world_changing).
-// CC-09 replaces this with the live HTTP + WebSocket client.
+// Live backend by default (CC-09). `?mock=<scenario>` keeps the contract-valid mock for
+// demos without a backend and for screenshots: demo|stale|busy|loading|error|empty|
+// disconnected|degraded|world_changing.
 const params = new URLSearchParams(window.location.search)
-const api = new MockConsoleApi(scenarioFromLocation(window.location.search))
+const api: ConsoleApi = params.has('mock')
+  ? new MockConsoleApi(scenarioFromLocation(window.location.search))
+  : new LiveConsoleApi({ baseUrl: import.meta.env.VITE_API_BASE ?? '/api' })
 
 createRoot(root).render(
   <StrictMode>

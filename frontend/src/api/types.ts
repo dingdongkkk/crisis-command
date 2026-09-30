@@ -1,6 +1,10 @@
 import type {
   ApprovalAccepted,
   ApproveCommand,
+  DemoAdvanceResult,
+  DemoResetResult,
+  ReportAccepted,
+  ReportCommand,
   OverrideCommand,
   OverrideRecorded,
   Problem,
@@ -42,4 +46,21 @@ export interface ConsoleApi {
   connect(listener: (update: LiveUpdate) => void): () => void
   /** Fastest road route from every unit to an incident (informational, not an allocation). */
   getRouteCandidates(incidentId: string): Promise<RouteCandidatesView | null>
+  /** Simulation controls; present only when the backend runs in simulation mode. */
+  simulation?: {
+    advance(step: DemoStep, sessionId: string, key: string): Promise<ApiResult<DemoAdvanceResult>>
+    reset(sessionId: string, key: string): Promise<ApiResult<DemoResetResult>>
+  }
+  /** Synthetic caller reports (text intake). */
+  reports?: {
+    submit(body: ReportCommand, key: string): Promise<ApiResult<ReportAccepted>>
+  }
 }
+
+export type DemoStep = 'T+0' | 'T+2' | 'T+5' | 'T+10'
+export const DEMO_STEPS: { step: DemoStep; simTimeS: number }[] = [
+  { step: 'T+0', simTimeS: 0 },
+  { step: 'T+2', simTimeS: 120 },
+  { step: 'T+5', simTimeS: 300 },
+  { step: 'T+10', simTimeS: 600 },
+]

@@ -118,6 +118,14 @@ p { margin: 0; }
 .icon-btn:hover { background: var(--panel-3); color: var(--fg); }
 .notice-strip { border-radius: 0; text-align: center; }
 
+/* ---------- Simulation controls ---------- */
+.scenario { display: flex; align-items: center; gap: 8px; height: 100%; padding-right: 12px; border-right: 1px solid var(--line); }
+.scenario-steps { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.scenario-steps li { padding: 1px 6px; font-size: 11px; color: var(--faint); border: 1px solid var(--line-2); }
+.scenario-steps li.done { color: var(--signal); border-color: var(--signal); background: var(--signal-tint); }
+.scenario-steps li.next { color: var(--fg); border-style: dashed; }
+.scenario-btn { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; font-size: 12px; }
+
 /* ---------- Desktop layout ---------- */
 .console { flex: 1; min-height: 0; display: grid; grid-template-columns: 320px minmax(0, 1fr) 420px; }
 .rail { min-height: 0; display: flex; flex-direction: column; background: var(--panel); }
