@@ -1,8 +1,0 @@
-{
-  "status": "ok",
-  "mode": "simulation",
-  "schema_version": "1.0",
-  "routing_provider": "fixture",
-  "llm_provider": "template",
-  "degraded": []
-}
