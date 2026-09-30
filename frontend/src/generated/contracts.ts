@@ -2057,6 +2057,33 @@ export interface ReportCommand {
 }
 /**
  * This interface was referenced by `CrisisCommandContracts`'s JSON-Schema
+ * via the `definition` "RouteCandidate".
+ */
+export interface RouteCandidate {
+  route: Route;
+  unit_id: string;
+  unit_status: UnitStatus;
+  unit_type: UnitType;
+}
+/**
+ * Fastest road route from each unit to an incident under current flood closures.
+ *
+ * Informational only: eligibility, locks and allocation remain the solver's job.
+ *
+ * This interface was referenced by `CrisisCommandContracts`'s JSON-Schema
+ * via the `definition` "RouteCandidates".
+ */
+export interface RouteCandidates {
+  as_of_sequence: number;
+  candidates: RouteCandidate[];
+  flood_version: number;
+  graph_version: string;
+  incident_id: string;
+  routing_policy_version: string;
+  session_id: string;
+}
+/**
+ * This interface was referenced by `CrisisCommandContracts`'s JSON-Schema
  * via the `definition` "UnitStatusAccepted".
  */
 export interface UnitStatusAccepted {
