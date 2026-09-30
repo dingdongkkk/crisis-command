@@ -12,6 +12,7 @@ from .api import operations, privacy, routes, ws
 from .config import Settings
 from .contracts import SCHEMA_VERSION
 from .contracts.commands import HealthResponse
+from .intake.service import IntakeService
 from .planning.service import Planner
 from .routing.service import RouteService
 from .storage.event_store import EventStore
@@ -52,6 +53,7 @@ def create_app(
     )
     app.state.settings = settings
     app.state.heartbeat_s = heartbeat_s
+    app.state.intake = IntakeService.from_settings(settings.llm_provider)
 
     @app.get("/health", response_model=HealthResponse)
     def health() -> HealthResponse:
@@ -61,7 +63,8 @@ def create_app(
             schema_version=SCHEMA_VERSION,
             routing_provider=settings.routing_provider,
             llm_provider=settings.llm_provider,
-            degraded=(["MODEL_UNAVAILABLE"] if settings.llm_provider == "gemini" else [])
+            # Model health is the outcome of the latest call, not merely "a model is configured".
+            degraded=app.state.intake.degraded
             + (
                 ["ROUTING_DEGRADED"]
                 if settings.routing_provider == "ors_directions"

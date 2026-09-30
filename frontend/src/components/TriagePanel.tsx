@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 import type { Incident, TriageFact, TriageFacts } from '../contracts'
 import {
   categoryLabel,
@@ -7,6 +7,7 @@ import {
   factSourceLabel,
   factValueLabel,
   needTypeLabel,
+  questionText,
   reasonText,
   severityIcon,
   severityLabel,
@@ -15,6 +16,39 @@ import {
 interface TriagePanelProps {
   incident: Incident | null
   facts: TriageFacts | null
+  /** Records the (synthetic) caller's answer; resolves to an error message or null. */
+  onAnswer?: (reportId: string, factKey: string, answer: 'yes' | 'no' | 'unknown') => Promise<string | null>
+  answerEnabled?: boolean
+}
+
+function PendingQuestion({ incident, factKey, onAnswer, enabled }: {
+  incident: Incident
+  factKey: string
+  onAnswer: NonNullable<TriagePanelProps['onAnswer']>
+  enabled: boolean
+}) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const reportId = incident.report_ids.at(-1)
+  const send = async (answer: 'yes' | 'no' | 'unknown') => {
+    if (!reportId) return
+    setBusy(true)
+    setError(await onAnswer(reportId, factKey, answer))
+    setBusy(false)
+  }
+  const disabled = !enabled || busy || !reportId
+  return (
+    <div className="pending-question" role="group" aria-labelledby={`q-${incident.incident_id}`}>
+      <p className="kv-label">Caller question pending · simulated</p>
+      <p id={`q-${incident.incident_id}`} className="question-text">{questionText(factKey)}</p>
+      <div className="question-actions">
+        <button type="button" disabled={disabled} onClick={() => void send('yes')}>Yes</button>
+        <button type="button" disabled={disabled} onClick={() => void send('no')}>No</button>
+        <button type="button" disabled={disabled} onClick={() => void send('unknown')}>Not sure</button>
+      </div>
+      {error && <p className="notice notice-error" role="alert">Answer not recorded: {error}</p>}
+    </div>
+  )
 }
 
 function valueText(fact: TriageFact): string {
@@ -27,7 +61,7 @@ function valueText(fact: TriageFact): string {
 
 const isUnknown = (fact: TriageFact) => (fact.count ? fact.count.status === 'unknown' : fact.value === 'unknown')
 
-export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(function TriagePanel({ incident, facts }, ref) {
+export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(function TriagePanel({ incident, facts, onAnswer, answerEnabled = false }, ref) {
   if (!incident) {
     return (
       <section className="triage" aria-labelledby="triage-title">
@@ -40,6 +74,8 @@ export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(func
   const allFacts = facts?.facts ?? []
   const unknownCritical = allFacts.filter((f) => applicable.has(f.key) && isUnknown(f))
   const escalation = facts?.escalation
+  const lastAsked = facts?.questions_asked.at(-1)
+  const pendingKey = lastAsked && lastAsked.answer == null && !escalation?.escalated ? lastAsked.fact_key : null
 
   return (
     <section className="triage" aria-labelledby="triage-title">
@@ -58,6 +94,9 @@ export const TriagePanel = forwardRef<HTMLHeadingElement, TriagePanelProps>(func
         <p className="escalated" role="note">
           With operator — reason: {escalation.reasons.map(escalationLabel).join(', ')}
         </p>
+      )}
+      {pendingKey && onAnswer && (
+        <PendingQuestion key={`${incident.incident_id}-${pendingKey}`} incident={incident} factKey={pendingKey} onAnswer={onAnswer} enabled={answerEnabled} />
       )}
       {!facts ? (
         <p className="empty">No triage facts recorded for this incident.</p>

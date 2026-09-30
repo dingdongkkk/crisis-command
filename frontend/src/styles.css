@@ -453,3 +453,10 @@ kbd { padding: 1px 6px; border-radius: 2px; border: 1px solid var(--line-2); bac
   .stat:nth-child(3n) { border-right: 0; }
   .stat:nth-child(-n + 3) { border-bottom: 1px solid var(--line); }
 }
+
+/* CC-09: intake question and provider degradation */
+.pending-question { margin: 8px 0 10px; padding: 8px 10px; border: 1px solid var(--accent); border-left-width: 3px; background: var(--panel-2); }
+.pending-question .question-text { margin: 4px 0 8px; font-weight: 600; }
+.question-actions { display: flex; gap: 6px; }
+.question-actions button { min-width: 72px; height: 26px; }
+.notice-degraded { color: var(--warning); border-color: var(--warning-solid); background: var(--warning-tint); }

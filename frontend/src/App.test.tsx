@@ -359,3 +359,54 @@ afterEach(async () => {
     await new Promise((r) => setTimeout(r, 30))
   })
 })
+
+describe('live intake (CC-09)', () => {
+  function intakeApi() {
+    const snapshot = snapshotT10()
+    const facts = snapshot.triage_facts[0]
+    const incident = snapshot.incidents.find((i) => i.incident_id === facts?.incident_id)
+    if (!facts || !incident) throw new Error('fixture has no triaged incident')
+    facts.escalation = { escalated: false, reasons: [], sim_time_s: null }
+    facts.questions_asked = [{ fact_key: 'breathing_normally', asked_sim_time_s: 590, answer: null }]
+    const answers: unknown[] = []
+    const api: ConsoleApi = {
+      loadState: async () => snapshot,
+      approve: async (): Promise<ApiResult<never>> => { throw new Error('unused') },
+      submitOverride: async (): Promise<ApiResult<never>> => { throw new Error('unused') },
+      getRouteCandidates: async () => null,
+      connect: (listener: (u: LiveUpdate) => void) => {
+        setTimeout(() => listener({ kind: 'connection', status: 'live' }))
+        return () => undefined
+      },
+      reports: {
+        submit: async (): Promise<ApiResult<never>> => { throw new Error('unused') },
+        answer: async (reportId, body) => {
+          answers.push({ reportId, body })
+          return { ok: true, status: 200, replayed: false, body: { report_id: reportId, incident_id: incident.incident_id, sequence: 61, escalated: false } }
+        },
+      },
+      health: async () => ({ ok: true, status: 200, replayed: false, body: { status: 'ok', mode: 'simulation', schema_version: '1.0', routing_provider: 'fixture', llm_provider: 'gemini', degraded: ['MODEL_UNAVAILABLE'] } }),
+    }
+    return { api, incident, answers }
+  }
+
+  it('records the caller answer to the pending question', async () => {
+    const { api, incident, answers } = intakeApi()
+    const user = userEvent.setup()
+    render(<App api={api} mapTiles={false} />)
+    await screen.findByText(/^Live/)
+    await user.click(document.querySelector(`[data-incident-id="${incident.incident_id}"]`) as HTMLElement)
+    const group = await screen.findByRole('group', { name: 'Is the person breathing normally?' })
+    await user.click(within(group).getByRole('button', { name: 'Not sure' }))
+    expect(answers).toEqual([
+      { reportId: incident.report_ids.at(-1), body: { expected_session_id: 'sess_demo_01', fact_key: 'breathing_normally', answer: 'unknown' } },
+    ])
+  })
+
+  it('shows model degradation from health without blocking the console', async () => {
+    const { api } = intakeApi()
+    render(<App api={api} mapTiles={false} />)
+    expect(await screen.findByText(/Model adapter unavailable — intake is rules-only/)).toBeInTheDocument()
+    expect(screen.getByText(/PROPOSED v7/)).toBeInTheDocument()
+  })
+})

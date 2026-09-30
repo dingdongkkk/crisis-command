@@ -18,6 +18,7 @@ import { Timeline } from './components/Timeline'
 import { TriagePanel } from './components/TriagePanel'
 import { sortEmergencies } from './state/queue'
 import { useTheme } from './state/theme'
+import { degradedText } from './state/labels'
 import { commandsEnabled, useConsole } from './state/useConsole'
 
 export interface AppProps {
@@ -67,6 +68,25 @@ export function App({ api, mapTiles = true }: AppProps) {
   const triageRef = useRef<HTMLHeadingElement>(null)
   const { snapshot } = state
   const enabled = commandsEnabled(state)
+
+  // Provider health (model/routing). Re-read whenever the world moves; a failed model call
+  // shows as degraded here while intake continues rules-only.
+  const [degraded, setDegraded] = useState<string[]>([])
+  const healthSequence = snapshot?.as_of_sequence
+  useEffect(() => {
+    if (!api.health || healthSequence == null) return
+    let cancelled = false
+    void api.health().then((r) => !cancelled && r.ok && setDegraded(r.body.degraded))
+    return () => {
+      cancelled = true
+    }
+  }, [api, healthSequence])
+
+  const answerQuestion = async (reportId: string, factKey: string, answer: 'yes' | 'no' | 'unknown') => {
+    if (!api.reports || !snapshot) return 'Intake is not available'
+    const result = await api.reports.answer(reportId, { expected_session_id: snapshot.session_id, fact_key: factKey, answer }, crypto.randomUUID())
+    return result.ok ? null : result.problem.title
+  }
 
   // Road-router candidates for the selected incident (informational; never changes the plan).
   // Loading/idle are derived from the selection; state is only set when a result arrives.
@@ -193,6 +213,9 @@ export function App({ api, mapTiles = true }: AppProps) {
         onToggleTheme={toggleTheme}
         onShowKeys={() => setDialog({ kind: 'keys' })}
       />
+      {degraded.map((code) => (
+        <p key={code} className="notice notice-strip notice-degraded" role="status">{degradedText(code)}</p>
+      ))}
       {state.sessionChanged && (
         <p className="notice notice-strip" role="alert">Simulation was reset. The console now shows the new session.</p>
       )}
@@ -244,7 +267,7 @@ export function App({ api, mapTiles = true }: AppProps) {
   const queue = <IncidentQueue incidents={snapshot.incidents} proposal={snapshot.current_proposal ?? snapshot.approved_plan} selectedId={state.selectedIncidentId} onSelect={select} />
   const fleet = <FleetList units={snapshot.units} />
   const map = <MapView snapshot={snapshot} proposal={snapshot.current_proposal} candidates={candidateRoutes} focusedUnitId={focusedUnitId} selectedId={state.selectedIncidentId} onSelect={select} theme={theme} tiles={mapTiles} />
-  const triage = <TriagePanel ref={triageRef} incident={selected} facts={selectedFacts} />
+  const triage = <TriagePanel ref={triageRef} incident={selected} facts={selectedFacts} onAnswer={api.reports ? answerQuestion : undefined} answerEnabled={enabled} />
   const reinforcements = (
     <ReinforcementsPanel state={routes} focusedUnitId={focusedUnitId} onFocus={setFocusedUnitId} snapshotSequence={snapshot.as_of_sequence} />
   )

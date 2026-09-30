@@ -6,7 +6,8 @@ Pure and deterministic given its inputs and an injected model. Emits contract
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
+from typing import Any
 
 from app.contracts.entities import TriageFacts
 
@@ -126,6 +127,37 @@ class IntakeSession:
     def request_human(self) -> None:
         """The caller pressed 'Talk to a person'."""
         self.human_requested = True
+
+    def pending_question(self) -> _Asked | None:
+        """The question awaiting the caller: the latest one asked and not yet answered."""
+        if self.asked and self.asked[-1].answer is None:
+            return self.asked[-1]
+        return None
+
+    # --- persistence --------------------------------------------------------------------
+
+    def to_state(self) -> dict[str, Any]:
+        """Dialogue state for the private intake table. No report text; the model is not saved."""
+        data = asdict(self)
+        data.pop("model")
+        data.pop("model_timeout_s")
+        data["escalated_at"] = data.pop("_escalated_at")
+        return data
+
+    @classmethod
+    def from_state(cls, data: dict[str, Any], model: FactModel | None = None) -> IntakeSession:
+        data = dict(data)
+        escalated_at = data.pop("escalated_at", None)
+        facts = {
+            k: _Fact(**{**v, "evidence": [tuple(e) for e in v["evidence"]]})
+            for k, v in data.pop("facts").items()
+        }
+        count = data.pop("count")
+        count = _Count(**{**count, "evidence": [tuple(e) for e in count["evidence"]]})
+        asked = [_Asked(**q) for q in data.pop("asked")]
+        session = cls(**data, model=model, facts=facts, count=count, asked=asked)
+        session._escalated_at = escalated_at
+        return session
 
     # --- questions and escalation -----------------------------------------------------
 

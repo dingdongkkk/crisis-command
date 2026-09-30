@@ -7,6 +7,7 @@
  * otherwise the client resyncs from a snapshot and resubscribes after its sequence.
  */
 import type {
+  AnswerCommand,
   ApprovalAccepted,
   ApproveCommand,
   DemoAdvanceResult,
@@ -136,6 +137,8 @@ export class LiveConsoleApi implements ConsoleApi {
 
   readonly reports = {
     submit: (body: ReportCommand, key: string) => this.request<ReportAccepted>('POST', '/reports', body, key),
+    answer: (reportId: string, body: AnswerCommand, key: string) =>
+      this.request<ReportAccepted>('POST', `/reports/${encodeURIComponent(reportId)}/answers`, body, key),
   }
 
   // --- WebSocket ----------------------------------------------------------------------
