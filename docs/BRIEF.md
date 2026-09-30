@@ -41,3 +41,7 @@ Exact assignments/ETAs in the PDF are illustrative. Use coherent fixtures and ac
 - API quotas, model downloads, map tiles and hosting mean the brief's blanket zero-cost/offline claims need qualification.
 
 The PDF lists human roles: Anubhav (AI and frontend), Shrihari (decision engine), Kavyadeep (backend/data). Preserve these as suggested human review areas; the repository does not invite or assign GitHub users without their handles.
+
+## CC-01 resolutions
+
+The open questions above are resolved in [the decision records](decisions/README.md): unknown triage facts and escalation (0002), ALS shortage, BLS bridge and soft reserve (0003), conflicting overrides (0004), stale approvals and replay (0005), screen states (0006), and acceptance scenarios for the T+0 to T+10 progression (0007). All numeric thresholds there are demonstration defaults under a versioned policy, not clinical values.

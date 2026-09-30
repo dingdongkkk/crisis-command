@@ -1,0 +1,215 @@
+[
+  {
+    "schema_version": "1.0",
+    "event_id": "5b0e7f7e-2a53-4a4f-9d7e-0c6f1b5a1e01",
+    "session_id": "sess_demo_01",
+    "sequence": 53,
+    "event_type": "ReportReceived",
+    "aggregate_type": "report",
+    "aggregate_id": "rpt_0010",
+    "occurred_at": "2026-09-30T09:10:00.000Z",
+    "sim_time_s": 600,
+    "actor": {
+      "kind": "caller_sim",
+      "id": "scenario:demo-bengaluru-v1"
+    },
+    "correlation_id": "corr_rpt_0010",
+    "causation_id": null,
+    "idempotency_key": "scenario:demo-bengaluru-v1:rpt_0010",
+    "affects_planning": true,
+    "payload": {
+      "report_id": "rpt_0010",
+      "channel": "text_sim",
+      "text_ref": {
+        "store": "report_text",
+        "text_sha256": "3f1c9a0e2b7d4c55a1e0f9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8",
+        "length_chars": 142
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.5838,
+          12.93
+        ]
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "9c1d2e3f-4a5b-4c6d-8e7f-0a1b2c3d4e02",
+    "session_id": "sess_demo_01",
+    "sequence": 58,
+    "event_type": "UnitStatusChanged",
+    "aggregate_type": "unit",
+    "aggregate_id": "unit_A2",
+    "occurred_at": "2026-09-30T09:10:00.400Z",
+    "sim_time_s": 600,
+    "actor": {
+      "kind": "watchdog",
+      "id": "watchdog"
+    },
+    "correlation_id": "corr_watchdog_600",
+    "causation_id": null,
+    "idempotency_key": "watchdog:unit_A2:broken_down:600",
+    "affects_planning": true,
+    "payload": {
+      "unit_id": "unit_A2",
+      "from_status": "en_route",
+      "to_status": "broken_down",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6231,
+          12.9241
+        ]
+      },
+      "invalidates_assignment_ids": [
+        "asg_0006_02"
+      ]
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "1e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a03",
+    "session_id": "sess_demo_01",
+    "sequence": 59,
+    "event_type": "PlanProposed",
+    "aggregate_type": "plan",
+    "aggregate_id": "plan_0007",
+    "occurred_at": "2026-09-30T09:10:01.350Z",
+    "sim_time_s": 601,
+    "actor": {
+      "kind": "solver",
+      "id": "ortools_cp_sat"
+    },
+    "correlation_id": "corr_watchdog_600",
+    "causation_id": "9c1d2e3f-4a5b-4c6d-8e7f-0a1b2c3d4e02",
+    "idempotency_key": "plan:sess_demo_01:7",
+    "affects_planning": false,
+    "payload": {
+      "plan_id": "plan_0007",
+      "version": 7,
+      "based_on_planning_sequence": 58,
+      "plan_ref": "see plan.valid.json"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "2a3b4c5d-6e7f-4a8b-9c0d-1e2f3a4b5c04",
+    "session_id": "sess_demo_01",
+    "sequence": 60,
+    "event_type": "OverrideRejected",
+    "aggregate_type": "override",
+    "aggregate_id": "ovr_0001",
+    "occurred_at": "2026-09-30T09:10:20.000Z",
+    "sim_time_s": 620,
+    "actor": {
+      "kind": "operator",
+      "id": "op_demo_1"
+    },
+    "correlation_id": "corr_ovr_0001",
+    "causation_id": null,
+    "idempotency_key": "7d8f0c9a-1b2c-4d3e-9f4a-5b6c7d8e9f10",
+    "affects_planning": false,
+    "payload": {
+      "override_id": "ovr_0001",
+      "kind": "pin",
+      "unit_id": "unit_A1",
+      "need_id": "need_0006_als",
+      "conflicts": [
+        {
+          "code": "UNIT_LOCKED",
+          "unit_id": "unit_A1",
+          "detail": "unit_A1 is on_scene at inc_0001"
+        }
+      ]
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "3b4c5d6e-7f8a-4b9c-8d1e-2f3a4b5c6d05",
+    "session_id": "sess_demo_01",
+    "sequence": 61,
+    "event_type": "PlanApproved",
+    "aggregate_type": "plan",
+    "aggregate_id": "plan_0007",
+    "occurred_at": "2026-09-30T09:10:41.000Z",
+    "sim_time_s": 641,
+    "actor": {
+      "kind": "operator",
+      "id": "op_demo_1"
+    },
+    "correlation_id": "corr_approve_0007",
+    "causation_id": null,
+    "idempotency_key": "0f1e2d3c-4b5a-4968-8776-655443322110",
+    "affects_planning": true,
+    "payload": {
+      "plan_id": "plan_0007",
+      "version": 7,
+      "based_on_planning_sequence": 58,
+      "acknowledged_flag_ids": [
+        "flag_0007_1",
+        "flag_0007_2",
+        "flag_0007_3",
+        "flag_0007_4"
+      ],
+      "outbox_keys": [
+        "plan_0007:asg_0007_03",
+        "plan_0007:asg_0007_04",
+        "plan_0007:asg_0007_05"
+      ]
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "4c5d6e7f-8a9b-4c0d-9e2f-3a4b5c6d7e06",
+    "session_id": "sess_demo_01",
+    "sequence": 62,
+    "event_type": "SimulatedDispatchQueued",
+    "aggregate_type": "dispatch",
+    "aggregate_id": "plan_0007:asg_0007_03",
+    "occurred_at": "2026-09-30T09:10:41.001Z",
+    "sim_time_s": 641,
+    "actor": {
+      "kind": "system",
+      "id": "approval"
+    },
+    "correlation_id": "corr_approve_0007",
+    "causation_id": "3b4c5d6e-7f8a-4b9c-8d1e-2f3a4b5c6d05",
+    "idempotency_key": "queue:plan_0007:asg_0007_03",
+    "affects_planning": false,
+    "payload": {
+      "outbox_key": "plan_0007:asg_0007_03",
+      "unit_id": "unit_B2",
+      "incident_id": "inc_0006",
+      "simulated": true
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "5d6e7f8a-9b0c-4d1e-8f3a-4b5c6d7e8f07",
+    "session_id": "sess_demo_01",
+    "sequence": 65,
+    "event_type": "SimulatedDispatchSent",
+    "aggregate_type": "dispatch",
+    "aggregate_id": "plan_0007:asg_0007_03",
+    "occurred_at": "2026-09-30T09:10:41.200Z",
+    "sim_time_s": 641,
+    "actor": {
+      "kind": "system",
+      "id": "simulated_dispatch_outbox"
+    },
+    "correlation_id": "corr_approve_0007",
+    "causation_id": "4c5d6e7f-8a9b-4c0d-9e2f-3a4b5c6d7e06",
+    "idempotency_key": "plan_0007:asg_0007_03",
+    "affects_planning": true,
+    "payload": {
+      "outbox_key": "plan_0007:asg_0007_03",
+      "unit_id": "unit_B2",
+      "incident_id": "inc_0006",
+      "unit_status_after": "en_route",
+      "simulated": true,
+      "transport": "in_process_simulator"
+    }
+  }
+]
