@@ -229,6 +229,7 @@ describe('unrecognised values', () => {
       loadState: async () => snapshot,
       approve: async (): Promise<ApiResult<never>> => { throw new Error('must not be called') },
       submitOverride: async (): Promise<ApiResult<never>> => { throw new Error('unused') },
+      getRouteCandidates: async () => null,
       connect: (listener: (u: LiveUpdate) => void) => {
         setTimeout(() => listener({ kind: 'connection', status: 'live' }))
         return () => undefined

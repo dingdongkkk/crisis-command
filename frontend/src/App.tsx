@@ -1,6 +1,6 @@
 import { X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
-import type { ConsoleApi } from './api/types'
+import type { ConsoleApi, RouteCandidatesView } from './api/types'
 import { ApproveDialog } from './components/ApproveDialog'
 import { ConnectionBanner, SimulationBanner, TopBar } from './components/Banners'
 import { FleetList } from './components/FleetList'
@@ -10,6 +10,7 @@ import { KpiStrip } from './components/KpiStrip'
 import { MapView } from './components/MapView'
 import { OverrideDialog, type OverridePrefill } from './components/OverrideDialog'
 import { PlanPanel } from './components/PlanPanel'
+import { ReinforcementsPanel } from './components/ReinforcementsPanel'
 import { Timeline } from './components/Timeline'
 import { TriagePanel } from './components/TriagePanel'
 import { sortEmergencies } from './state/queue'
@@ -42,6 +43,8 @@ function useNarrow(): boolean {
 const isTyping = (target: EventTarget | null) =>
   target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
 
+type RoutesState = { status: 'idle' | 'loading' | 'error' } | { status: 'ready'; data: RouteCandidatesView }
+
 export function App({ api, mapTiles = true }: AppProps) {
   const { state, planView, select, ack, approve, submitOverride, clearPlanAction } = useConsole(api)
   const [dialog, setDialog] = useState<DialogState>(null)
@@ -54,6 +57,46 @@ export function App({ api, mapTiles = true }: AppProps) {
   const triageRef = useRef<HTMLHeadingElement>(null)
   const { snapshot } = state
   const enabled = commandsEnabled(state)
+
+  // Road-router candidates for the selected incident (informational; never changes the plan).
+  // Loading/idle are derived from the selection; state is only set when a result arrives.
+  const selectedIncidentId = state.selectedIncidentId
+  const [routeResult, setRouteResult] = useState<{ incidentId: string; data: RouteCandidatesView | null } | null>(null)
+  const [focus, setFocus] = useState<{ incidentId: string; unitId: string | null } | null>(null)
+  useEffect(() => {
+    if (!selectedIncidentId) return
+    let cancelled = false
+    api
+      .getRouteCandidates(selectedIncidentId)
+      .then((data) => !cancelled && setRouteResult({ incidentId: selectedIncidentId, data }))
+      .catch(() => !cancelled && setRouteResult({ incidentId: selectedIncidentId, data: null }))
+    return () => {
+      cancelled = true
+    }
+  }, [api, selectedIncidentId])
+  const routes: RoutesState = useMemo(
+    () =>
+      !selectedIncidentId
+        ? { status: 'idle' }
+        : routeResult?.incidentId !== selectedIncidentId
+          ? { status: 'loading' }
+          : routeResult.data
+            ? { status: 'ready', data: routeResult.data }
+            : { status: 'error' },
+    [selectedIncidentId, routeResult],
+  )
+  const defaultFocus =
+    routes.status === 'ready'
+      ? (routes.data.candidates.find(
+          (c) => c.route.route_status === 'ok' && !['broken_down', 'out_of_service', 'off_duty'].includes(c.unit_status),
+        )?.unit_id ?? null)
+      : null
+  const focusedUnitId = focus && focus.incidentId === selectedIncidentId ? focus.unitId : defaultFocus
+  const setFocusedUnitId = (unitId: string | null) => selectedIncidentId && setFocus({ incidentId: selectedIncidentId, unitId })
+  const candidateRoutes = useMemo(
+    () => (routes.status === 'ready' ? routes.data.candidates.map((c) => ({ unitId: c.unit_id, route: c.route })) : []),
+    [routes],
+  )
 
   const emergencies = useMemo(() => (snapshot ? sortEmergencies(snapshot.incidents) : []), [snapshot])
   const selected = snapshot?.incidents.find((i) => i.incident_id === state.selectedIncidentId) ?? null
@@ -160,8 +203,11 @@ export function App({ api, mapTiles = true }: AppProps) {
 
   const queue = <IncidentQueue incidents={snapshot.incidents} proposal={snapshot.current_proposal ?? snapshot.approved_plan} selectedId={state.selectedIncidentId} onSelect={select} />
   const fleet = <FleetList units={snapshot.units} />
-  const map = <MapView snapshot={snapshot} proposal={snapshot.current_proposal} selectedId={state.selectedIncidentId} onSelect={select} theme={theme} tiles={mapTiles} />
+  const map = <MapView snapshot={snapshot} proposal={snapshot.current_proposal} candidates={candidateRoutes} focusedUnitId={focusedUnitId} selectedId={state.selectedIncidentId} onSelect={select} theme={theme} tiles={mapTiles} />
   const triage = <TriagePanel ref={triageRef} incident={selected} facts={selectedFacts} />
+  const reinforcements = (
+    <ReinforcementsPanel state={routes} focusedUnitId={focusedUnitId} onFocus={setFocusedUnitId} snapshotSequence={snapshot.as_of_sequence} />
+  )
   const planPanel = (
     <PlanPanel
       ref={planHeaderRef}
@@ -205,7 +251,12 @@ export function App({ api, mapTiles = true }: AppProps) {
         </div>
       ),
       Plan: planPanel,
-      Triage: triage,
+      Triage: (
+        <>
+          {triage}
+          {selected && reinforcements}
+        </>
+      ),
       Fleet: fleet,
     }
     return (
@@ -257,7 +308,10 @@ export function App({ api, mapTiles = true }: AppProps) {
                 <X size={14} />
               </button>
             )}
-            <div className="dock-body">{triage}</div>
+            <div className="dock-body">
+              {triage}
+              {selected && reinforcements}
+            </div>
           </div>
         </section>
         <aside className="rail rail-right" aria-label="Plan">

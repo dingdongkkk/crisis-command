@@ -3,7 +3,7 @@
  * `docs/decisions/examples/` (validated in tests); the mock only sequences them.
  * It contains no allocation or policy logic: outcomes are canned server responses.
  */
-import type { ApiResult, ConsoleApi, LiveUpdate } from '../api/types'
+import type { ApiResult, ConsoleApi, LiveUpdate, RouteCandidatesView } from '../api/types'
 import type {
   ApprovalAccepted,
   ApproveCommand,
@@ -16,6 +16,7 @@ import type {
 } from '../contracts'
 import apiExamples from '../../../docs/decisions/examples/api.examples.json'
 import events from '../../../docs/decisions/examples/events.valid.json'
+import recordedRoutes from './fixtures/route-candidates-t10.json'
 
 export type MockScenario =
   | 'demo'
@@ -176,6 +177,11 @@ export class MockConsoleApi implements ConsoleApi {
     return { ok: true, status: 200, body: accepted, replayed: false }
   }
 
+  getRouteCandidates(incidentId: string): Promise<RouteCandidatesView | null> {
+    const found = recordedRouteCandidates().find((c) => c.incident_id === incidentId) ?? null
+    return this.later(found, this.delayMs * 2)
+  }
+
   async submitOverride(body: OverrideCommand, key: string): Promise<ApiResult<OverrideRecorded>> {
     this.requests.push({ kind: 'override', key, body })
     if (body.expected_planning_sequence !== this.state.planning_sequence) {
@@ -210,6 +216,10 @@ export class MockConsoleApi implements ConsoleApi {
     return { ok: true, status: 201, body: recorded, replayed: false }
   }
 }
+
+/** Real CC-07 router output recorded for the T+10 snapshot (seq 60). */
+export const recordedRouteCandidates = (): RouteCandidatesView[] =>
+  clone((recordedRoutes as unknown as { items: RouteCandidatesView[] }).items)
 
 export function scenarioFromLocation(search: string): MockScenario {
   const value = new URLSearchParams(search).get('mock')

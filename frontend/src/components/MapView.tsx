@@ -11,7 +11,7 @@ import {
 import type { FeatureCollection, LineString, Polygon as GeoPolygon } from 'geojson'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import type { Incident, Plan, StateSnapshot, Unit } from '../contracts'
+import type { Incident, Plan, Route, StateSnapshot, Unit } from '../contracts'
 import { severityLabel, unitStatusLabel } from '../state/labels'
 import type { Theme } from '../state/theme'
 import { IncidentKindIcon, UnitTypeIcon } from './icons'
@@ -33,7 +33,17 @@ function blankStyle(theme: Theme): StyleSpecification {
 }
 
 
-function overlays(snapshot: StateSnapshot, proposal: Plan | null): Record<string, FeatureCollection> {
+export interface CandidateRoute {
+  unitId: string
+  route: Route
+}
+
+function overlays(
+  snapshot: StateSnapshot,
+  proposal: Plan | null,
+  candidates: CandidateRoute[],
+  focusedUnitId: string | null,
+): Record<string, FeatureCollection> {
   const coverage = (proposal ?? snapshot.approved_plan)?.coverage ?? []
   const uncovered = new Set(coverage.filter((c) => c.status !== 'covered').map((c) => c.zone_id))
   const routes = (plan: Plan | null | undefined): FeatureCollection => ({
@@ -55,6 +65,16 @@ function overlays(snapshot: StateSnapshot, proposal: Plan | null): Record<string
     },
     approved: routes(snapshot.approved_plan),
     proposed: routes(proposal),
+    candidates: {
+      type: 'FeatureCollection',
+      features: candidates
+        .filter((c) => c.route.route_status === 'ok' && c.route.geometry)
+        .map((c) => ({
+          type: 'Feature',
+          properties: { unit: c.unitId, focused: c.unitId === focusedUnitId },
+          geometry: c.route.geometry as LineString,
+        })),
+    },
   }
 }
 
@@ -95,6 +115,10 @@ function addOverlayLayers(map: MapLibreMap, data: Record<string, FeatureCollecti
   map.addLayer({ id: 'routes-approved', type: 'line', source: 'approved', layout: { 'line-cap': 'round' }, paint: { 'line-color': dark ? '#C5CBD3' : '#404854', 'line-width': 2, 'line-opacity': 0.9 } })
   map.addLayer({ id: 'routes-proposed-casing', type: 'line', source: 'proposed', paint: { 'line-color': dark ? '#111418' : '#ffffff', 'line-width': 5, 'line-opacity': 0.7 } })
   map.addLayer({ id: 'routes-proposed', type: 'line', source: 'proposed', paint: { 'line-color': '#EC9A3C', 'line-width': 2, 'line-dasharray': [2, 2] } })
+  // Road-router candidates for the selected incident: faint alternatives, one focused route.
+  map.addLayer({ id: 'candidates-alt', type: 'line', source: 'candidates', filter: ['!', ['get', 'focused']], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#3EC7D8', 'line-width': 1.5, 'line-opacity': 0.35 } })
+  map.addLayer({ id: 'candidates-casing', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': dark ? '#0a0d12' : '#ffffff', 'line-width': 7, 'line-opacity': 0.85 } })
+  map.addLayer({ id: 'candidates-focus', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#3EC7D8', 'line-width': 3.5 } })
 }
 
 const DASH_STEPS: [number, number, number][] = [
@@ -136,6 +160,9 @@ function UnitChip({ unit }: { unit: Unit }) {
 interface MapViewProps {
   snapshot: StateSnapshot
   proposal: Plan | null
+  /** Road-router routes for the selected incident (informational layer). */
+  candidates?: CandidateRoute[]
+  focusedUnitId?: string | null
   selectedId: string | null
   onSelect: (id: string) => void
   theme: Theme
@@ -143,7 +170,7 @@ interface MapViewProps {
   tiles?: boolean
 }
 
-export function MapView({ snapshot, proposal, selectedId, onSelect, theme, tiles = true }: MapViewProps) {
+export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = null, selectedId, onSelect, theme, tiles = true }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MapLibreMap | null>(null)
   const markersRef = useRef(new Map<string, Marker>())
@@ -152,7 +179,10 @@ export function MapView({ snapshot, proposal, selectedId, onSelect, theme, tiles
   const [baseMapFailed, setBaseMapFailed] = useState(false)
   const [hud, setHud] = useState({ lng: CENTER[0], lat: CENTER[1], zoom: 11.4, bearing: -12, pitch: 42 })
   const [cursor, setCursor] = useState<{ lng: number; lat: number } | null>(null)
-  const data = useMemo(() => overlays(snapshot, proposal), [snapshot, proposal])
+  const data = useMemo(
+    () => overlays(snapshot, proposal, candidates, focusedUnitId),
+    [snapshot, proposal, candidates, focusedUnitId],
+  )
   const dataRef = useRef(data)
   const themeRef = useRef(theme)
   const onSelectRef = useRef(onSelect)
@@ -352,6 +382,7 @@ export function MapView({ snapshot, proposal, selectedId, onSelect, theme, tiles
         <span className="kv-label">Legend</span>
         <span><i className="lg-line lg-approved" />Approved route</span>
         <span><i className="lg-line lg-proposed" />Proposed · not dispatched</span>
+        {candidates.length > 0 && <span><i className="lg-line lg-road" />Road route · router</span>}
         <span><i className="lg-box lg-flood" />Flood zone</span>
         <span><i className="lg-box lg-uncovered" />Reserve uncovered</span>
       </div>
