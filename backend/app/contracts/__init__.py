@@ -57,6 +57,7 @@ CONTRACT_MODELS: dict[str, Any] = {
     "DemoResetResult": commands.DemoResetResult,
     "DemoAdvanceResult": commands.DemoAdvanceResult,
     "WsSubscribe": commands.WsSubscribe,
+    "RouteCandidates": commands.RouteCandidates,
 }
 
 ADAPTERS: dict[str, TypeAdapter[Any]] = {
