@@ -16,6 +16,7 @@ from pydantic import (
     BeforeValidator,
     ConfigDict,
     Field,
+    WithJsonSchema,
     model_validator,
 )
 from pydantic_core import PydanticCustomError
@@ -33,9 +34,11 @@ class Contract(BaseModel):
 # --- Integers ---------------------------------------------------------------------------
 
 
-def _require_int(code: str, message: str) -> Any:
+def _require_int(code: str, message: str, minimum: int | None = None) -> Any:
     def check(value: Any) -> Any:
         if isinstance(value, bool) or not isinstance(value, int):
+            raise PydanticCustomError(code, message)
+        if minimum is not None and value < minimum:
             raise PydanticCustomError(code, message)
         return value
 
@@ -44,41 +47,37 @@ def _require_int(code: str, message: str) -> Any:
 
 Seconds = Annotated[
     int,
-    BeforeValidator(_require_int("INTEGER_SECONDS_REQUIRED", "durations are integer seconds")),
     Field(ge=0),
+    BeforeValidator(_require_int("INTEGER_SECONDS_REQUIRED", "durations are integer seconds")),
 ]
 """Non-negative integer seconds (durations, ETAs, simulation time)."""
 
 Metres = Annotated[
     int,
-    BeforeValidator(_require_int("INTEGER_METRES_REQUIRED", "distances are integer metres")),
     Field(ge=0),
+    BeforeValidator(_require_int("INTEGER_METRES_REQUIRED", "distances are integer metres")),
 ]
 Persons = Annotated[
     int,
-    BeforeValidator(_require_int("INTEGER_COUNT_REQUIRED", "counts are integers")),
     Field(ge=0),
+    BeforeValidator(_require_int("INTEGER_COUNT_REQUIRED", "counts are integers")),
 ]
 Beds = Persons
 NonNegativeInt = Persons
 Sequence = Annotated[
     int,
+    Field(ge=1),
     BeforeValidator(
-        _require_int("POSITIVE_SEQUENCE_REQUIRED", "sequence is an integer starting at 1")
+        _require_int("POSITIVE_SEQUENCE_REQUIRED", "sequence is an integer starting at 1", 1)
     ),
-    AfterValidator(lambda v: _positive(v, "POSITIVE_SEQUENCE_REQUIRED")),
 ]
 Version = Annotated[
     int,
-    BeforeValidator(_require_int("POSITIVE_VERSION_REQUIRED", "versions are integers")),
-    AfterValidator(lambda v: _positive(v, "POSITIVE_VERSION_REQUIRED")),
+    Field(ge=1),
+    BeforeValidator(
+        _require_int("POSITIVE_VERSION_REQUIRED", "versions are integers starting at 1", 1)
+    ),
 ]
-
-
-def _positive(value: int, code: str) -> int:
-    if value < 1:
-        raise PydanticCustomError(code, "must be at least 1")
-    return value
 
 
 # --- Time -------------------------------------------------------------------------------
@@ -147,7 +146,23 @@ def _coordinate(limit: float, name: str) -> Any:
 
 Longitude = Annotated[float, BeforeValidator(_coordinate(180, "longitude"))]
 Latitude = Annotated[float, BeforeValidator(_coordinate(90, "latitude"))]
-Position = tuple[Longitude, Latitude]
+Position = Annotated[
+    tuple[Longitude, Latitude],
+    # Explicit schema: ``prefixItems`` bounds for validators plus a 2-item ``items`` form
+    # that json-schema-to-typescript renders as ``[number, number]``.
+    WithJsonSchema(
+        {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {"type": "number"},
+            "prefixItems": [
+                {"type": "number", "minimum": -180, "maximum": 180, "description": "longitude"},
+                {"type": "number", "minimum": -90, "maximum": 90, "description": "latitude"},
+            ],
+        }
+    ),
+]
 """GeoJSON position, always ``[longitude, latitude]``."""
 
 

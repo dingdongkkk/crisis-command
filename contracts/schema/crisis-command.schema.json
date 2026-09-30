@@ -187,6 +187,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -196,7 +197,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -254,6 +255,7 @@
           "type": "array"
         },
         "expected_plan_version": {
+          "minimum": 1,
           "type": "integer"
         },
         "expected_planning_sequence": {
@@ -326,7 +328,7 @@
           "default": null
         },
         "eta_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "incident_id": {
@@ -373,7 +375,7 @@
         "persons": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -436,7 +438,7 @@
           "type": "array"
         },
         "eta_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "unit_id": {
@@ -676,7 +678,7 @@
           "type": "integer"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -768,7 +770,7 @@
         "eta_s": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -885,26 +887,26 @@
       "additionalProperties": false,
       "properties": {
         "needs_unmet": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "units_added": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "units_moved": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "units_released": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "weighted_eta_delta_s": {
           "type": "integer"
         },
         "zones_uncovered": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -1091,6 +1093,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -1100,7 +1103,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -1254,6 +1257,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -1263,7 +1267,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -1328,7 +1332,7 @@
         "sim_time_s": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -1499,7 +1503,7 @@
       "additionalProperties": false,
       "properties": {
         "end": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "report_id": {
@@ -1509,7 +1513,7 @@
           "type": "string"
         },
         "start": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -1537,7 +1541,7 @@
           "type": "string"
         },
         "free_after_persons": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "incident_id": {
@@ -1648,6 +1652,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -1657,7 +1662,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -1775,7 +1780,7 @@
         "value": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -1834,6 +1839,7 @@
           "type": "integer"
         },
         "version": {
+          "minimum": 1,
           "type": "integer"
         }
       },
@@ -1852,7 +1858,7 @@
           "type": "boolean"
         },
         "effective_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "expected_session_id": {
@@ -1871,6 +1877,7 @@
           "$ref": "#/$defs/Polygon"
         },
         "version": {
+          "minimum": 1,
           "type": "integer"
         }
       },
@@ -1892,7 +1899,7 @@
           "type": "boolean"
         },
         "effective_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "flood_id": {
@@ -1912,6 +1919,7 @@
           "type": "string"
         },
         "version": {
+          "minimum": 1,
           "type": "integer"
         }
       },
@@ -1995,6 +2003,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -2004,7 +2013,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -2108,7 +2117,7 @@
           "type": "string"
         },
         "ed_beds_available": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "facility_id": {
@@ -2205,6 +2214,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -2214,7 +2224,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -2298,7 +2308,7 @@
           "$ref": "#/$defs/IncidentCategory"
         },
         "created_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "duplicate_candidate_of": {
@@ -2430,6 +2440,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -2439,7 +2450,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -2541,6 +2552,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -2550,7 +2562,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -2672,6 +2684,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -2681,7 +2694,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -2787,6 +2800,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -2796,7 +2810,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -2860,13 +2874,22 @@
       "properties": {
         "coordinates": {
           "items": {
+            "items": {
+              "type": "number"
+            },
             "maxItems": 2,
             "minItems": 2,
             "prefixItems": [
               {
+                "description": "longitude",
+                "maximum": 180,
+                "minimum": -180,
                 "type": "number"
               },
               {
+                "description": "latitude",
+                "maximum": 90,
+                "minimum": -90,
                 "type": "number"
               }
             ],
@@ -2994,6 +3017,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -3003,7 +3027,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -3096,6 +3120,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -3105,7 +3130,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -3284,6 +3309,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -3293,7 +3319,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -3628,6 +3654,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -3637,7 +3664,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -3933,6 +3960,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -3942,7 +3970,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4091,6 +4119,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -4100,7 +4129,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4277,6 +4306,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -4286,7 +4316,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4346,7 +4376,7 @@
           "type": "string"
         },
         "created_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "diff": {
@@ -4415,6 +4445,7 @@
           "type": "array"
         },
         "version": {
+          "minimum": 1,
           "type": "integer"
         }
       },
@@ -4509,6 +4540,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -4518,7 +4550,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4591,6 +4623,7 @@
           "type": "string"
         },
         "version": {
+          "minimum": 1,
           "type": "integer"
         }
       },
@@ -4652,7 +4685,7 @@
           "$ref": "#/$defs/DiffTotals"
         },
         "unchanged_count": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4737,6 +4770,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -4746,7 +4780,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4868,6 +4902,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -4877,7 +4912,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -4983,6 +5018,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -4992,7 +5028,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -5024,7 +5060,7 @@
           "type": "integer"
         },
         "checked_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "plan_id": {
@@ -5125,6 +5161,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -5134,7 +5171,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -5262,6 +5299,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -5271,7 +5309,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -5299,7 +5337,7 @@
       "additionalProperties": false,
       "properties": {
         "tick_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "units": {
@@ -5320,13 +5358,22 @@
       "additionalProperties": false,
       "properties": {
         "coordinates": {
+          "items": {
+            "type": "number"
+          },
           "maxItems": 2,
           "minItems": 2,
           "prefixItems": [
             {
+              "description": "longitude",
+              "maximum": 180,
+              "minimum": -180,
               "type": "number"
             },
             {
+              "description": "latitude",
+              "maximum": 90,
+              "minimum": -90,
               "type": "number"
             }
           ],
@@ -5369,7 +5416,7 @@
           "type": "integer"
         },
         "near_arrival_lock_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "objective_tiers": {
@@ -5432,11 +5479,11 @@
           "type": "integer"
         },
         "travel_cap_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "waiting_cap_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -5528,7 +5575,7 @@
         "since_sim_time_s": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -5597,13 +5644,22 @@
         "coordinates": {
           "items": {
             "items": {
+              "items": {
+                "type": "number"
+              },
               "maxItems": 2,
               "minItems": 2,
               "prefixItems": [
                 {
+                  "description": "longitude",
+                  "maximum": 180,
+                  "minimum": -180,
                   "type": "number"
                 },
                 {
+                  "description": "latitude",
+                  "maximum": 90,
+                  "minimum": -90,
                   "type": "number"
                 }
               ],
@@ -5793,7 +5849,7 @@
           "default": null
         },
         "asked_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "fact_key": {
@@ -5929,7 +5985,7 @@
           "type": "string"
         },
         "received_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "report_id": {
@@ -6021,7 +6077,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "text": {
@@ -6110,6 +6166,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -6119,7 +6176,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -6243,6 +6300,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -6252,7 +6310,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -6293,7 +6351,7 @@
       "additionalProperties": false,
       "properties": {
         "coverage_eta_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "geometry": {
@@ -6401,6 +6459,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -6410,7 +6469,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -6448,6 +6507,7 @@
         },
         "geometry": {},
         "version": {
+          "minimum": 1,
           "type": "integer"
         }
       },
@@ -6467,7 +6527,7 @@
         "distance_m": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -6478,7 +6538,7 @@
         "duration_s": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -6627,6 +6687,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -6636,7 +6697,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -6695,7 +6756,7 @@
       "additionalProperties": false,
       "properties": {
         "capacity_persons": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "display_name": {
@@ -6715,7 +6776,7 @@
           "$ref": "#/$defs/Point"
         },
         "occupied_persons": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -6799,6 +6860,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -6808,7 +6870,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -6934,6 +6996,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -6943,7 +7006,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -7036,6 +7099,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -7045,7 +7109,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -7151,6 +7215,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -7160,7 +7225,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -7499,7 +7564,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "triage_facts": {
@@ -7542,7 +7607,7 @@
       "description": "Reference to caller text held in the separate, revocable report store (0005).",
       "properties": {
         "length_chars": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "report_id": {
@@ -7642,7 +7707,7 @@
           "$ref": "#/$defs/FactSource"
         },
         "updated_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "value": {
@@ -7736,6 +7801,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -7745,7 +7811,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -7903,6 +7969,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -7912,7 +7979,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -7953,7 +8020,7 @@
       "additionalProperties": false,
       "properties": {
         "capacity_persons": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "current_task": {
@@ -7991,7 +8058,7 @@
           "$ref": "#/$defs/Point"
         },
         "position_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "status": {
@@ -8045,7 +8112,7 @@
         "remaining_route_s": {
           "anyOf": [
             {
-              "ge": 0,
+              "minimum": 0,
               "type": "integer"
             },
             {
@@ -8138,6 +8205,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -8147,7 +8215,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -8175,7 +8243,7 @@
       "additionalProperties": false,
       "properties": {
         "observed_sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "position": {
@@ -8315,6 +8383,7 @@
           "type": "string"
         },
         "sequence": {
+          "minimum": 1,
           "type": "integer"
         },
         "session_id": {
@@ -8324,7 +8393,7 @@
           "type": "string"
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },
@@ -8392,7 +8461,7 @@
           "default": null
         },
         "sim_time_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         },
         "to_status": {
@@ -8460,7 +8529,7 @@
           "$ref": "#/$defs/NeedType"
         },
         "waiting_s": {
-          "ge": 0,
+          "minimum": 0,
           "type": "integer"
         }
       },

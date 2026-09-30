@@ -308,7 +308,7 @@ export interface Point {
    * @minItems 2
    * @maxItems 2
    */
-  coordinates: [unknown, unknown];
+  coordinates: [number, number];
   type: "Point";
 }
 /**
@@ -319,7 +319,7 @@ export interface LineString {
   /**
    * @minItems 2
    */
-  coordinates: [[unknown, unknown], [unknown, unknown], ...[unknown, unknown][]];
+  coordinates: [[number, number], [number, number], ...[number, number][]];
   type: "LineString";
 }
 /**
@@ -792,7 +792,7 @@ export interface Polygon {
   /**
    * @minItems 1
    */
-  coordinates: [[unknown, unknown][], ...[unknown, unknown][][]];
+  coordinates: [[number, number][], ...[number, number][][]];
   type: "Polygon";
 }
 /**
