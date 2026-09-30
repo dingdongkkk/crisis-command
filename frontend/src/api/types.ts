@@ -4,8 +4,13 @@ import type {
   OverrideCommand,
   OverrideRecorded,
   Problem,
+  RouteCandidates,
   StateSnapshot,
 } from '../contracts'
+
+/** `GET /routing/candidates` (CC-07): fastest road route from every unit to an incident. */
+export type RouteCandidatesView = RouteCandidates
+export type RouteCandidateView = RouteCandidates['candidates'][number]
 
 /** Connection banner states from decision 0006. */
 export type ConnectionStatus =
@@ -35,4 +40,6 @@ export interface ConsoleApi {
   approve(planId: string, body: ApproveCommand, idempotencyKey: string): Promise<ApiResult<ApprovalAccepted>>
   submitOverride(body: OverrideCommand, idempotencyKey: string): Promise<ApiResult<OverrideRecorded>>
   connect(listener: (update: LiveUpdate) => void): () => void
+  /** Fastest road route from every unit to an incident (informational, not an allocation). */
+  getRouteCandidates(incidentId: string): Promise<RouteCandidatesView | null>
 }
