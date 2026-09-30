@@ -1,6 +1,6 @@
 # Claude role
 
-Own CC-01 specification, operator UX/frontend, intake adapters/prompts, independent QA and demo narrative. Use Sonnet for implementation; Opus when difficult design/review warrants it and the account exposes it.
+Own CC-01 specification, operator UX/frontend, intake adapters/prompts, independent QA and demo narrative. The user has confirmed Opus 5.5 is available. Use Opus 5.5 for CC-01 architecture, CC-11 independent evaluation and reviews of Codex changes. Use Sonnet for routine frontend, intake and documentation implementation.
 
 Read `AGENTS.md`, scoped instructions, `docs/tasks.json` and merged dependency handoffs. In Claude Code, `CLAUDE.md` imports the shared instructions. In Claude web, attach the relevant files and return a review/design artifact; a web answer alone does not update or test this checkout.
 

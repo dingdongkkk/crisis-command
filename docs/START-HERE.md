@@ -4,7 +4,7 @@ The repo is a planning and collaboration setup, not a running application yet.
 
 ## 1. Start Claude on CC-01
 
-Use Claude Code from this folder, signed in with your Claude account. This setup did not find the `claude` executable on PATH, so it has not tested your Claude login or model access. Follow the [official setup guide](https://code.claude.com/docs/en/setup) if you need to install it. Check `/model`; use Opus for CC-01 if available, otherwise Sonnet.
+Use Claude Code from this folder, signed in with your Claude account. The user has confirmed Opus 5.5 is available. This setup did not find the `claude` executable on PATH, so the local Claude Code login has not been tested. Follow the [official setup guide](https://code.claude.com/docs/en/setup) if you need to install it. Select Opus 5.5 with `/model` for CC-01. The custom architect and reviewer roles explicitly use `claude-opus-5-5`.
 
 Paste:
 

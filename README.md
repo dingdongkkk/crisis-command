@@ -17,7 +17,7 @@ GitHub: [private repository](https://github.com/dingdongkkk/crisis-command), [ta
 
 | Responsibility | Development agent |
 | --- | --- |
-| Product specification, operator UX, frontend, language prompts, independent QA | Claude Sonnet; Opus for difficult design/review if available |
+| Product specification, operator UX, frontend, language prompts, independent QA | Claude Opus 5.5 for specification/review; Sonnet for routine UI/intake |
 | Contracts, backend, event log, rules, CP-SAT, routing, replanning, integration, CI | Codex Astra; Sol for routine implementation |
 | Acceptance, demos, merging after review | You |
 

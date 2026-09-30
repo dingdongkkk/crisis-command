@@ -7,9 +7,9 @@ Recommendation checked 2026-09-30. These are workload assignments, not a claim t
 | Work | First choice | When to change |
 | --- | --- | --- |
 | Backend, solver, event log, replanning, difficult integration | Codex `gpt-6-astra`, medium; high for hard races/solver review | Current desktop tools expose Astra and the 5.6 family. Use `gpt-5.6-sol` for routine backend tasks; try `gpt-6.1-sol` if it appears in your picker. |
-| Product specification, UX flow, architecture critique | Claude Opus 5.5 (`opus`) if available | Sonnet 5.5 (`sonnet`) is a practical fallback; do not wait for an unavailable tier. |
+| Product specification, UX flow, architecture critique | Claude Opus 5.5 (`claude-opus-5-5`), confirmed available | Use it for CC-01 and difficult design decisions; Sonnet handles routine implementation. |
 | React UI, interaction details, prompt/data authoring | Claude Sonnet 5.5 (`sonnet`) | Escalate to Opus only for unresolved complex design/debugging. |
-| Independent review of Codex changes | Claude Sonnet; Opus for allocation/approval invariants | Reviewer supplies concrete repros and missing tests; author fixes. |
+| Independent review of Codex changes | Claude Opus 5.5 (`claude-opus-5-5`) | Reviewer supplies concrete repros and missing tests; author fixes. |
 | Independent review of Claude changes | Codex Astra | UI behavior, contract compatibility and fallback tests matter more than cosmetic preference. |
 | Mechanical docs, formatting, narrow fixtures | Codex 5.6 Luna already exposed locally, or Claude Haiku if available | No need for another model if switching costs more time than it saves. |
 
@@ -17,7 +17,7 @@ Spend most Codex usage on implementation and tests. Spend the smaller Claude bud
 
 OpenAI's current docs recommend GPT-6.1 Sol where rolled out, with Astra for the hardest work. This desktop session's callable model list is narrower; no local config is pinned to a model that is not exposed. [OpenAI model guidance](https://learn.chatgpt.com/docs/models).
 
-Claude's current docs list Sonnet 5.5 and Opus 5.5. `/model` is the account-specific authority; aliases keep the role files usable across account changes. [Model configuration](https://support.claude.com/en/articles/11940350-claude-code-model-configuration), [usage guidance](https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code).
+Claude's current docs list Sonnet 5.5 and Opus 5.5. The user confirmed Opus 5.5 availability. Architect/reviewer roles are pinned to `claude-opus-5-5`; the frontend role keeps `sonnet`. `/model` selects the main session model independently of these role files. [Model configuration](https://support.claude.com/en/articles/11940350-claude-code-model-configuration), [usage guidance](https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code).
 
 ## Models and engines inside Crisis Command
 
