@@ -1,18 +1,301 @@
 [
-  {"name": "lat_lng_fields", "entity": "Report", "value": {"location": {"lat": 12.93, "lng": 77.5838}}, "reason": "Only GeoJSON Point with [longitude, latitude] is allowed."},
-  {"name": "swapped_point_in_fixture", "entity": "Unit", "value": {"position": {"type": "Point", "coordinates": [12.9241, 77.6231]}}, "reason": "Latitude out of range; also outside the demo bounding box."},
-  {"name": "non_utc_timestamp", "entity": "EventEnvelope", "value": {"occurred_at": "2026-09-30T14:40:00+05:30"}, "reason": "Timestamps must be UTC with Z."},
-  {"name": "fractional_eta", "entity": "Assignment", "value": {"eta_s": 95.5}, "reason": "Durations are integer seconds."},
-  {"name": "boolean_fact", "entity": "TriageFact", "value": {"key": "conscious", "value": false}, "reason": "Facts are yes/no/unknown strings, never booleans."},
-  {"name": "missing_fact_value", "entity": "TriageFact", "value": {"key": "conscious", "source": "rule_adapter"}, "reason": "value is required; absent knowledge is 'unknown'."},
-  {"name": "unknown_count_as_zero", "entity": "TriageFact", "value": {"key": "people_count", "count": {"value": 0, "status": "unknown"}}, "reason": "Unknown count must have value null."},
-  {"name": "model_no_without_evidence_stored_as_no", "entity": "TriageFact", "value": {"key": "breathing_normally", "value": "no", "source": "model_adapter", "evidence": []}, "reason": "A model/rule 'no' requires an evidence span; must be stored as unknown with coercion_reason."},
-  {"name": "bridge_satisfies_need", "entity": "Assignment", "value": {"unit_id": "unit_B2", "role": "bridge", "satisfies_need": true, "bridges_need_id": "need_0006_als"}, "reason": "A bridge never satisfies the ALS need."},
-  {"name": "bls_on_als_primary", "entity": "Plan", "value": {"assignments": [{"unit_id": "unit_B2", "need_id": "need_0006_als", "role": "primary", "satisfies_need": true}]}, "reason": "Type-ineligible primary assignment (H3); plan validator must reject."},
-  {"name": "double_booked_unit", "entity": "Plan", "value": {"assignments": [{"unit_id": "unit_B3", "need_id": "need_0006_bls"}, {"unit_id": "unit_B3", "need_id": "need_0004_bls"}]}, "reason": "One active task per unit (H4)."},
-  {"name": "unreachable_assignment", "entity": "Plan", "value": {"assignments": [{"unit_id": "unit_T1", "incident_id": "inc_0003", "route_status": "unavailable", "eta_s": 300}]}, "reason": "Unavailable route cannot carry an ETA or an assignment (H5)."},
-  {"name": "sequence_zero", "entity": "EventEnvelope", "value": {"sequence": 0}, "reason": "Sequence starts at 1."},
-  {"name": "unknown_major_schema", "entity": "EventEnvelope", "value": {"schema_version": "2.0"}, "reason": "Consumers reject an unknown MAJOR version."},
-  {"name": "raw_text_in_event", "entity": "EventEnvelope", "value": {"event_type": "ReportReceived", "payload": {"text": "caller free text…"}}, "reason": "Event payloads carry text_ref and hash, never raw text."},
-  {"name": "flag_ack_missing_field", "entity": "PolicyFlag", "value": {"flag_id": "flag_x", "code": "ALS_UNMET", "severity": "critical"}, "reason": "requires_ack is required on every flag."}
+  {
+    "name": "lat_lng_fields",
+    "entity": "Report",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/Report"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/location",
+        "value": {
+          "lat": 12.93,
+          "lng": 77.5838
+        }
+      }
+    ],
+    "expected_error": "GEOJSON_POINT_REQUIRED",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "swapped_point_in_fixture",
+    "entity": "Unit",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/Unit"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/position/coordinates",
+        "value": [
+          12.9241,
+          77.6231
+        ]
+      }
+    ],
+    "expected_error": "OUTSIDE_DEMO_BOUNDS",
+    "validation_layer": "fixture"
+  },
+  {
+    "name": "non_utc_timestamp",
+    "entity": "EventEnvelope",
+    "base": {
+      "file": "events.valid.json",
+      "pointer": "/0"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/occurred_at",
+        "value": "2026-09-30T14:40:00+05:30"
+      }
+    ],
+    "expected_error": "UTC_Z_REQUIRED",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "fractional_eta",
+    "entity": "Assignment",
+    "base": {
+      "file": "plan.valid.json",
+      "pointer": "/assignments/1"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/eta_s",
+        "value": 95.5
+      }
+    ],
+    "expected_error": "INTEGER_SECONDS_REQUIRED",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "boolean_fact",
+    "entity": "TriageFact",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/TriageFacts/facts/1"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/value",
+        "value": false
+      }
+    ],
+    "expected_error": "TRISTATE_REQUIRED",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "missing_fact_value",
+    "entity": "TriageFact",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/TriageFacts/facts/1"
+    },
+    "patches": [
+      {
+        "op": "remove",
+        "path": "/value"
+      }
+    ],
+    "expected_error": "FACT_VALUE_REQUIRED",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "unknown_count_as_zero",
+    "entity": "TriageFact",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/TriageFacts/facts/5"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/count/value",
+        "value": 0
+      }
+    ],
+    "expected_error": "UNKNOWN_COUNT_MUST_BE_NULL",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "model_no_without_evidence_stored_as_no",
+    "entity": "TriageFact",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/TriageFacts/facts/3"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/value",
+        "value": "no"
+      }
+    ],
+    "expected_error": "ASSERTION_WITHOUT_EVIDENCE",
+    "validation_layer": "domain"
+  },
+  {
+    "name": "bridge_satisfies_need",
+    "entity": "Assignment",
+    "base": {
+      "file": "entities.valid.json",
+      "pointer": "/BridgeAssignment"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/satisfies_need",
+        "value": true
+      }
+    ],
+    "expected_error": "BRIDGE_CANNOT_SATISFY",
+    "validation_layer": "domain"
+  },
+  {
+    "name": "bls_on_als_primary",
+    "entity": "Plan",
+    "base": {
+      "file": "plan.valid.json",
+      "pointer": ""
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/assignments/2/need_id",
+        "value": "need_0006_als"
+      }
+    ],
+    "expected_error": "TYPE_INELIGIBLE",
+    "validation_layer": "domain"
+  },
+  {
+    "name": "double_booked_unit",
+    "entity": "Plan",
+    "base": {
+      "file": "plan.valid.json",
+      "pointer": ""
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/assignments/3/unit_id",
+        "value": "unit_B2"
+      }
+    ],
+    "expected_error": "DUPLICATE_UNIT",
+    "validation_layer": "domain"
+  },
+  {
+    "name": "unreachable_assignment",
+    "entity": "Plan",
+    "base": {
+      "file": "plan.valid.json",
+      "pointer": ""
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/assignments/2/route",
+        "value": {
+          "route_id": "route_unit_T1_inc_0003_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.66,
+              12.95
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.6784,
+              12.9304
+            ]
+          },
+          "route_status": "unavailable",
+          "unavailable_reason": "DESTINATION_IN_CLOSED_FLOOD_ZONE",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": null,
+          "distance_m": null,
+          "geometry": null
+        }
+      }
+    ],
+    "expected_error": "ROUTE_UNAVAILABLE",
+    "validation_layer": "domain"
+  },
+  {
+    "name": "sequence_zero",
+    "entity": "EventEnvelope",
+    "base": {
+      "file": "events.valid.json",
+      "pointer": "/0"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/sequence",
+        "value": 0
+      }
+    ],
+    "expected_error": "POSITIVE_SEQUENCE_REQUIRED",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "unknown_major_schema",
+    "entity": "EventEnvelope",
+    "base": {
+      "file": "events.valid.json",
+      "pointer": "/0"
+    },
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/schema_version",
+        "value": "2.0"
+      }
+    ],
+    "expected_error": "UNKNOWN_SCHEMA_MAJOR",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "raw_text_in_event",
+    "entity": "EventEnvelope",
+    "base": {
+      "file": "events.valid.json",
+      "pointer": "/0"
+    },
+    "patches": [
+      {
+        "op": "add",
+        "path": "/payload/text",
+        "value": "caller free text"
+      }
+    ],
+    "expected_error": "RAW_TEXT_FORBIDDEN",
+    "validation_layer": "schema"
+  },
+  {
+    "name": "flag_ack_missing_field",
+    "entity": "PolicyFlag",
+    "base": {
+      "file": "plan.valid.json",
+      "pointer": "/flags/0"
+    },
+    "patches": [
+      {
+        "op": "remove",
+        "path": "/requires_ack"
+      }
+    ],
+    "expected_error": "ACK_FIELD_REQUIRED",
+    "validation_layer": "schema"
+  }
 ]

@@ -1,6 +1,6 @@
 # CC-01 decision records
 
-Accepted by CC-01 (Claude Opus 5.5) pending Codex feasibility review. These records are the specification CC-02 onward implements. A later task changes a decision by adding a new record that says which one it supersedes; do not silently edit accepted numbers or semantics in code.
+Accepted by CC-01 (Claude Opus 5.5) and revised after the Codex feasibility review ([0009](0009-review-resolutions.md)). These records are the specification CC-02 onward implements. A later task changes a decision by adding a new record that says which one it supersedes; do not silently edit accepted numbers or semantics in code.
 
 | ID | Decision | Primary consumers |
 | --- | --- | --- |
@@ -12,6 +12,7 @@ Accepted by CC-01 (Claude Opus 5.5) pending Codex feasibility review. These reco
 | [0006](0006-operator-screen-states.md) | Operator console and intake screen states | CC-04, CC-09 |
 | [0007](0007-acceptance-scenarios.md) | Demo fixture and Given/When/Then acceptance scenarios | CC-03 to CC-11 |
 | [0008](0008-contract-examples.md) | Entity, event and API examples (valid and invalid) | CC-02, CC-04 |
+| [0009](0009-review-resolutions.md) | Review findings R1–R11 and how 0001–0008 changed | all |
 
 Machine-readable examples live in [examples/](examples/). CC-02 moves them into `contracts/` as canonical contract-test fixtures and generates schemas from Pydantic models; after that, `contracts/` is the source of truth and these files are historical.
 

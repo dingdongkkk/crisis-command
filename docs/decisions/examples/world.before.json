@@ -1,0 +1,1436 @@
+{
+  "schema_version": "1.0",
+  "session_id": "sess_demo_01",
+  "as_of_sequence": 52,
+  "planning_sequence": 50,
+  "sim_time_s": 600,
+  "policy": {
+    "policy_version": "demo-2026.2",
+    "dangerous_values": {
+      "conscious": "no",
+      "breathing_normally": "no",
+      "chest_pain": "yes",
+      "severe_bleeding": "yes",
+      "trapped": "yes",
+      "fire_or_smoke": "yes",
+      "gas_smell": "yes",
+      "water_rising": "yes",
+      "caller_in_danger": "yes"
+    },
+    "objective_tiers": [
+      "unmet_critical",
+      "unmet_high",
+      "unmet_medium",
+      "unmet_low",
+      "waiting_cost",
+      "operating_cost"
+    ],
+    "severity_weights": {
+      "critical": 5,
+      "high": 3,
+      "medium": 2,
+      "low": 1
+    },
+    "limits": {
+      "units": 25,
+      "need_records": 30,
+      "demand_quanta": 2000,
+      "reserve_pairs": 12
+    },
+    "costs": {
+      "travel_cap_s": 3600,
+      "waiting_cap_s": 3600,
+      "reassignment": 600,
+      "reserve_shortfall": 900,
+      "als_on_bls": 900
+    },
+    "planning_tick_s": 10,
+    "max_debounce_ms": 250,
+    "solver_budget_ms": 2000,
+    "near_arrival_lock_s": 120
+  },
+  "incidents": [
+    {
+      "incident_id": "inc_0001",
+      "category": "emergency",
+      "kind": "fixture_incident",
+      "severity": "critical",
+      "assumed_facts": [],
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.6408,
+          12.9784
+        ]
+      },
+      "created_sim_time_s": 0,
+      "status": "active",
+      "report_ids": [],
+      "needs": [
+        {
+          "need_id": "need_0001_als",
+          "type": "als",
+          "quantity": 1,
+          "basis": "confirmed",
+          "reasons": []
+        }
+      ],
+      "duplicate_candidate_of": []
+    },
+    {
+      "incident_id": "inc_0003",
+      "category": "emergency",
+      "kind": "fixture_incident",
+      "severity": "high",
+      "assumed_facts": [],
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.6784,
+          12.9304
+        ]
+      },
+      "created_sim_time_s": 0,
+      "status": "active",
+      "report_ids": [],
+      "needs": [
+        {
+          "need_id": "need_0003_water",
+          "type": "water_rescue",
+          "quantity": 1,
+          "basis": "confirmed",
+          "reasons": []
+        }
+      ],
+      "duplicate_candidate_of": []
+    },
+    {
+      "incident_id": "inc_0004",
+      "category": "emergency",
+      "kind": "fixture_incident",
+      "severity": "critical",
+      "assumed_facts": [
+        "conscious",
+        "breathing_normally"
+      ],
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.6229,
+          12.9177
+        ]
+      },
+      "created_sim_time_s": 120,
+      "status": "active",
+      "report_ids": [],
+      "needs": [
+        {
+          "need_id": "need_0004_als",
+          "type": "als",
+          "quantity": 1,
+          "basis": "provisional_unknown",
+          "reasons": []
+        },
+        {
+          "need_id": "need_0004_bls",
+          "type": "bls",
+          "quantity": 1,
+          "basis": "confirmed",
+          "reasons": []
+        }
+      ],
+      "duplicate_candidate_of": []
+    },
+    {
+      "incident_id": "inc_0005",
+      "category": "emergency",
+      "kind": "fixture_incident",
+      "severity": "high",
+      "assumed_facts": [],
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.6387,
+          12.9116
+        ]
+      },
+      "created_sim_time_s": 120,
+      "status": "active",
+      "report_ids": [],
+      "needs": [
+        {
+          "need_id": "need_0005_fire",
+          "type": "fire",
+          "quantity": 1,
+          "basis": "confirmed",
+          "reasons": []
+        },
+        {
+          "need_id": "need_0005_shelter",
+          "type": "shelter_places",
+          "quantity": 40,
+          "basis": "confirmed",
+          "reasons": []
+        }
+      ],
+      "duplicate_candidate_of": []
+    }
+  ],
+  "reports": [],
+  "triage_facts": [],
+  "units": [
+    {
+      "unit_id": "unit_A1",
+      "display_name": "A1",
+      "type": "als",
+      "status": "on_scene",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6408,
+          12.9784
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_central",
+      "current_task": {
+        "assignment_id": "asg_0006_01",
+        "incident_id": "inc_0001",
+        "need_id": "need_0001_als"
+      },
+      "capacity_persons": 1,
+      "desired_revision": 6
+    },
+    {
+      "unit_id": "unit_A2",
+      "display_name": "A2",
+      "type": "als",
+      "status": "en_route",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6231,
+          12.9241
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_south",
+      "current_task": {
+        "assignment_id": "asg_0006_05",
+        "incident_id": "inc_0004",
+        "need_id": "need_0004_als"
+      },
+      "capacity_persons": 1,
+      "desired_revision": 6
+    },
+    {
+      "unit_id": "unit_B1",
+      "display_name": "B1",
+      "type": "bls",
+      "status": "en_route",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.623,
+          12.918
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_central",
+      "current_task": {
+        "assignment_id": "asg_0006_02",
+        "incident_id": "inc_0004",
+        "need_id": "need_0004_bls"
+      },
+      "capacity_persons": 1,
+      "desired_revision": 6
+    },
+    {
+      "unit_id": "unit_B2",
+      "display_name": "B2",
+      "type": "bls",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.5838,
+          12.925
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_south",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_B3",
+      "display_name": "B3",
+      "type": "bls",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.592,
+          13.0358
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_north",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_F1",
+      "display_name": "F1",
+      "type": "fire",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.601,
+          12.978
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_central",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_F2",
+      "display_name": "F2",
+      "type": "fire",
+      "status": "on_scene",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6387,
+          12.9116
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_east",
+      "current_task": {
+        "assignment_id": "asg_0006_03",
+        "incident_id": "inc_0005",
+        "need_id": "need_0005_fire"
+      },
+      "capacity_persons": 1,
+      "desired_revision": 6
+    },
+    {
+      "unit_id": "unit_BT1",
+      "display_name": "BT1",
+      "type": "boat",
+      "status": "en_route",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6784,
+          12.94
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_east",
+      "current_task": {
+        "assignment_id": "asg_0006_04",
+        "incident_id": "inc_0003",
+        "need_id": "need_0003_water"
+      },
+      "capacity_persons": 6,
+      "desired_revision": 6
+    },
+    {
+      "unit_id": "unit_T1",
+      "display_name": "T1",
+      "type": "tow",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.66,
+          12.95
+        ]
+      },
+      "position_sim_time_s": 600,
+      "home_zone_id": "zone_east",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    }
+  ],
+  "facilities": [
+    {
+      "facility_id": "hosp_H1",
+      "kind": "hospital",
+      "display_name": "Synthetic General H1",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.596,
+          12.958
+        ]
+      },
+      "capabilities": [
+        "emergency",
+        "cardiac"
+      ],
+      "ed_beds_available": 4
+    },
+    {
+      "facility_id": "shelter_S1",
+      "kind": "shelter",
+      "display_name": "Synthetic Community Hall S1",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.61,
+          12.95
+        ]
+      },
+      "capacity_persons": 120,
+      "occupied_persons": 30
+    }
+  ],
+  "flood": [
+    {
+      "flood_id": "flood_bellandur",
+      "version": 1,
+      "effective_sim_time_s": 300,
+      "closes_roads": true,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.668,
+              12.924
+            ],
+            [
+              77.69,
+              12.924
+            ],
+            [
+              77.69,
+              12.938
+            ],
+            [
+              77.668,
+              12.938
+            ],
+            [
+              77.668,
+              12.924
+            ]
+          ]
+        ]
+      },
+      "source": "synthetic_progression"
+    }
+  ],
+  "reserve_zones": [
+    {
+      "zone_id": "zone_north",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.592,
+          13.0358
+        ]
+      },
+      "required_types": [
+        "bls"
+      ],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.58,
+              13.02
+            ],
+            [
+              77.61,
+              13.02
+            ],
+            [
+              77.61,
+              13.05
+            ],
+            [
+              77.58,
+              13.05
+            ],
+            [
+              77.58,
+              13.02
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "zone_id": "zone_central",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.592,
+          13.0358
+        ]
+      },
+      "required_types": [
+        "bls"
+      ],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.58,
+              13.02
+            ],
+            [
+              77.61,
+              13.02
+            ],
+            [
+              77.61,
+              13.05
+            ],
+            [
+              77.58,
+              13.05
+            ],
+            [
+              77.58,
+              13.02
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "zone_id": "zone_south",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.592,
+          13.0358
+        ]
+      },
+      "required_types": [
+        "bls"
+      ],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.58,
+              13.02
+            ],
+            [
+              77.61,
+              13.02
+            ],
+            [
+              77.61,
+              13.05
+            ],
+            [
+              77.58,
+              13.05
+            ],
+            [
+              77.58,
+              13.02
+            ]
+          ]
+        ]
+      }
+    }
+  ],
+  "active_overrides": [],
+  "approved_plan": {
+    "plan_id": "plan_0006",
+    "version": 6,
+    "session_id": "sess_demo_01",
+    "state": "dispatched_simulated",
+    "based_on_planning_sequence": 50,
+    "created_sim_time_s": 590,
+    "created_at": "2026-09-30T09:09:50.000Z",
+    "policy_version": "demo-2026.2",
+    "supersedes_approved_plan_id": "plan_0005",
+    "solver": {
+      "engine": "ortools_cp_sat",
+      "status": "OPTIMAL",
+      "wall_time_ms": 184,
+      "seed": 7,
+      "workers": 1,
+      "objective_vector": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3105
+      ],
+      "completed_tiers": [
+        "unmet_critical",
+        "unmet_high",
+        "unmet_medium",
+        "unmet_low",
+        "waiting_cost",
+        "operating_cost"
+      ],
+      "lexicographic_complete": true,
+      "tie_break_complete": true
+    },
+    "assignments": [
+      {
+        "assignment_id": "asg_0006_01",
+        "unit_id": "unit_A1",
+        "incident_id": "inc_0001",
+        "need_id": "need_0001_als",
+        "role": "primary",
+        "satisfies_need": true,
+        "eta_s": 0,
+        "locked": "on_scene",
+        "destination_facility_id": "hosp_H1",
+        "reasons": [
+          {
+            "code": "UNIT_LOCKED",
+            "params": {
+              "unit_id": "unit_A1",
+              "lock": "on_scene"
+            }
+          }
+        ],
+        "route": {
+          "route_id": "route_unit_A1_inc_0001_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.6408,
+              12.9784
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.6408,
+              12.9784
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 0,
+          "distance_m": 0,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.6408,
+                12.9784
+              ],
+              [
+                77.6408,
+                12.9784
+              ]
+            ]
+          }
+        },
+        "onward_route": {
+          "route_id": "route_inc_0001_hosp_H1_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.6408,
+              12.9784
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.596,
+              12.958
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 800,
+          "distance_m": 8000,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.6408,
+                12.9784
+              ],
+              [
+                77.596,
+                12.958
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "assignment_id": "asg_0006_02",
+        "unit_id": "unit_B1",
+        "incident_id": "inc_0004",
+        "need_id": "need_0004_bls",
+        "role": "primary",
+        "satisfies_need": true,
+        "eta_s": 95,
+        "locked": "near_arrival",
+        "reasons": [
+          {
+            "code": "UNIT_LOCKED",
+            "params": {
+              "unit_id": "unit_B1",
+              "lock": "near_arrival"
+            }
+          }
+        ],
+        "route": {
+          "route_id": "route_unit_B1_inc_0004_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.623,
+              12.918
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.6229,
+              12.9177
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 95,
+          "distance_m": 950,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.623,
+                12.918
+              ],
+              [
+                77.6229,
+                12.9177
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "assignment_id": "asg_0006_03",
+        "unit_id": "unit_F2",
+        "incident_id": "inc_0005",
+        "need_id": "need_0005_fire",
+        "role": "primary",
+        "satisfies_need": true,
+        "eta_s": 0,
+        "locked": "on_scene",
+        "reasons": [
+          {
+            "code": "UNIT_LOCKED",
+            "params": {
+              "unit_id": "unit_F2",
+              "lock": "on_scene"
+            }
+          }
+        ],
+        "route": {
+          "route_id": "route_unit_F2_inc_0005_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.6387,
+              12.9116
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.6387,
+              12.9116
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 0,
+          "distance_m": 0,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.6387,
+                12.9116
+              ],
+              [
+                77.6387,
+                12.9116
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "assignment_id": "asg_0006_04",
+        "unit_id": "unit_BT1",
+        "incident_id": "inc_0003",
+        "need_id": "need_0003_water",
+        "role": "primary",
+        "satisfies_need": true,
+        "eta_s": 210,
+        "locked": null,
+        "reasons": [
+          {
+            "code": "NEAREST_ELIGIBLE",
+            "params": {
+              "unit_id": "unit_BT1",
+              "eta_s": 210
+            }
+          }
+        ],
+        "route": {
+          "route_id": "route_unit_BT1_inc_0003_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.6784,
+              12.94
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.6784,
+              12.9304
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 210,
+          "distance_m": 2100,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.6784,
+                12.94
+              ],
+              [
+                77.6784,
+                12.9304
+              ]
+            ]
+          }
+        },
+        "persons": 2
+      },
+      {
+        "assignment_id": "asg_0006_05",
+        "unit_id": "unit_A2",
+        "incident_id": "inc_0004",
+        "need_id": "need_0004_als",
+        "role": "primary",
+        "satisfies_need": true,
+        "eta_s": 400,
+        "locked": null,
+        "reasons": [
+          {
+            "code": "UNIT_LOCKED",
+            "params": {
+              "unit_id": "unit_B1",
+              "lock": "near_arrival"
+            }
+          }
+        ],
+        "route": {
+          "route_id": "route_unit_A2_inc_0004_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.623,
+              12.918
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.6229,
+              12.9177
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 400,
+          "distance_m": 950,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.623,
+                12.918
+              ],
+              [
+                77.6229,
+                12.9177
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "facility_allocations": [
+      {
+        "allocation_id": "fal_0007_01",
+        "facility_id": "shelter_S1",
+        "incident_id": "inc_0005",
+        "need_id": "need_0005_shelter",
+        "persons": 40,
+        "free_after_persons": 50,
+        "route": {
+          "route_id": "route_inc_0005_shelter_S1_fv1",
+          "from": {
+            "type": "Point",
+            "coordinates": [
+              77.6387,
+              12.9116
+            ]
+          },
+          "to": {
+            "type": "Point",
+            "coordinates": [
+              77.61,
+              12.95
+            ]
+          },
+          "route_status": "ok",
+          "provider": "fixture",
+          "flood_version": 1,
+          "duration_s": 900,
+          "distance_m": 9000,
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                77.6387,
+                12.9116
+              ],
+              [
+                77.61,
+                12.95
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "unmet_needs": [],
+    "flags": [],
+    "diff": {
+      "against_plan_id": "plan_0005",
+      "changed": [],
+      "added": [],
+      "released": [],
+      "unchanged_count": 5,
+      "newly_unmet": [],
+      "totals": {
+        "weighted_eta_delta_s": 0,
+        "units_moved": 0,
+        "units_added": 0,
+        "units_released": 0,
+        "needs_unmet": 0,
+        "zones_uncovered": 0
+      }
+    },
+    "soft_consequences": [],
+    "schema_version": "1.0",
+    "coverage": [
+      {
+        "zone_id": "zone_north",
+        "resource_type": "bls",
+        "status": "covered",
+        "available_unit_ids": [
+          "unit_B3"
+        ]
+      },
+      {
+        "zone_id": "zone_central",
+        "resource_type": "bls",
+        "status": "covered",
+        "available_unit_ids": [
+          "unit_B2"
+        ]
+      },
+      {
+        "zone_id": "zone_south",
+        "resource_type": "bls",
+        "status": "covered",
+        "available_unit_ids": [
+          "unit_B2"
+        ]
+      }
+    ]
+  },
+  "current_proposal": null,
+  "outbox": [],
+  "historical_plans": [
+    {
+      "plan_id": "plan_0006",
+      "version": 6,
+      "session_id": "sess_demo_01",
+      "state": "dispatched_simulated",
+      "based_on_planning_sequence": 50,
+      "created_sim_time_s": 590,
+      "created_at": "2026-09-30T09:09:50.000Z",
+      "policy_version": "demo-2026.2",
+      "supersedes_approved_plan_id": "plan_0005",
+      "solver": {
+        "engine": "ortools_cp_sat",
+        "status": "OPTIMAL",
+        "wall_time_ms": 184,
+        "seed": 7,
+        "workers": 1,
+        "objective_vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          3105
+        ],
+        "completed_tiers": [
+          "unmet_critical",
+          "unmet_high",
+          "unmet_medium",
+          "unmet_low",
+          "waiting_cost",
+          "operating_cost"
+        ],
+        "lexicographic_complete": true,
+        "tie_break_complete": true
+      },
+      "assignments": [
+        {
+          "assignment_id": "asg_0006_01",
+          "unit_id": "unit_A1",
+          "incident_id": "inc_0001",
+          "need_id": "need_0001_als",
+          "role": "primary",
+          "satisfies_need": true,
+          "eta_s": 0,
+          "locked": "on_scene",
+          "destination_facility_id": "hosp_H1",
+          "reasons": [
+            {
+              "code": "UNIT_LOCKED",
+              "params": {
+                "unit_id": "unit_A1",
+                "lock": "on_scene"
+              }
+            }
+          ],
+          "route": {
+            "route_id": "route_unit_A1_inc_0001_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.6408,
+                12.9784
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.6408,
+                12.9784
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 0,
+            "distance_m": 0,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.6408,
+                  12.9784
+                ],
+                [
+                  77.6408,
+                  12.9784
+                ]
+              ]
+            }
+          },
+          "onward_route": {
+            "route_id": "route_inc_0001_hosp_H1_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.6408,
+                12.9784
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.596,
+                12.958
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 800,
+            "distance_m": 8000,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.6408,
+                  12.9784
+                ],
+                [
+                  77.596,
+                  12.958
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "assignment_id": "asg_0006_02",
+          "unit_id": "unit_B1",
+          "incident_id": "inc_0004",
+          "need_id": "need_0004_bls",
+          "role": "primary",
+          "satisfies_need": true,
+          "eta_s": 95,
+          "locked": "near_arrival",
+          "reasons": [
+            {
+              "code": "UNIT_LOCKED",
+              "params": {
+                "unit_id": "unit_B1",
+                "lock": "near_arrival"
+              }
+            }
+          ],
+          "route": {
+            "route_id": "route_unit_B1_inc_0004_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.623,
+                12.918
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.6229,
+                12.9177
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 95,
+            "distance_m": 950,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.623,
+                  12.918
+                ],
+                [
+                  77.6229,
+                  12.9177
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "assignment_id": "asg_0006_03",
+          "unit_id": "unit_F2",
+          "incident_id": "inc_0005",
+          "need_id": "need_0005_fire",
+          "role": "primary",
+          "satisfies_need": true,
+          "eta_s": 0,
+          "locked": "on_scene",
+          "reasons": [
+            {
+              "code": "UNIT_LOCKED",
+              "params": {
+                "unit_id": "unit_F2",
+                "lock": "on_scene"
+              }
+            }
+          ],
+          "route": {
+            "route_id": "route_unit_F2_inc_0005_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.6387,
+                12.9116
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.6387,
+                12.9116
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 0,
+            "distance_m": 0,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.6387,
+                  12.9116
+                ],
+                [
+                  77.6387,
+                  12.9116
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "assignment_id": "asg_0006_04",
+          "unit_id": "unit_BT1",
+          "incident_id": "inc_0003",
+          "need_id": "need_0003_water",
+          "role": "primary",
+          "satisfies_need": true,
+          "eta_s": 210,
+          "locked": null,
+          "reasons": [
+            {
+              "code": "NEAREST_ELIGIBLE",
+              "params": {
+                "unit_id": "unit_BT1",
+                "eta_s": 210
+              }
+            }
+          ],
+          "route": {
+            "route_id": "route_unit_BT1_inc_0003_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.6784,
+                12.94
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.6784,
+                12.9304
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 210,
+            "distance_m": 2100,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.6784,
+                  12.94
+                ],
+                [
+                  77.6784,
+                  12.9304
+                ]
+              ]
+            }
+          },
+          "persons": 2
+        },
+        {
+          "assignment_id": "asg_0006_05",
+          "unit_id": "unit_A2",
+          "incident_id": "inc_0004",
+          "need_id": "need_0004_als",
+          "role": "primary",
+          "satisfies_need": true,
+          "eta_s": 400,
+          "locked": null,
+          "reasons": [
+            {
+              "code": "UNIT_LOCKED",
+              "params": {
+                "unit_id": "unit_B1",
+                "lock": "near_arrival"
+              }
+            }
+          ],
+          "route": {
+            "route_id": "route_unit_A2_inc_0004_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.623,
+                12.918
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.6229,
+                12.9177
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 400,
+            "distance_m": 950,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.623,
+                  12.918
+                ],
+                [
+                  77.6229,
+                  12.9177
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "facility_allocations": [
+        {
+          "allocation_id": "fal_0007_01",
+          "facility_id": "shelter_S1",
+          "incident_id": "inc_0005",
+          "need_id": "need_0005_shelter",
+          "persons": 40,
+          "free_after_persons": 50,
+          "route": {
+            "route_id": "route_inc_0005_shelter_S1_fv1",
+            "from": {
+              "type": "Point",
+              "coordinates": [
+                77.6387,
+                12.9116
+              ]
+            },
+            "to": {
+              "type": "Point",
+              "coordinates": [
+                77.61,
+                12.95
+              ]
+            },
+            "route_status": "ok",
+            "provider": "fixture",
+            "flood_version": 1,
+            "duration_s": 900,
+            "distance_m": 9000,
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  77.6387,
+                  12.9116
+                ],
+                [
+                  77.61,
+                  12.95
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "unmet_needs": [],
+      "flags": [],
+      "diff": {
+        "against_plan_id": "plan_0005",
+        "changed": [],
+        "added": [],
+        "released": [],
+        "unchanged_count": 5,
+        "newly_unmet": [],
+        "totals": {
+          "weighted_eta_delta_s": 0,
+          "units_moved": 0,
+          "units_added": 0,
+          "units_released": 0,
+          "needs_unmet": 0,
+          "zones_uncovered": 0
+        }
+      },
+      "soft_consequences": [],
+      "schema_version": "1.0",
+      "coverage": [
+        {
+          "zone_id": "zone_north",
+          "resource_type": "bls",
+          "status": "covered",
+          "available_unit_ids": [
+            "unit_B3"
+          ]
+        },
+        {
+          "zone_id": "zone_central",
+          "resource_type": "bls",
+          "status": "covered",
+          "available_unit_ids": [
+            "unit_B2"
+          ]
+        },
+        {
+          "zone_id": "zone_south",
+          "resource_type": "bls",
+          "status": "covered",
+          "available_unit_ids": [
+            "unit_B2"
+          ]
+        }
+      ]
+    }
+  ]
+}

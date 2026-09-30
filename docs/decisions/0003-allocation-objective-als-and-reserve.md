@@ -1,13 +1,13 @@
 # 0003 — Allocation constraints, objective bounds, ALS shortage and reserve coverage
 
-Status: accepted (CC-01). Consumers: CC-05 solver, CC-07 routing inputs, CC-08 policy gate, UI flags.
+Status: accepted (CC-01), revised after Codex review — see [0009](0009-review-resolutions.md). Consumers: CC-05 solver, CC-07 routing inputs, CC-08 policy gate, UI flags.
 
 ## Hard constraints (never violated by any plan, fallback or override)
 
 | ID | Constraint |
 | --- | --- |
 | H1 | Unit exists in the fleet for this session. |
-| H2 | Unit `status` is `available` or `returning`, or assigned-but-unlocked (`en_route` outside lock threshold). `out_of_service`, `broken_down`, `off_duty` units have no assignment; their previous assignments are invalidated. |
+| H2 | For new/changed tasks, unit `status` is `available` or `returning`, or assigned-but-unlocked (`en_route` outside lock threshold). Existing locked tasks are retained under H7. `out_of_service`, `broken_down`, `off_duty` units have no assignment; their previous assignments are invalidated. |
 | H3 | Resource type is eligible (table below). |
 | H4 | At most one active task per unit (no double-booking). |
 | H5 | A route with `route_status: "ok"` exists from the unit's position to the incident and, for transport needs, onward to the chosen facility, under the current flood version. Unknown or failed routes are ineligible (`ROUTE_UNAVAILABLE`), never straight-line estimates. |
@@ -26,41 +26,38 @@ Status: accepted (CC-01). Consumers: CC-05 solver, CC-07 routing inputs, CC-08 p
 | `tow` | `tow` | Only for `emergency` category (e.g. flood-stranded vehicle). |
 | `shelter_places` | facility, not a unit | Allocated as persons to a shelter, H6. |
 
-## Objective (minimise, integers only)
+## Objective (lexicographic, integers only)
+
+Policy `demo-2026.2` replaces the original scalar penalty claim. Minimise in order:
 
 ```
-total = Σ unmet_need_cost(need)
-      + Σ travel_cost(assignment)
-      + Σ reassignment_cost(moved unit)
-      + Σ reserve_shortfall_cost(zone, type)
-      + Σ als_on_bls_cost(assignment)
+(unmet_critical, unmet_high, unmet_medium, unmet_low, waiting_cost, operating_cost)
 ```
 
-Default `demo-2026.1` weights:
+Each `unmet_<severity>` is the sum of `quantity_unmet` in that severity. A quantity is a declared demand quantum: one ALS/BLS/fire/tow/boat unit slot, or one shelter person. A boat's passenger capacity is a separate hard check; it cannot satisfy a rescue of unknown size without a flagged explicit planning assumption. Partial fulfilment reduces missing quanta; never charge one flat penalty for an entire partially met need record.
+
+`waiting_cost = Σ quantity_unmet × w × min(waiting_s, 3600)`, with critical/high/medium/low `w = 5/3/2/1`. This prefers older needs within a fixed fulfilled-count vector. Quantity comparisons across different need types are an explicit demo simplification.
+
+`operating_cost` is the sum of:
 
 | Term | Value |
 | --- | --- |
-| Severity weight `w` | critical 5, high 3, medium 2, low 1 |
-| `travel_cost` | `w × min(eta_s, 3600)` |
-| `unmet_need_cost` | critical 20 000 000; high 300 000; medium 60 000; low 15 000; plus `w × min(waiting_s, 3600)` |
-| `reassignment_cost` | 600 per non-locked unit whose target changes from the currently approved plan |
-| `reserve_shortfall_cost` | 900 per (zone, required type) left uncovered |
-| `als_on_bls_cost` | 900 per ALS unit on a BLS-only need |
+| travel | `w × min(eta_s, 3600)` per unit assignment |
+| reassignment | 600 per unlocked unit changing an existing approved task; newly assigned idle units are not reassignments |
+| reserve shortfall | 900 per uncovered (zone, required type) |
+| ALS on BLS | 900 per ALS unit serving a BLS-only need |
 
-### Bounds that must hold (CC-05 asserts them in a test against the declared scenario limit)
+### Bounds and guarantees
 
-Declared limit: ≤ 25 units, ≤ 30 needs, ≤ 6 reserve zones × 2 types.
+Declared limits: ≤25 units, ≤30 need records, ≤2000 total demand quanta, ≤6 zones ×2 reserve types. Reject a fixture exceeding these limits. The maximum operating cost is `25×5×3600 + 25×600 + 12×900 + 25×900 = 498300`. Maximum waiting cost is `2000×5×3600 = 36000000`. These bounds check integer domains, not dominance via a scalar weight.
 
-1. One critical unmet need outweighs every non-critical term combined at the declared limit: `20 000 000 > 30 × (300 000 + 5 × 3600) + 25 × (5 × 3600) + 25 × 600 + 12 × 900 + 25 × 900` (= 10 038 300: all other needs unmet at high with maximum waiting, plus maximum travel, reassignment, reserve and waste). So the solver never leaves a critical need unmet to reduce travel, reassignment, reserve or waste.
-2. Any unmet high need outweighs any single assignment's travel: `300 000 > 5 × 3600`.
-3. Reserve shortfall (900) is less than the lowest unmet cost (15 000): **the solver never withholds a unit from a need to keep reserve.** It only uses reserve to break travel trade-offs: at critical weight, it accepts at most 180 s extra ETA to keep a zone covered; at low weight, 900 s.
-4. Reassignment (600) means moving an en-route unlocked unit must save more than 120 s of critical-weighted travel.
+Solve lexicographic tiers in separate passes, fixing a tier's value only after it is proven optimal. Never start waiting/operating optimisation until all unmet-count tiers are proven optimal. Thus **reserve cannot cause extra unmet demand at any severity while higher tiers stay equal**. Under scarcity, meeting a higher tier may still increase lower-tier unmet demand; no claim says every need is always satisfiable. The review counter-example (one ALS covers 12 reserve pairs, low BLS at 3600 s) must select service: its unmet-low count is 0 versus 1, regardless of the 15300 operating cost.
 
-Changing a weight requires a new `policy_version` and rerunning the bound test.
+A timeout at any pass returns its feasible incumbent with `lexicographic_complete: false`, `completed_tiers` and `SOLVER_TIME_LIMIT`; it is not labelled lexicographically optimal. Do not run lower passes after an unproven higher pass. Compare fallback candidate plans with the same tuple and enforce H1–H8. No guarantee of global optimality is claimed for a timed-out solve or fallback.
 
 ### Determinism
 
-Fixed `num_search_workers = 1`, fixed random seed, time limit 2 s per solve (demo default), stable ordering of units and needs by ID. Equal-cost ties break on lowest unit ID then lowest need ID via a tiny lexicographic tiebreak term below 1 objective unit (scale all other terms × 1000 internally if needed). Record `solver_status`, `objective`, `wall_time_ms` in the plan.
+One worker, fixed seed, stable ordered input IDs and a total 2 s wall-time budget across all passes. After all six tiers are proven, an optional deterministic tie pass fixes each unit's target in ID order; never perturb higher objectives with an unbounded summed tie term. If budget is exhausted, keep the last valid incumbent and record incomplete tie resolution. Pin the solver version; wall-time cutoffs can yield different feasible incumbents on different hardware, so exact-plan repeatability is asserted only for fixture runs completing every tier/tie pass. `solver` stores `objective_vector`, `completed_tiers`, `lexicographic_complete`, status, seed/workers and timing, not the superseded scalar `objective_cost`.
 
 ### Solver outcomes
 
@@ -78,19 +75,19 @@ Unmet demand is a decision variable, so infeasibility should only arise from con
 - An ALS need with no eligible, available, reachable ALS stays in `plan.unmet_needs` with reason codes, e.g. `NO_ALS_AVAILABLE`, `ALS_LOCKED_ON_SCENE` (with unit IDs), `ALS_OUT_OF_SERVICE`, `ALS_UNREACHABLE`.
 - Plan flag `ALS_UNMET` (severity `critical`, `requires_ack: true`) per affected incident. Approval requires acknowledging it (0005). Acknowledgement records that the operator saw the shortage; it does not mark the need met.
 - The unmet ALS need persists and is re-solved on every replan. When an ALS unit becomes available, the next plan assigns it if eligible.
-- `unmet_needs[].bridge_candidates` lists up to 3 reachable BLS units ordered by ETA, with ETA and the cost of taking each (which need/zone it leaves).
+- `unmet_needs[].bridge_candidates` lists up to 3 reachable, available or unlocked BLS units ordered by ETA (exclude locked units, even at the same incident), with ETA and the cost of taking each (which need/zone it leaves).
 
 ### BLS bridge
 
 - The solver **never** assigns a bridge on its own. The operator creates an `approve_bls_bridge` override (0004) naming the BLS unit and the unmet ALS need.
-- A bridge assignment has `role: "bridge"`, `satisfies_need: false`, `bridges_need_id`. It occupies the BLS unit (H4) but does not reduce ALS unmet cost, so the `ALS_UNMET` flag remains, relabelled `ALS_UNMET_BLS_BRIDGING` (still `critical`, still `requires_ack`).
+- A bridge assignment has `role: "bridge"`, `satisfies_need: false`, `bridges_need_id`. It occupies the BLS unit (H4) but does not reduce the ALS unmet-count tier, so the `ALS_UNMET` flag remains, relabelled `ALS_UNMET_BLS_BRIDGING` (still `critical`, still `requires_ack`).
 - If the BLS unit's own BLS need elsewhere becomes unmet as a result, that shows as its own unmet need and flag.
 - UI copy: "BLS bridge — not ALS care. ALS still unmet."
 
 ## Reserve coverage (soft)
 
 - Fixture defines reserve zones (polygon + required types + `coverage_eta_s`, default 600 s). A zone/type is covered if at least one `available` (unassigned after this plan) unit of that type, or a superset type, has a route to the zone's reference point within `coverage_eta_s`.
-- Coverage is a **soft** term. It is never hard, because a hard reserve could force a critical need to be unmet, contradicting bound 1. The brief's "absolute" reserve wording is satisfied only by an explicit operator `hold_unit` override, which then becomes H8 and shows its own consequences.
+- Coverage is a **soft** term. It is never hard, because a hard reserve could force a critical need to be unmet, contradicting the unmet-count priority. The brief's "absolute" reserve wording is satisfied only by an explicit operator `hold_unit` override, which then becomes H8 and shows its own consequences.
 - Each uncovered zone/type yields flag `RESERVE_UNCOVERED` (severity `warning`, `requires_ack: true`) with `zone_id`, `resource_type`, and `since_sim_time_s`.
 - Coverage is computed from the plan's resulting positions, using the same route provider and flood version as allocation. Routing failure for coverage marks the zone `coverage_unknown` (flag `RESERVE_COVERAGE_UNKNOWN`), not covered.
 

@@ -1,7 +1,7 @@
 [
   {
     "schema_version": "1.0",
-    "event_id": "5b0e7f7e-2a53-4a4f-9d7e-0c6f1b5a1e01",
+    "event_id": "00000000-0000-4000-8000-000000000053",
     "session_id": "sess_demo_01",
     "sequence": 53,
     "event_type": "ReportReceived",
@@ -11,105 +11,1170 @@
     "sim_time_s": 600,
     "actor": {
       "kind": "caller_sim",
-      "id": "scenario:demo-bengaluru-v1"
+      "id": "fixture"
     },
-    "correlation_id": "corr_rpt_0010",
+    "correlation_id": "corr_t10",
     "causation_id": null,
-    "idempotency_key": "scenario:demo-bengaluru-v1:rpt_0010",
+    "idempotency_key": "fixture:53",
     "affects_planning": true,
     "payload": {
-      "report_id": "rpt_0010",
-      "channel": "text_sim",
-      "text_ref": {
-        "store": "report_text",
-        "text_sha256": "3f1c9a0e2b7d4c55a1e0f9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8",
-        "length_chars": 142
-      },
-      "location": {
-        "type": "Point",
-        "coordinates": [
-          77.5838,
-          12.93
+      "report": {
+        "report_id": "rpt_0010",
+        "received_sim_time_s": 600,
+        "received_at": "2026-09-30T09:10:00.000Z",
+        "channel": "text_sim",
+        "text_ref": {
+          "store": "report_text",
+          "report_id": "rpt_0010",
+          "text_sha256": "38cc11fc20fbffd0040266edc788b9bc474e53c15e0d87788c27a85534bda0cf",
+          "length_chars": 76
+        },
+        "location": {
+          "type": "Point",
+          "coordinates": [
+            77.5838,
+            12.93
+          ]
+        },
+        "location_source": "caller_stated",
+        "linked_incident_id": "inc_0006"
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000054",
+    "session_id": "sess_demo_01",
+    "sequence": 54,
+    "event_type": "TriageFactsExtracted",
+    "aggregate_type": "incident",
+    "aggregate_id": "inc_0006",
+    "occurred_at": "2026-09-30T09:10:01.000Z",
+    "sim_time_s": 601,
+    "actor": {
+      "kind": "rule_adapter",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "fixture:54",
+    "affects_planning": true,
+    "payload": {
+      "triage_facts": {
+        "incident_id": "inc_0006",
+        "policy_version": "demo-2026.2",
+        "facts": [
+          {
+            "key": "trapped",
+            "value": "yes",
+            "source": "rule_adapter",
+            "evidence": [
+              {
+                "report_id": "rpt_0010",
+                "start": 38,
+                "end": 54
+              }
+            ],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "conscious",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "breathing_normally",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "severe_bleeding",
+            "value": "unknown",
+            "source": "model_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false,
+            "coerced_from": "no",
+            "coercion_reason": "ASSERTION_WITHOUT_EVIDENCE"
+          },
+          {
+            "key": "fire_or_smoke",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "people_count",
+            "count": {
+              "value": null,
+              "status": "unknown"
+            },
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "chest_pain",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "gas_smell",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "water_rising",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          },
+          {
+            "key": "caller_in_danger",
+            "value": "unknown",
+            "source": "rule_adapter",
+            "evidence": [],
+            "updated_sim_time_s": 601,
+            "confirmed_by_operator": false
+          }
+        ],
+        "questions_asked": [],
+        "escalation": {
+          "escalated": true,
+          "reasons": [
+            "LIFE_THREAT_INDICATED"
+          ],
+          "sim_time_s": 601
+        },
+        "applicable_facts": [
+          "conscious",
+          "breathing_normally",
+          "trapped",
+          "fire_or_smoke",
+          "people_count"
         ]
       }
     }
   },
   {
     "schema_version": "1.0",
-    "event_id": "9c1d2e3f-4a5b-4c6d-8e7f-0a1b2c3d4e02",
+    "event_id": "00000000-0000-4000-8000-000000000055",
     "session_id": "sess_demo_01",
-    "sequence": 58,
-    "event_type": "UnitStatusChanged",
-    "aggregate_type": "unit",
-    "aggregate_id": "unit_A2",
-    "occurred_at": "2026-09-30T09:10:00.400Z",
-    "sim_time_s": 600,
+    "sequence": 55,
+    "event_type": "IncidentCreated",
+    "aggregate_type": "incident",
+    "aggregate_id": "inc_0006",
+    "occurred_at": "2026-09-30T09:10:01.000Z",
+    "sim_time_s": 601,
     "actor": {
-      "kind": "watchdog",
-      "id": "watchdog"
+      "kind": "system",
+      "id": "fixture"
     },
-    "correlation_id": "corr_watchdog_600",
+    "correlation_id": "corr_t10",
     "causation_id": null,
-    "idempotency_key": "watchdog:unit_A2:broken_down:600",
+    "idempotency_key": "fixture:55",
     "affects_planning": true,
     "payload": {
-      "unit_id": "unit_A2",
-      "from_status": "en_route",
-      "to_status": "broken_down",
-      "position": {
-        "type": "Point",
-        "coordinates": [
-          77.6231,
-          12.9241
-        ]
-      },
-      "invalidates_assignment_ids": [
-        "asg_0006_02"
+      "incident": {
+        "incident_id": "inc_0006",
+        "category": "emergency",
+        "kind": "structural_collapse",
+        "severity": "critical",
+        "assumed_facts": [
+          "conscious",
+          "breathing_normally"
+        ],
+        "location": {
+          "type": "Point",
+          "coordinates": [
+            77.5838,
+            12.93
+          ]
+        },
+        "created_sim_time_s": 600,
+        "status": "active",
+        "report_ids": [
+          "rpt_0010"
+        ],
+        "needs": [
+          {
+            "need_id": "need_0006_als",
+            "type": "als",
+            "quantity": 1,
+            "basis": "provisional_unknown",
+            "reasons": [
+              {
+                "code": "SEVERITY_FROM_UNKNOWN",
+                "params": {
+                  "facts": [
+                    "conscious",
+                    "breathing_normally"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "need_id": "need_0006_bls",
+            "type": "bls",
+            "quantity": 2,
+            "basis": "confirmed",
+            "reasons": [
+              {
+                "code": "TRAPPED_PERSONS",
+                "params": {}
+              }
+            ]
+          },
+          {
+            "need_id": "need_0006_fire",
+            "type": "fire",
+            "quantity": 1,
+            "basis": "confirmed",
+            "reasons": [
+              {
+                "code": "STRUCTURAL_COLLAPSE_RESCUE",
+                "params": {}
+              }
+            ]
+          }
+        ],
+        "duplicate_candidate_of": []
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000056",
+    "session_id": "sess_demo_01",
+    "sequence": 56,
+    "event_type": "IncidentAssessed",
+    "aggregate_type": "incident",
+    "aggregate_id": "inc_0006",
+    "occurred_at": "2026-09-30T09:10:01.000Z",
+    "sim_time_s": 601,
+    "actor": {
+      "kind": "system",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "fixture:56",
+    "affects_planning": true,
+    "payload": {
+      "incident": {
+        "incident_id": "inc_0006",
+        "category": "emergency",
+        "kind": "structural_collapse",
+        "severity": "critical",
+        "assumed_facts": [
+          "conscious",
+          "breathing_normally"
+        ],
+        "location": {
+          "type": "Point",
+          "coordinates": [
+            77.5838,
+            12.93
+          ]
+        },
+        "created_sim_time_s": 600,
+        "status": "active",
+        "report_ids": [
+          "rpt_0010"
+        ],
+        "needs": [
+          {
+            "need_id": "need_0006_als",
+            "type": "als",
+            "quantity": 1,
+            "basis": "provisional_unknown",
+            "reasons": [
+              {
+                "code": "SEVERITY_FROM_UNKNOWN",
+                "params": {
+                  "facts": [
+                    "conscious",
+                    "breathing_normally"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "need_id": "need_0006_bls",
+            "type": "bls",
+            "quantity": 2,
+            "basis": "confirmed",
+            "reasons": [
+              {
+                "code": "TRAPPED_PERSONS",
+                "params": {}
+              }
+            ]
+          },
+          {
+            "need_id": "need_0006_fire",
+            "type": "fire",
+            "quantity": 1,
+            "basis": "confirmed",
+            "reasons": [
+              {
+                "code": "STRUCTURAL_COLLAPSE_RESCUE",
+                "params": {}
+              }
+            ]
+          }
+        ],
+        "duplicate_candidate_of": []
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000057",
+    "session_id": "sess_demo_01",
+    "sequence": 57,
+    "event_type": "EscalatedToHuman",
+    "aggregate_type": "incident",
+    "aggregate_id": "inc_0006",
+    "occurred_at": "2026-09-30T09:10:01.000Z",
+    "sim_time_s": 601,
+    "actor": {
+      "kind": "system",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "fixture:57",
+    "affects_planning": false,
+    "payload": {
+      "incident_id": "inc_0006",
+      "reasons": [
+        "LIFE_THREAT_INDICATED"
       ]
     }
   },
   {
     "schema_version": "1.0",
-    "event_id": "1e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a03",
+    "event_id": "00000000-0000-4000-8000-000000000058",
+    "session_id": "sess_demo_01",
+    "sequence": 58,
+    "event_type": "UnitStatusChanged",
+    "aggregate_type": "unit",
+    "aggregate_id": "unit_A2",
+    "occurred_at": "2026-09-30T09:10:01.000Z",
+    "sim_time_s": 601,
+    "actor": {
+      "kind": "watchdog",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "fixture:58",
+    "affects_planning": true,
+    "payload": {
+      "unit": {
+        "unit_id": "unit_A2",
+        "display_name": "A2",
+        "type": "als",
+        "status": "broken_down",
+        "position": {
+          "type": "Point",
+          "coordinates": [
+            77.6231,
+            12.9241
+          ]
+        },
+        "position_sim_time_s": 600,
+        "home_zone_id": "zone_south",
+        "current_task": null,
+        "capacity_persons": 1,
+        "desired_revision": 7
+      },
+      "invalidates_assignment_ids": [
+        "asg_0006_05"
+      ]
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000059",
     "session_id": "sess_demo_01",
     "sequence": 59,
     "event_type": "PlanProposed",
     "aggregate_type": "plan",
     "aggregate_id": "plan_0007",
-    "occurred_at": "2026-09-30T09:10:01.350Z",
-    "sim_time_s": 601,
+    "occurred_at": "2026-09-30T09:10:02.000Z",
+    "sim_time_s": 602,
     "actor": {
       "kind": "solver",
-      "id": "ortools_cp_sat"
+      "id": "fixture"
     },
-    "correlation_id": "corr_watchdog_600",
-    "causation_id": "9c1d2e3f-4a5b-4c6d-8e7f-0a1b2c3d4e02",
-    "idempotency_key": "plan:sess_demo_01:7",
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "fixture:59",
     "affects_planning": false,
     "payload": {
-      "plan_id": "plan_0007",
-      "version": 7,
-      "based_on_planning_sequence": 58,
-      "plan_ref": "see plan.valid.json"
+      "plan": {
+        "plan_id": "plan_0007",
+        "version": 7,
+        "session_id": "sess_demo_01",
+        "state": "proposed",
+        "based_on_planning_sequence": 58,
+        "created_sim_time_s": 602,
+        "created_at": "2026-09-30T09:10:02.000Z",
+        "policy_version": "demo-2026.2",
+        "supersedes_approved_plan_id": "plan_0006",
+        "solver": {
+          "engine": "ortools_cp_sat",
+          "status": "OPTIMAL",
+          "wall_time_ms": 184,
+          "seed": 7,
+          "workers": 1,
+          "objective_vector": [
+            2,
+            0,
+            0,
+            0,
+            2420,
+            14705
+          ],
+          "completed_tiers": [
+            "unmet_critical",
+            "unmet_high",
+            "unmet_medium",
+            "unmet_low",
+            "waiting_cost",
+            "operating_cost"
+          ],
+          "lexicographic_complete": true,
+          "tie_break_complete": true
+        },
+        "assignments": [
+          {
+            "assignment_id": "asg_0007_01",
+            "unit_id": "unit_A1",
+            "incident_id": "inc_0001",
+            "need_id": "need_0001_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 0,
+            "locked": "on_scene",
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "UNIT_LOCKED",
+                "params": {
+                  "unit_id": "unit_A1",
+                  "lock": "on_scene"
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_A1_inc_0001_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.6408,
+                  12.9784
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.6408,
+                  12.9784
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 0,
+              "distance_m": 0,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.6408,
+                    12.9784
+                  ],
+                  [
+                    77.6408,
+                    12.9784
+                  ]
+                ]
+              }
+            },
+            "onward_route": {
+              "route_id": "route_inc_0001_hosp_H1_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.6408,
+                  12.9784
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.596,
+                  12.958
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 800,
+              "distance_m": 8000,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.6408,
+                    12.9784
+                  ],
+                  [
+                    77.596,
+                    12.958
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "assignment_id": "asg_0007_02",
+            "unit_id": "unit_B1",
+            "incident_id": "inc_0004",
+            "need_id": "need_0004_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 95,
+            "locked": "near_arrival",
+            "reasons": [
+              {
+                "code": "UNIT_LOCKED",
+                "params": {
+                  "unit_id": "unit_B1",
+                  "lock": "near_arrival"
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_B1_inc_0004_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.623,
+                  12.918
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.6229,
+                  12.9177
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 95,
+              "distance_m": 950,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.623,
+                    12.918
+                  ],
+                  [
+                    77.6229,
+                    12.9177
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "assignment_id": "asg_0007_03",
+            "unit_id": "unit_B2",
+            "incident_id": "inc_0006",
+            "need_id": "need_0006_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 140,
+            "locked": null,
+            "reasons": [
+              {
+                "code": "NEAREST_ELIGIBLE",
+                "params": {
+                  "unit_id": "unit_B2",
+                  "eta_s": 140
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_B2_inc_0006_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.5838,
+                  12.925
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.5838,
+                  12.93
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 140,
+              "distance_m": 1400,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.5838,
+                    12.925
+                  ],
+                  [
+                    77.5838,
+                    12.93
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "assignment_id": "asg_0007_04",
+            "unit_id": "unit_B3",
+            "incident_id": "inc_0006",
+            "need_id": "need_0006_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 1260,
+            "locked": null,
+            "reasons": [
+              {
+                "code": "ONLY_ELIGIBLE_REMAINING",
+                "params": {
+                  "unit_id": "unit_B3"
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_B3_inc_0006_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.592,
+                  13.0358
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.5838,
+                  12.93
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 1260,
+              "distance_m": 12600,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.592,
+                    13.0358
+                  ],
+                  [
+                    77.5838,
+                    12.93
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "assignment_id": "asg_0007_05",
+            "unit_id": "unit_F1",
+            "incident_id": "inc_0006",
+            "need_id": "need_0006_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 780,
+            "locked": null,
+            "reasons": [
+              {
+                "code": "NEAREST_ELIGIBLE",
+                "params": {
+                  "unit_id": "unit_F1",
+                  "eta_s": 780
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_F1_inc_0006_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.601,
+                  12.978
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.5838,
+                  12.93
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 780,
+              "distance_m": 7800,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.601,
+                    12.978
+                  ],
+                  [
+                    77.5838,
+                    12.93
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "assignment_id": "asg_0007_06",
+            "unit_id": "unit_F2",
+            "incident_id": "inc_0005",
+            "need_id": "need_0005_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 0,
+            "locked": "on_scene",
+            "reasons": [
+              {
+                "code": "UNIT_LOCKED",
+                "params": {
+                  "unit_id": "unit_F2",
+                  "lock": "on_scene"
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_F2_inc_0005_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.6387,
+                  12.9116
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.6387,
+                  12.9116
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 0,
+              "distance_m": 0,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.6387,
+                    12.9116
+                  ],
+                  [
+                    77.6387,
+                    12.9116
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "assignment_id": "asg_0007_07",
+            "unit_id": "unit_BT1",
+            "incident_id": "inc_0003",
+            "need_id": "need_0003_water",
+            "role": "primary",
+            "satisfies_need": true,
+            "eta_s": 210,
+            "locked": null,
+            "reasons": [
+              {
+                "code": "NEAREST_ELIGIBLE",
+                "params": {
+                  "unit_id": "unit_BT1",
+                  "eta_s": 210
+                }
+              }
+            ],
+            "route": {
+              "route_id": "route_unit_BT1_inc_0003_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.6784,
+                  12.94
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.6784,
+                  12.9304
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 210,
+              "distance_m": 2100,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.6784,
+                    12.94
+                  ],
+                  [
+                    77.6784,
+                    12.9304
+                  ]
+                ]
+              }
+            },
+            "persons": 2
+          }
+        ],
+        "facility_allocations": [
+          {
+            "allocation_id": "fal_0007_01",
+            "facility_id": "shelter_S1",
+            "incident_id": "inc_0005",
+            "need_id": "need_0005_shelter",
+            "persons": 40,
+            "free_after_persons": 50,
+            "route": {
+              "route_id": "route_inc_0005_shelter_S1_fv1",
+              "from": {
+                "type": "Point",
+                "coordinates": [
+                  77.6387,
+                  12.9116
+                ]
+              },
+              "to": {
+                "type": "Point",
+                "coordinates": [
+                  77.61,
+                  12.95
+                ]
+              },
+              "route_status": "ok",
+              "provider": "fixture",
+              "flood_version": 1,
+              "duration_s": 900,
+              "distance_m": 9000,
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.6387,
+                    12.9116
+                  ],
+                  [
+                    77.61,
+                    12.95
+                  ]
+                ]
+              }
+            }
+          }
+        ],
+        "unmet_needs": [
+          {
+            "need_id": "need_0006_als",
+            "incident_id": "inc_0006",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 2,
+            "reasons": [
+              {
+                "code": "ALS_LOCKED_ON_SCENE",
+                "params": {
+                  "unit_id": "unit_A1",
+                  "incident_id": "inc_0001"
+                }
+              },
+              {
+                "code": "ALS_OUT_OF_SERVICE",
+                "params": {
+                  "unit_id": "unit_A2",
+                  "status": "broken_down"
+                }
+              }
+            ],
+            "bridge_candidates": [
+              {
+                "unit_id": "unit_B2",
+                "eta_s": 140,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "need_0006_bls"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "need_id": "need_0004_als",
+            "incident_id": "inc_0004",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 482,
+            "reasons": [
+              {
+                "code": "ALS_LOCKED_ON_SCENE",
+                "params": {
+                  "unit_id": "unit_A1",
+                  "incident_id": "inc_0001"
+                }
+              },
+              {
+                "code": "ALS_OUT_OF_SERVICE",
+                "params": {
+                  "unit_id": "unit_A2",
+                  "status": "broken_down"
+                }
+              }
+            ],
+            "bridge_candidates": []
+          }
+        ],
+        "flags": [
+          {
+            "flag_id": "flag_0007_1",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "incident_id": "inc_0006",
+            "need_id": "need_0006_als",
+            "message": "inc_0006 has no ALS unit. No eligible ALS is available or reachable."
+          },
+          {
+            "flag_id": "flag_0007_2",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "incident_id": "inc_0004",
+            "need_id": "need_0004_als",
+            "message": "inc_0004 lost ALS unit_A2 (broken down). No eligible ALS is available."
+          },
+          {
+            "flag_id": "flag_0007_3",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "zone_id": "zone_north",
+            "resource_type": "bls",
+            "since_sim_time_s": 602,
+            "message": "zone_north has no ambulance within 600 s after unit_B3 moves."
+          },
+          {
+            "flag_id": "flag_0007_4",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "zone_id": "zone_south",
+            "resource_type": "bls",
+            "since_sim_time_s": 602,
+            "message": "zone_south has no ambulance within 600 s."
+          },
+          {
+            "flag_id": "flag_0007_5",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "zone_id": "zone_central",
+            "resource_type": "bls",
+            "since_sim_time_s": 602,
+            "message": "zone_central has no available reserve ambulance."
+          },
+          {
+            "flag_id": "flag_0007_6",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "incident_id": "inc_0006",
+            "need_id": "need_0006_als",
+            "message": "ALS need is provisional because applicable life signs are unknown."
+          },
+          {
+            "flag_id": "flag_0007_7",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "incident_id": "inc_0004",
+            "need_id": "need_0004_als",
+            "message": "ALS need is provisional because applicable life signs are unknown."
+          }
+        ],
+        "diff": {
+          "against_plan_id": "plan_0006",
+          "changed": [],
+          "added": [
+            {
+              "unit_id": "unit_B2",
+              "from": {
+                "state": "available",
+                "zone_id": "zone_south"
+              },
+              "to": {
+                "incident_id": "inc_0006",
+                "need_id": "need_0006_bls",
+                "eta_s": 140
+              }
+            },
+            {
+              "unit_id": "unit_B3",
+              "from": {
+                "state": "available",
+                "zone_id": "zone_north"
+              },
+              "to": {
+                "incident_id": "inc_0006",
+                "need_id": "need_0006_bls",
+                "eta_s": 1260
+              }
+            },
+            {
+              "unit_id": "unit_F1",
+              "from": {
+                "state": "available",
+                "zone_id": "zone_central"
+              },
+              "to": {
+                "incident_id": "inc_0006",
+                "need_id": "need_0006_fire",
+                "eta_s": 780
+              }
+            }
+          ],
+          "released": [
+            {
+              "unit_id": "unit_A2",
+              "from": {
+                "incident_id": "inc_0004",
+                "need_id": "need_0004_als"
+              },
+              "reason": {
+                "code": "UNIT_UNAVAILABLE",
+                "params": {
+                  "status": "broken_down"
+                }
+              }
+            }
+          ],
+          "unchanged_count": 4,
+          "newly_unmet": [
+            "need_0004_als",
+            "need_0006_als"
+          ],
+          "totals": {
+            "weighted_eta_delta_s": 8900,
+            "units_moved": 0,
+            "units_added": 3,
+            "units_released": 1,
+            "needs_unmet": 2,
+            "zones_uncovered": 3
+          }
+        },
+        "soft_consequences": [],
+        "schema_version": "1.0",
+        "coverage": [
+          {
+            "zone_id": "zone_north",
+            "resource_type": "bls",
+            "status": "uncovered",
+            "available_unit_ids": []
+          },
+          {
+            "zone_id": "zone_central",
+            "resource_type": "bls",
+            "status": "uncovered",
+            "available_unit_ids": []
+          },
+          {
+            "zone_id": "zone_south",
+            "resource_type": "bls",
+            "status": "uncovered",
+            "available_unit_ids": []
+          }
+        ]
+      }
     }
   },
   {
     "schema_version": "1.0",
-    "event_id": "2a3b4c5d-6e7f-4a8b-9c0d-1e2f3a4b5c04",
+    "event_id": "00000000-0000-4000-8000-000000000060",
     "session_id": "sess_demo_01",
     "sequence": 60,
     "event_type": "OverrideRejected",
     "aggregate_type": "override",
     "aggregate_id": "ovr_0001",
-    "occurred_at": "2026-09-30T09:10:20.000Z",
-    "sim_time_s": 620,
+    "occurred_at": "2026-09-30T09:10:03.000Z",
+    "sim_time_s": 603,
     "actor": {
       "kind": "operator",
-      "id": "op_demo_1"
+      "id": "fixture"
     },
-    "correlation_id": "corr_ovr_0001",
+    "correlation_id": "corr_t10",
     "causation_id": null,
-    "idempotency_key": "7d8f0c9a-1b2c-4d3e-9f4a-5b6c7d8e9f10",
+    "idempotency_key": "fixture:60",
     "affects_planning": false,
     "payload": {
       "override_id": "ovr_0001",
@@ -127,19 +1192,19 @@
   },
   {
     "schema_version": "1.0",
-    "event_id": "3b4c5d6e-7f8a-4b9c-8d1e-2f3a4b5c6d05",
+    "event_id": "00000000-0000-4000-8000-000000000061",
     "session_id": "sess_demo_01",
     "sequence": 61,
     "event_type": "PlanApproved",
     "aggregate_type": "plan",
     "aggregate_id": "plan_0007",
-    "occurred_at": "2026-09-30T09:10:41.000Z",
-    "sim_time_s": 641,
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
     "actor": {
       "kind": "operator",
-      "id": "op_demo_1"
+      "id": "fixture"
     },
-    "correlation_id": "corr_approve_0007",
+    "correlation_id": "corr_t10",
     "causation_id": null,
     "idempotency_key": "0f1e2d3c-4b5a-4968-8776-655443322110",
     "affects_planning": true,
@@ -151,65 +1216,274 @@
         "flag_0007_1",
         "flag_0007_2",
         "flag_0007_3",
-        "flag_0007_4"
+        "flag_0007_4",
+        "flag_0007_5"
       ],
       "outbox_keys": [
-        "plan_0007:asg_0007_03",
-        "plan_0007:asg_0007_04",
-        "plan_0007:asg_0007_05"
+        "sess_demo_01:plan_0007:assign:asg_0007_03",
+        "sess_demo_01:plan_0007:assign:asg_0007_04",
+        "sess_demo_01:plan_0007:assign:asg_0007_05"
+      ],
+      "desired_assignments": [
+        {
+          "unit_id": "unit_B2",
+          "assignment_id": "asg_0007_03",
+          "desired_revision": 7
+        },
+        {
+          "unit_id": "unit_B3",
+          "assignment_id": "asg_0007_04",
+          "desired_revision": 7
+        },
+        {
+          "unit_id": "unit_F1",
+          "assignment_id": "asg_0007_05",
+          "desired_revision": 7
+        }
       ]
     }
   },
   {
     "schema_version": "1.0",
-    "event_id": "4c5d6e7f-8a9b-4c0d-9e2f-3a4b5c6d7e06",
+    "event_id": "00000000-0000-4000-8000-000000000062",
     "session_id": "sess_demo_01",
     "sequence": 62,
     "event_type": "SimulatedDispatchQueued",
     "aggregate_type": "dispatch",
-    "aggregate_id": "plan_0007:asg_0007_03",
-    "occurred_at": "2026-09-30T09:10:41.001Z",
-    "sim_time_s": 641,
+    "aggregate_id": "sess_demo_01:plan_0007:assign:asg_0007_03",
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
     "actor": {
       "kind": "system",
-      "id": "approval"
+      "id": "fixture"
     },
-    "correlation_id": "corr_approve_0007",
-    "causation_id": "3b4c5d6e-7f8a-4b9c-8d1e-2f3a4b5c6d05",
-    "idempotency_key": "queue:plan_0007:asg_0007_03",
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "queue:sess_demo_01:plan_0007:assign:asg_0007_03",
     "affects_planning": false,
     "payload": {
-      "outbox_key": "plan_0007:asg_0007_03",
+      "command": {
+        "session_id": "sess_demo_01",
+        "outbox_key": "sess_demo_01:plan_0007:assign:asg_0007_03",
+        "plan_id": "plan_0007",
+        "action": "assign",
+        "unit_id": "unit_B2",
+        "assignment_id": "asg_0007_03",
+        "incident_id": "inc_0006",
+        "desired_revision": 7,
+        "state": "pending",
+        "simulated": true
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000063",
+    "session_id": "sess_demo_01",
+    "sequence": 63,
+    "event_type": "SimulatedDispatchQueued",
+    "aggregate_type": "dispatch",
+    "aggregate_id": "sess_demo_01:plan_0007:assign:asg_0007_04",
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
+    "actor": {
+      "kind": "system",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "queue:sess_demo_01:plan_0007:assign:asg_0007_04",
+    "affects_planning": false,
+    "payload": {
+      "command": {
+        "session_id": "sess_demo_01",
+        "outbox_key": "sess_demo_01:plan_0007:assign:asg_0007_04",
+        "plan_id": "plan_0007",
+        "action": "assign",
+        "unit_id": "unit_B3",
+        "assignment_id": "asg_0007_04",
+        "incident_id": "inc_0006",
+        "desired_revision": 7,
+        "state": "pending",
+        "simulated": true
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000064",
+    "session_id": "sess_demo_01",
+    "sequence": 64,
+    "event_type": "SimulatedDispatchQueued",
+    "aggregate_type": "dispatch",
+    "aggregate_id": "sess_demo_01:plan_0007:assign:asg_0007_05",
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
+    "actor": {
+      "kind": "system",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "queue:sess_demo_01:plan_0007:assign:asg_0007_05",
+    "affects_planning": false,
+    "payload": {
+      "command": {
+        "session_id": "sess_demo_01",
+        "outbox_key": "sess_demo_01:plan_0007:assign:asg_0007_05",
+        "plan_id": "plan_0007",
+        "action": "assign",
+        "unit_id": "unit_F1",
+        "assignment_id": "asg_0007_05",
+        "incident_id": "inc_0006",
+        "desired_revision": 7,
+        "state": "pending",
+        "simulated": true
+      }
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000065",
+    "session_id": "sess_demo_01",
+    "sequence": 65,
+    "event_type": "SimulatedDispatchSent",
+    "aggregate_type": "dispatch",
+    "aggregate_id": "sess_demo_01:plan_0007:assign:asg_0007_03",
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
+    "actor": {
+      "kind": "system",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "sess_demo_01:plan_0007:assign:asg_0007_03",
+    "affects_planning": true,
+    "payload": {
+      "outbox_key": "sess_demo_01:plan_0007:assign:asg_0007_03",
+      "action": "assign",
       "unit_id": "unit_B2",
-      "incident_id": "inc_0006",
+      "assignment_id": "asg_0007_03",
+      "unit_after": {
+        "unit_id": "unit_B2",
+        "display_name": "B2",
+        "type": "bls",
+        "status": "en_route",
+        "position": {
+          "type": "Point",
+          "coordinates": [
+            77.5838,
+            12.925
+          ]
+        },
+        "position_sim_time_s": 600,
+        "home_zone_id": "zone_south",
+        "current_task": {
+          "assignment_id": "asg_0007_03",
+          "incident_id": "inc_0006",
+          "need_id": "need_0006_bls"
+        },
+        "capacity_persons": 1,
+        "desired_revision": 7
+      },
       "simulated": true
     }
   },
   {
     "schema_version": "1.0",
-    "event_id": "5d6e7f8a-9b0c-4d1e-8f3a-4b5c6d7e8f07",
+    "event_id": "00000000-0000-4000-8000-000000000066",
     "session_id": "sess_demo_01",
-    "sequence": 65,
+    "sequence": 66,
     "event_type": "SimulatedDispatchSent",
     "aggregate_type": "dispatch",
-    "aggregate_id": "plan_0007:asg_0007_03",
-    "occurred_at": "2026-09-30T09:10:41.200Z",
-    "sim_time_s": 641,
+    "aggregate_id": "sess_demo_01:plan_0007:assign:asg_0007_04",
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
     "actor": {
       "kind": "system",
-      "id": "simulated_dispatch_outbox"
+      "id": "fixture"
     },
-    "correlation_id": "corr_approve_0007",
-    "causation_id": "4c5d6e7f-8a9b-4c0d-9e2f-3a4b5c6d7e06",
-    "idempotency_key": "plan_0007:asg_0007_03",
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "sess_demo_01:plan_0007:assign:asg_0007_04",
     "affects_planning": true,
     "payload": {
-      "outbox_key": "plan_0007:asg_0007_03",
-      "unit_id": "unit_B2",
-      "incident_id": "inc_0006",
-      "unit_status_after": "en_route",
-      "simulated": true,
-      "transport": "in_process_simulator"
+      "outbox_key": "sess_demo_01:plan_0007:assign:asg_0007_04",
+      "action": "assign",
+      "unit_id": "unit_B3",
+      "assignment_id": "asg_0007_04",
+      "unit_after": {
+        "unit_id": "unit_B3",
+        "display_name": "B3",
+        "type": "bls",
+        "status": "en_route",
+        "position": {
+          "type": "Point",
+          "coordinates": [
+            77.592,
+            13.0358
+          ]
+        },
+        "position_sim_time_s": 600,
+        "home_zone_id": "zone_north",
+        "current_task": {
+          "assignment_id": "asg_0007_04",
+          "incident_id": "inc_0006",
+          "need_id": "need_0006_bls"
+        },
+        "capacity_persons": 1,
+        "desired_revision": 7
+      },
+      "simulated": true
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "event_id": "00000000-0000-4000-8000-000000000067",
+    "session_id": "sess_demo_01",
+    "sequence": 67,
+    "event_type": "SimulatedDispatchSent",
+    "aggregate_type": "dispatch",
+    "aggregate_id": "sess_demo_01:plan_0007:assign:asg_0007_05",
+    "occurred_at": "2026-09-30T09:10:05.000Z",
+    "sim_time_s": 605,
+    "actor": {
+      "kind": "system",
+      "id": "fixture"
+    },
+    "correlation_id": "corr_t10",
+    "causation_id": null,
+    "idempotency_key": "sess_demo_01:plan_0007:assign:asg_0007_05",
+    "affects_planning": true,
+    "payload": {
+      "outbox_key": "sess_demo_01:plan_0007:assign:asg_0007_05",
+      "action": "assign",
+      "unit_id": "unit_F1",
+      "assignment_id": "asg_0007_05",
+      "unit_after": {
+        "unit_id": "unit_F1",
+        "display_name": "F1",
+        "type": "fire",
+        "status": "en_route",
+        "position": {
+          "type": "Point",
+          "coordinates": [
+            77.601,
+            12.978
+          ]
+        },
+        "position_sim_time_s": 600,
+        "home_zone_id": "zone_central",
+        "current_task": {
+          "assignment_id": "asg_0007_05",
+          "incident_id": "inc_0006",
+          "need_id": "need_0006_fire"
+        },
+        "capacity_persons": 1,
+        "desired_revision": 7
+      },
+      "simulated": true
     }
   }
 ]
