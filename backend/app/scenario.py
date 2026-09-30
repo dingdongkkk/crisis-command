@@ -51,7 +51,18 @@ def run(path: Path) -> dict[str, Any]:
                 {
                     "step": step,
                     "elapsed_ms": round((perf_counter() - started) * 1000),
-                    "plan": plan.model_dump(mode="json", by_alias=True) if plan else None,
+                    "plan": {
+                        "plan_id": plan.plan_id,
+                        "solver": plan.solver.model_dump(mode="json"),
+                        "assignments": [
+                            a.model_dump(mode="json", exclude={"route", "onward_route"})
+                            for a in plan.assignments
+                        ],
+                        "unmet_needs": [n.model_dump(mode="json") for n in plan.unmet_needs],
+                        "flags": [f.model_dump(mode="json") for f in plan.flags],
+                    }
+                    if plan
+                    else None,
                 }
             )
         state = store.state()
