@@ -319,6 +319,9 @@ class EnvelopeBase(Contract):
     causation_id: Uuid | None
     idempotency_key: Annotated[str, Field(min_length=1, max_length=200)] | None
     affects_planning: bool
+    # Narrowed to a Literal and a concrete payload model by each catalog variant.
+    event_type: str
+    payload: Contract
 
     @model_validator(mode="before")
     @classmethod
@@ -331,8 +334,7 @@ class EnvelopeBase(Contract):
 
     @model_validator(mode="after")
     def _catalog_flag(self) -> EnvelopeBase:
-        event_type: str = getattr(self, "event_type")  # noqa: B009 - set by each variant
-        if self.affects_planning != EVENT_CATALOG[event_type][0]:
+        if self.affects_planning != EVENT_CATALOG[self.event_type][0]:
             raise PydanticCustomError(
                 "AFFECTS_PLANNING_MISMATCH", "affects_planning is fixed by the event catalog"
             )
