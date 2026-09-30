@@ -11,6 +11,7 @@ import type { ConsoleApi } from './api/types'
 import { MockConsoleApi, scenarioFromLocation } from './mocks/mockApi'
 import './styles.css'
 import './command-center.css'
+import './data-strip.css'
 
 const root = document.getElementById('root')
 if (!root) throw new Error('Missing #root element')
