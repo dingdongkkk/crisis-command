@@ -43,6 +43,7 @@ from app.routing.service import RouteService  # noqa: E402
 from app.storage.event_store import EventStore  # noqa: E402
 
 CRITICAL_TARGET_S = 480  # "critical under eight minutes"
+RANK = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 BOX = ((77.57, 12.93), (77.68, 13.02))  # inside the routed OSM extract, around the fleet
 
 # Synthetic caller texts by family (distinct from the triage evaluation sets). The intake,
@@ -114,6 +115,7 @@ class Run:
     latencies_ms: list[float] = field(default_factory=list)
     first_decision: dict[str, dict[str, Any]] = field(default_factory=dict)
     reassignments: int = 0
+    reassignments_to_higher_severity: int = 0
     uncovered_per_step: list[int] = field(default_factory=list)
     final_unmet: int = 0
     plans: int = 0
@@ -215,10 +217,15 @@ def run_policy(scenario: Scenario, policy: str, routes: RouteService, workdir: P
                 )
             now = {a.unit_id: a.need_id or a.bridges_need_id or "" for a in approved.assignments}
             active_ids = {n.need_id for _, n in active_needs}
+            need_rank = {
+                n.need_id: RANK[i.severity.value] for i in state.incidents for n in i.needs
+            }
             for unit, need_id in previous.items():
                 # Reassigned: a committed unit moved to different work while its need is open.
                 if need_id in active_ids and now.get(unit) not in (None, need_id):
                     result.reassignments += 1
+                    if need_rank.get(now[unit] or "", 9) < need_rank.get(need_id, 9):
+                        result.reassignments_to_higher_severity += 1
             previous = now
             result.uncovered_per_step.append(
                 sum(1 for c in approved.coverage if c.status != "covered")
@@ -245,6 +252,7 @@ def summarize(run: Run) -> dict[str, Any]:
         first_decision_unmet=sum(1 for d in decisions if d["eta_s"] is None),
         final_unmet_quanta=run.final_unmet,
         reassignments=run.reassignments,
+        reassignments_to_higher_severity=run.reassignments_to_higher_severity,
         mean_uncovered_zones=round(statistics.fmean(run.uncovered_per_step), 3)
         if run.uncovered_per_step
         else 0.0,
@@ -281,6 +289,7 @@ def aggregate(rows: list[dict[str, Any]], policy: str) -> dict[str, Any]:
         first_decision_unmet=sum(r["first_decision_unmet"] for r in runs),
         final_unmet_quanta=sum(r["final_unmet_quanta"] for r in runs),
         reassignments=sum(r["reassignments"] for r in runs),
+        reassignments_to_higher_severity=sum(r["reassignments_to_higher_severity"] for r in runs),
         mean_uncovered_zones=round(statistics.fmean(r["mean_uncovered_zones"] for r in runs), 3),
         replans=len(lat),
         replan_ms_p50=pct(lat, 0.5),
@@ -300,6 +309,24 @@ def paired(rows: list[dict[str, Any]], key: str, lower_is_better: bool = True) -
         else:
             out["baseline_better"] += 1
     return out
+
+
+def bootstrap_mean_diff(rows: list[dict[str, Any]], key: str, n: int = 5000) -> dict[str, Any]:
+    """Paired baseline - planner difference with a seeded percentile bootstrap 95% CI."""
+    diffs = [
+        r["baseline"][key] - r["planner"][key]
+        for r in rows
+        if r["planner"][key] is not None and r["baseline"][key] is not None
+    ]
+    if not diffs:
+        return {}
+    rng = random.Random(0)
+    means = sorted(statistics.fmean(rng.choices(diffs, k=len(diffs))) for _ in range(n))
+    return dict(
+        pairs=len(diffs),
+        mean=round(statistics.fmean(diffs), 2),
+        ci95=[round(means[int(0.025 * n)], 2), round(means[int(0.975 * n) - 1], 2)],
+    )
 
 
 def metadata() -> dict[str, Any]:
@@ -388,10 +415,16 @@ def main() -> int:
             reassignments=paired(rows, "reassignments"),
             mean_uncovered_zones=paired(rows, "mean_uncovered_zones"),
         ),
+        baseline_minus_planner=dict(
+            weighted_response_s=bootstrap_mean_diff(rows, "weighted_response_s"),
+            critical_under_8min=bootstrap_mean_diff(rows, "critical_under_8min"),
+            reassignments=bootstrap_mean_diff(rows, "reassignments"),
+        ),
         seeds=rows,
     )
     print(json.dumps(report["summary"], indent=2))
     print(json.dumps(report["paired"], indent=2))
+    print(json.dumps(report["baseline_minus_planner"], indent=2))
     if args.json:
         args.json.write_text(json.dumps(report, indent=2) + "\n")
     return 0
