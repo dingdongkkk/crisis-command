@@ -211,7 +211,7 @@ def main() -> int:
             report["cases"].append(row)
         report["sets"][name] = {"cases": len(cases), **totals}
 
-        def trio(metric: str) -> str:
+        def trio(metric: str, totals: dict[str, dict[str, int]] = totals) -> str:
             return "/".join(str(totals[m][metric]) for m in ("rules", "laya", "hybrid"))
 
         print(
