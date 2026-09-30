@@ -169,7 +169,9 @@ class IntakeSession:
             for q in [*superseded, *(q for q in self.asked if q.answer == "unknown")]
             if q.fact_key in applicable and self._still_unknown(q.fact_key)
         ]
-        elapsed = sim_time_s - (self.started_sim_time_s or sim_time_s)
+        # Explicit None check: an intake that starts at T+0 must still hit the time limit.
+        started = sim_time_s if self.started_sim_time_s is None else self.started_sim_time_s
+        elapsed = sim_time_s - started
         if (
             self.category == "emergency"
             and self._unresolved()
