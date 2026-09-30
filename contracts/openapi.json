@@ -6396,6 +6396,91 @@
         "title": "Route",
         "type": "object"
       },
+      "RouteCandidate": {
+        "additionalProperties": false,
+        "properties": {
+          "route": {
+            "$ref": "#/components/schemas/Route"
+          },
+          "unit_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Unit Id",
+            "type": "string"
+          },
+          "unit_status": {
+            "$ref": "#/components/schemas/UnitStatus"
+          },
+          "unit_type": {
+            "$ref": "#/components/schemas/UnitType"
+          }
+        },
+        "required": [
+          "unit_id",
+          "unit_type",
+          "unit_status",
+          "route"
+        ],
+        "title": "RouteCandidate",
+        "type": "object"
+      },
+      "RouteCandidates": {
+        "additionalProperties": false,
+        "description": "Fastest road route from each unit to an incident under current flood closures.\n\nInformational only: eligibility, locks and allocation remain the solver's job.",
+        "properties": {
+          "as_of_sequence": {
+            "minimum": 1.0,
+            "title": "As Of Sequence",
+            "type": "integer"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/RouteCandidate"
+            },
+            "title": "Candidates",
+            "type": "array"
+          },
+          "flood_version": {
+            "minimum": 0.0,
+            "title": "Flood Version",
+            "type": "integer"
+          },
+          "graph_version": {
+            "title": "Graph Version",
+            "type": "string"
+          },
+          "incident_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Incident Id",
+            "type": "string"
+          },
+          "routing_policy_version": {
+            "title": "Routing Policy Version",
+            "type": "string"
+          },
+          "session_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_:.\\-]+$",
+            "title": "Session Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "incident_id",
+          "as_of_sequence",
+          "flood_version",
+          "graph_version",
+          "routing_policy_version",
+          "candidates"
+        ],
+        "title": "RouteCandidates",
+        "type": "object"
+      },
       "RouteStatus": {
         "enum": [
           "ok",
@@ -9043,6 +9128,221 @@
           }
         },
         "summary": "Health"
+      }
+    },
+    "/routing/candidates": {
+      "get": {
+        "description": "Fastest road route from every unit to an incident (informational; not an allocation).",
+        "operationId": "get_route_candidates_routing_candidates_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "incident_id",
+            "required": true,
+            "schema": {
+              "title": "Incident Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteCandidates"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Route Candidates"
+      }
+    },
+    "/routing/route": {
+      "get": {
+        "description": "Fastest open road route under the current session's flood closures.",
+        "operationId": "get_route_routing_route_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from_lon",
+            "required": true,
+            "schema": {
+              "maximum": 180,
+              "minimum": -180,
+              "title": "From Lon",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from_lat",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "From Lat",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to_lon",
+            "required": true,
+            "schema": {
+              "maximum": 180,
+              "minimum": -180,
+              "title": "To Lon",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to_lat",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "To Lat",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Route"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Route"
       }
     },
     "/state": {

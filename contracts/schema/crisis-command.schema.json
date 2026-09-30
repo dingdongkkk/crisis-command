@@ -6609,6 +6609,83 @@
       "title": "Route",
       "type": "object"
     },
+    "RouteCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "route": {
+          "$ref": "#/$defs/Route"
+        },
+        "unit_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_:.\\-]+$",
+          "type": "string"
+        },
+        "unit_status": {
+          "$ref": "#/$defs/UnitStatus"
+        },
+        "unit_type": {
+          "$ref": "#/$defs/UnitType"
+        }
+      },
+      "required": [
+        "unit_id",
+        "unit_type",
+        "unit_status",
+        "route"
+      ],
+      "title": "RouteCandidate",
+      "type": "object"
+    },
+    "RouteCandidates": {
+      "additionalProperties": false,
+      "description": "Fastest road route from each unit to an incident under current flood closures.\n\nInformational only: eligibility, locks and allocation remain the solver's job.",
+      "properties": {
+        "as_of_sequence": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "candidates": {
+          "items": {
+            "$ref": "#/$defs/RouteCandidate"
+          },
+          "type": "array"
+        },
+        "flood_version": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "graph_version": {
+          "type": "string"
+        },
+        "incident_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_:.\\-]+$",
+          "type": "string"
+        },
+        "routing_policy_version": {
+          "type": "string"
+        },
+        "session_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_:.\\-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "incident_id",
+        "as_of_sequence",
+        "flood_version",
+        "graph_version",
+        "routing_policy_version",
+        "candidates"
+      ],
+      "title": "RouteCandidates",
+      "type": "object"
+    },
     "RouteStatus": {
       "enum": [
         "ok",
