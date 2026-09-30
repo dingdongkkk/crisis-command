@@ -292,7 +292,7 @@ def main() -> int:
     print(f"\n{sum(r['passed'] for r in results)}/{len(results)} probes passed")
     if args.json:
         args.json.write_text(json.dumps(results, indent=2) + "\n")
-    return 0
+    return 0 if all(r["passed"] for r in results) else 1
 
 
 if __name__ == "__main__":
