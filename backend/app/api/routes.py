@@ -18,10 +18,12 @@ from app.contracts.commands import (
     DemoResetResult,
     FloodAccepted,
     FloodEventCommand,
+    RouteCandidates,
     UnitStatusAccepted,
     UnitStatusCommand,
 )
 from app.contracts.common import Problem
+from app.contracts.entities import Route
 from app.contracts.events import (
     EnvelopeBase,
     EventEnvelope,
@@ -30,6 +32,7 @@ from app.contracts.events import (
 )
 from app.contracts.state import StateSnapshot
 from app.domain.commands import DomainError, flood_update, unit_status
+from app.routing.service import RouteService
 from app.storage.event_store import CommandResult, DatabaseBusyError, Decision, EventStore, problem
 
 OPERATOR = {"kind": "operator", "id": "op_demo_1"}
@@ -123,6 +126,42 @@ def get_events(
         e.model_dump(mode="json", by_alias=True)
         for e in store.events(active, after_sequence, limit)
     ]
+
+
+# --- routing (CC-07) --------------------------------------------------------------------
+
+
+def _routing(request: Request) -> RouteService:
+    service: RouteService | None = getattr(request.app.state, "routing", None)
+    if service is None:
+        service = RouteService()
+        request.app.state.routing = service
+    return service
+
+
+@router.get("/routing/route", response_model=Route, responses=PROBLEM_RESPONSES)
+def get_route(
+    request: Request,
+    from_lon: Annotated[float, Query(ge=-180, le=180)],
+    from_lat: Annotated[float, Query(ge=-90, le=90)],
+    to_lon: Annotated[float, Query(ge=-180, le=180)],
+    to_lat: Annotated[float, Query(ge=-90, le=90)],
+) -> Any:
+    """Fastest open road route under the current session's flood closures."""
+    route = _routing(request).route(_store(request).state(), (from_lon, from_lat), (to_lon, to_lat))
+    return route.model_dump(mode="json", by_alias=True)
+
+
+@router.get("/routing/candidates", response_model=RouteCandidates, responses=PROBLEM_RESPONSES)
+def get_route_candidates(request: Request, incident_id: str) -> Any:
+    """Fastest road route from every unit to an incident (informational; not an allocation)."""
+    try:
+        result = _routing(request).candidates(_store(request).state(), incident_id)
+    except KeyError:
+        raise DomainError(
+            404, "NOT_FOUND", "Unknown incident", f"{incident_id} is not in this session"
+        ) from None
+    return result.model_dump(mode="json", by_alias=True)
 
 
 # --- commands ---------------------------------------------------------------------------

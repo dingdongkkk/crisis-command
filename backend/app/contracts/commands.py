@@ -12,7 +12,8 @@ from pydantic import Field, model_validator
 from pydantic_core import PydanticCustomError
 
 from .common import Code, Contract, Id, Point, Polygon, SchemaVersion, Seconds, Version
-from .enums import FactValue, OverrideKind, UnitStatus
+from .entities import Route
+from .enums import FactValue, OverrideKind, UnitStatus, UnitType
 from .events import EventEnvelope
 
 ReasonText = Annotated[str, Field(min_length=1, max_length=280)]
@@ -189,6 +190,28 @@ class DemoAdvanceResult(Contract):
     sim_time_s: Seconds
     head_sequence: Annotated[int, Field(ge=1)]
     appended: Annotated[int, Field(ge=0)]
+
+
+class RouteCandidate(Contract):
+    unit_id: Id
+    unit_type: UnitType
+    unit_status: UnitStatus
+    route: Route
+
+
+class RouteCandidates(Contract):
+    """Fastest road route from each unit to an incident under current flood closures.
+
+    Informational only: eligibility, locks and allocation remain the solver's job.
+    """
+
+    session_id: Id
+    incident_id: Id
+    as_of_sequence: Annotated[int, Field(ge=1)]
+    flood_version: Annotated[int, Field(ge=0)]
+    graph_version: str
+    routing_policy_version: str
+    candidates: list[RouteCandidate]
 
 
 # --- WebSocket /ws/events (0005) --------------------------------------------------------
