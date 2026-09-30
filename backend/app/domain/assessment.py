@@ -19,10 +19,15 @@ def assess(incident: Incident, facts: TriageFacts, policy: Policy) -> Incident:
     unknown = sorted(k for k in dangerous if values.get(k, "unknown") == "unknown")
     needs: list[Need] = []
     category = incident.category
-    if any(
-        values.get(k) == "yes"
-        for k in ("water_rising", "fire_or_smoke", "gas_smell", "caller_in_danger")
-    ):
+    # A road-status question ("is the underpass flooded?") names a hazard without reporting
+    # one; like the intake rules, only fire or a caller in danger upgrades it. Life threats
+    # were already upgraded by intake. Other routine categories upgrade on any hazard.
+    upgrade = (
+        ("fire_or_smoke", "caller_in_danger")
+        if category == IncidentCategory.INFORMATION_REQUEST
+        else ("water_rising", "fire_or_smoke", "gas_smell", "caller_in_danger")
+    )
+    if any(values.get(k) == "yes" for k in upgrade):
         category = IncidentCategory.EMERGENCY
 
     def add(kind: NeedType, quantity: int, keys: set[str]) -> None:

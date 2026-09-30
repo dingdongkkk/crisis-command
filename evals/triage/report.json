@@ -30,5 +30,110 @@
       "hinglish": 8
     },
     "failures": []
+  },
+  {
+    "dataset": "cases.cc11.jsonl",
+    "cases": 30,
+    "passed": 18,
+    "unsafe_downgrades": 0,
+    "missed_danger": 6,
+    "false_danger": 0,
+    "category_accuracy": "25/30",
+    "required_escalations_met": "8/11",
+    "cases_by_language": {
+      "en": 24,
+      "hinglish": 3,
+      "hi": 3
+    },
+    "failures": [
+      {
+        "id": "r04",
+        "lang": "en",
+        "errors": [
+          "category: expected non_emergency_assist, got emergency"
+        ]
+      },
+      {
+        "id": "r06",
+        "lang": "hi",
+        "errors": [
+          "chest_pain: expected yes, got unknown",
+          "escalation: missing LIFE_THREAT_INDICATED"
+        ]
+      },
+      {
+        "id": "r07",
+        "lang": "en",
+        "errors": [
+          "category: expected information_request, got emergency"
+        ]
+      },
+      {
+        "id": "r09",
+        "lang": "en",
+        "errors": [
+          "category: expected non_emergency_assist, got emergency"
+        ]
+      },
+      {
+        "id": "r11",
+        "lang": "en",
+        "errors": [
+          "trapped: expected yes, got unknown",
+          "escalation: missing LIFE_THREAT_INDICATED"
+        ]
+      },
+      {
+        "id": "r15",
+        "lang": "en",
+        "errors": [
+          "breathing_normally: expected no, got conflict"
+        ]
+      },
+      {
+        "id": "r17",
+        "lang": "en",
+        "errors": [
+          "trapped: expected yes, got unknown",
+          "escalation: missing LIFE_THREAT_INDICATED"
+        ]
+      },
+      {
+        "id": "r21",
+        "lang": "en",
+        "errors": [
+          "water_rising: expected yes, got unknown",
+          "people_count: expected 4, got unknown"
+        ]
+      },
+      {
+        "id": "r24",
+        "lang": "hi",
+        "errors": [
+          "category: expected information_request, got emergency"
+        ]
+      },
+      {
+        "id": "r25",
+        "lang": "en",
+        "errors": [
+          "caller_in_danger: expected yes, got unknown"
+        ]
+      },
+      {
+        "id": "r28",
+        "lang": "en",
+        "errors": [
+          "severe_bleeding: expected no, got unknown"
+        ]
+      },
+      {
+        "id": "r30",
+        "lang": "en",
+        "errors": [
+          "category: expected information_request, got emergency"
+        ]
+      }
+    ]
   }
 ]
