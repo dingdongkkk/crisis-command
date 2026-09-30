@@ -97,7 +97,7 @@ p { margin: 0; }
 
 /* ---------- Chrome ---------- */
 .app { display: flex; flex-direction: column; height: 100%; min-height: 0; }
-.sim-banner { display: flex; align-items: center; justify-content: center; gap: 6px; height: 22px; background: var(--sim-bg); color: var(--sim-fg); font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+.sim-banner { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 22px; padding: 3px 12px; text-align: center; background: var(--sim-bg); color: var(--sim-fg); font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
 .topbar { display: flex; align-items: center; gap: 16px; height: 44px; padding: 0 12px; background: var(--panel); border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 8px; height: 100%; padding-right: 16px; border-right: 1px solid var(--line); }
 .brand-mark { display: grid; place-items: center; color: var(--signal); }
@@ -137,7 +137,8 @@ p { margin: 0; }
 /* ---------- Stage: stat bar, map, detail dock ---------- */
 .stage { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--bg); }
 .statbar { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); flex: none; margin: 0; padding: 0; list-style: none; background: var(--panel); border-bottom: 1px solid var(--line); }
-.stat { position: relative; display: grid; gap: 2px; padding: 8px 12px; border-right: 1px solid var(--line); }
+.stat { position: relative; display: grid; grid-template-rows: 1fr auto; align-items: end; gap: 2px; padding: 8px 12px; border-right: 1px solid var(--line); }
+.stat .kv-label { align-self: start; }
 .stat:last-child { border-right: 0; }
 .stat::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; }
 .stat-value { font-size: 18px; font-weight: 600; line-height: 1.15; color: var(--fg); }
@@ -228,6 +229,7 @@ p { margin: 0; }
 .hud-row .mono { color: var(--signal); font-size: 11px; }
 .hud-row .kv-label { font-size: 9px; }
 .map-legend { z-index: 3; }
+.stage:has(.detail-dock.open) .map-legend { display: none; }
 .maplibregl-ctrl-bottom-right { z-index: 3; }
 
 /* ---------- Timeline ---------- */
@@ -396,6 +398,10 @@ kbd { padding: 1px 6px; border-radius: 2px; border: 1px solid var(--line-2); bac
 .app-narrow .crumbs { display: none; }
 .app-narrow .topbar-right { justify-content: space-between; width: 100%; height: 32px; margin-left: 0; }
 .app-narrow .sim-clock { padding-left: 0; border-left: 0; }
+.app-narrow .sim-clock .kv-label, .app-narrow .conn { white-space: nowrap; }
+.app-narrow .conn { font-size: 11px; }
+.app-narrow .topbar-rule, .app-narrow .icon-btn[aria-label='Keyboard shortcuts'] { display: none; }
+.app-narrow .sim-banner { font-size: 10.5px; }
 .sticky-plan { position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px; font-size: 12px; font-weight: 600; background: var(--panel); border-bottom: 1px solid var(--line); border-left: 3px solid var(--warning-solid); }
 .tabs { display: flex; overflow-x: auto; background: var(--panel); border-bottom: 1px solid var(--line); }
 .tabs [role='tab'] { flex: 1; height: auto; padding: 10px 8px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
