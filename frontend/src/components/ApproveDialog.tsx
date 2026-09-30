@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import type { Plan } from '../contracts'
-import { flagSeverityLabel } from '../state/labels'
+import type { Incident, Plan } from '../contracts'
+import { flagSeverityLabel, flagSubject } from '../state/labels'
 import { Dialog } from './Dialog'
 
 interface ApproveDialogProps {
   plan: Plan
+  incidents: Incident[]
   onConfirm: (note: string) => void
   onCancel: () => void
 }
 
-export function ApproveDialog({ plan, onConfirm, onCancel }: ApproveDialogProps) {
+export function ApproveDialog({ plan, incidents, onConfirm, onCancel }: ApproveDialogProps) {
   const [note, setNote] = useState('')
   const { totals } = plan.diff
   return (
@@ -28,6 +29,7 @@ export function ApproveDialog({ plan, onConfirm, onCancel }: ApproveDialogProps)
             {plan.flags.filter((f) => f.requires_ack).map((f) => (
               <li key={f.flag_id}>
                 {flagSeverityLabel(f.severity)}: {f.message}
+                {flagSubject(f, incidents) && ` — ${flagSubject(f, incidents)}`}
               </li>
             ))}
           </ul>

@@ -1,11 +1,12 @@
 import { CircleCheck, CircleDashed, Clock, OctagonAlert, Send } from 'lucide-react'
 import { forwardRef } from 'react'
-import type { Assignment, DiffRow, Plan } from '../contracts'
+import type { Assignment, DiffRow, Incident, Plan } from '../contracts'
 import type { PlanView } from '../state/planView'
 import { requiredAcks, unrecognisedValues } from '../state/planView'
 import type { PlanAction } from '../state/useConsole'
 import {
   flagSeverityLabel,
+  flagSubject,
   formatSeconds,
   lockLabel,
   needTypeLabel,
@@ -16,6 +17,7 @@ import {
 
 interface PlanPanelProps {
   view: PlanView
+  incidents: Incident[]
   action: PlanAction
   acked: string[]
   commandsEnabled: boolean
@@ -98,8 +100,9 @@ function DiffRows({ title, rows, render }: { title: string; rows: DiffRow[]; ren
   )
 }
 
-function PlanBody({ plan, view, acked, onAck, onOverride, editable }: {
+function PlanBody({ plan, view, incidents, acked, onAck, onOverride, editable }: {
   plan: Plan
+  incidents: Incident[]
   view: PlanView
   acked: string[]
   onAck: PlanPanelProps['onAck']
@@ -125,9 +128,11 @@ function PlanBody({ plan, view, acked, onAck, onOverride, editable }: {
           <ul>
             {plan.flags.map((f) => {
               const id = `ack-${f.flag_id}`
+              const subject = flagSubject(f, incidents)
               return (
                 <li key={f.flag_id} className={`flag flag-${f.severity}`}>
                   <span className="flag-sev">{flagSeverityLabel(f.severity)}</span> {f.message}
+                  {subject && <span className="flag-subject">{subject}</span>}
                   {f.requires_ack && showAcks && (
                     <label htmlFor={id} className="ack">
                       <input
@@ -137,7 +142,7 @@ function PlanBody({ plan, view, acked, onAck, onOverride, editable }: {
                         disabled={!editable}
                         onChange={(e) => onAck(plan.plan_id, f.flag_id, e.target.checked)}
                       />{' '}
-                      I understand: {f.message}
+                      I understand: {f.message}{subject ? ` — ${subject}` : ''}
                     </label>
                   )}
                 </li>
@@ -219,7 +224,7 @@ function PlanBody({ plan, view, acked, onAck, onOverride, editable }: {
 }
 
 export const PlanPanel = forwardRef<HTMLHeadingElement, PlanPanelProps>(function PlanPanel(
-  { view, action, acked, commandsEnabled, onAck, onApprove, onOverride, onDismissNotice, approveRef },
+  { view, incidents, action, acked, commandsEnabled, onAck, onApprove, onOverride, onDismissNotice, approveRef },
   headerRef,
 ) {
   const plan = 'plan' in view ? view.plan : null
@@ -261,7 +266,7 @@ export const PlanPanel = forwardRef<HTMLHeadingElement, PlanPanelProps>(function
         <p className="muted">Approved plan v{view.approved.version} remains in force until a new plan is approved.</p>
       )}
       {plan && (
-        <PlanBody plan={plan} view={view} acked={acked} onAck={onAck} onOverride={onOverride} editable={commandsEnabled && !pending && view.kind === 'proposed'} />
+        <PlanBody plan={plan} view={view} incidents={incidents} acked={acked} onAck={onAck} onOverride={onOverride} editable={commandsEnabled && !pending && view.kind === 'proposed'} />
       )}
       <div className="plan-actions">
         {view.kind === 'proposed' && needed.length > 0 && (

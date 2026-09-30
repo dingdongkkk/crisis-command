@@ -108,7 +108,7 @@ p { margin: 0; }
 .topbar-rule { width: 1px; height: 20px; background: var(--line); }
 .sim-clock { display: flex; align-items: center; gap: 8px; height: 100%; padding: 0 12px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 .sim-clock .mono { font-size: 14px; font-weight: 600; color: var(--signal); letter-spacing: 0.04em; }
-.conn { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 8px; border-radius: 2px; font-size: 12px; font-weight: 500; color: var(--fg-2); border: 1px solid var(--line-2); background: var(--panel-2); font-variant-numeric: tabular-nums; }
+.conn { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; height: 24px; padding: 0 8px; border-radius: 2px; font-size: 12px; font-weight: 500; color: var(--fg-2); border: 1px solid var(--line-2); background: var(--panel-2); font-variant-numeric: tabular-nums; }
 .conn-dot { display: inline-grid; place-items: center; }
 .conn-live { color: var(--success); border-color: var(--success-solid); background: var(--success-tint); }
 .conn-disconnected, .conn-error { color: var(--danger); border-color: var(--danger-solid); background: var(--danger-tint); }
@@ -124,7 +124,7 @@ p { margin: 0; }
 .scenario-steps li { padding: 1px 6px; font-size: 11px; color: var(--faint); border: 1px solid var(--line-2); }
 .scenario-steps li.done { color: var(--signal); border-color: var(--signal); background: var(--signal-tint); }
 .scenario-steps li.next { color: var(--fg); border-style: dashed; }
-.scenario-btn { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; font-size: 12px; }
+.scenario-btn { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; font-size: 12px; white-space: nowrap; }
 
 /* ---------- Desktop layout ---------- */
 .console { flex: 1; min-height: 0; display: grid; grid-template-columns: 320px minmax(0, 1fr) 420px; }
@@ -362,6 +362,7 @@ tbody tr:hover { background: var(--panel-2); }
 .flag-critical .flag-sev { color: var(--danger); }
 .flag-warning .flag-sev { color: var(--warning); }
 .flag-info .flag-sev { color: var(--accent); }
+.flag-subject { display: block; margin: 2px 0 0 62px; color: var(--muted); font-size: 11px; }
 .ack { display: flex; align-items: flex-start; gap: 8px; margin-top: 6px; font-size: 11.5px; color: var(--muted); cursor: pointer; }
 .ack input { flex: none; width: 14px; height: 14px; margin: 1px 0 0; accent-color: var(--accent-solid); }
 .unmet > ul > li { padding: 10px 0 10px 10px; font-size: 12px; border-bottom: 1px solid var(--line); border-left: 3px solid var(--danger-solid); }

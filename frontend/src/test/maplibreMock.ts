@@ -5,6 +5,7 @@
 type Handler = (...args: unknown[]) => void
 
 export const created: { options: Record<string, unknown>; controls: unknown[]; styles: unknown[] }[] = []
+export const instances: Map[] = []
 
 export class Map {
   private handlers: Record<string, Handler[]> = {}
@@ -12,11 +13,14 @@ export class Map {
   private layers = new Set<string>()
   readonly record: (typeof created)[number]
   readonly container: HTMLElement
+  /** MapLibre reports false while any tile or source is still loading. */
+  styleLoaded = true
 
   constructor(options: Record<string, unknown>) {
     this.container = options.container as HTMLElement
     this.record = { options, controls: [], styles: [options.style] }
     created.push(this.record)
+    instances.push(this)
     setTimeout(() => this.fire('style.load'))
   }
   on(event: string, fn: Handler) {
@@ -48,7 +52,7 @@ export class Map {
   }
   setPaintProperty() {}
   isStyleLoaded() {
-    return true
+    return this.styleLoaded
   }
   setStyle(style: unknown) {
     this.record.styles.push(style)

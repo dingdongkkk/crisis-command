@@ -118,6 +118,44 @@ describe('proposed versus approved', () => {
     expect(screen.getAllByRole('checkbox', { name: /I understand/ }).every((b) => !(b as HTMLInputElement).checked)).toBe(true)
   })
 
+  it('never carries an open confirmation over to a newer proposal', async () => {
+    const first = snapshotT10()
+    let push: ((u: LiveUpdate) => void) | null = null
+    const approve = vi.fn()
+    const api: ConsoleApi = {
+      loadState: async () => first,
+      approve,
+      submitOverride: async (): Promise<ApiResult<never>> => { throw new Error('unused') },
+      getRouteCandidates: async () => null,
+      connect: (listener: (u: LiveUpdate) => void) => {
+        push = listener
+        setTimeout(() => listener({ kind: 'connection', status: 'live' }))
+        return () => undefined
+      },
+    }
+    const user = userEvent.setup()
+    render(<App api={api} mapTiles={false} />)
+    await ready()
+    await ackAll(user)
+    await user.click(approveButton())
+    expect(screen.getByRole('dialog', { name: 'Approve plan v7?' })).toBeInTheDocument()
+
+    const next = snapshotT10()
+    const proposal = next.current_proposal as NonNullable<StateSnapshot['current_proposal']>
+    proposal.version = 8
+    proposal.plan_id = 'plan_0008'
+    proposal.based_on_planning_sequence = 61
+    proposal.flags = proposal.flags.map((f) => ({ ...f, requires_ack: false }))
+    act(() => push?.({ kind: 'state', state: { ...next, as_of_sequence: 62, planning_sequence: 61 } }))
+
+    const dialog = await screen.findByRole('dialog', { name: 'Plan changed — nothing approved' })
+    expect(dialog).toHaveTextContent('Plan v7 changed while you were reviewing it (now v8)')
+    expect(within(dialog).queryByRole('button', { name: /Approve/ })).not.toBeInTheDocument()
+    await user.click(within(dialog).getByRole('button', { name: 'Review current plan' }))
+    expect(approve).not.toHaveBeenCalled()
+    expect(await screen.findByText('PROPOSED v8 — not dispatched')).toBeInTheDocument()
+  })
+
   it('retries a busy server with the same idempotency key', async () => {
     const { api, user } = setup('busy')
     await ready()
@@ -267,6 +305,25 @@ describe('layout', () => {
     await user.click(screen.getByRole('button', { name: 'Switch to light theme' }))
     await waitFor(() => expect(created.at(-1)?.styles.at(-1)).toBe('https://tiles.openfreemap.org/styles/positron'))
     await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }))
+  })
+
+  it('applies live overlay updates while base tiles are still loading', async () => {
+    const { instances } = await import('./test/maplibreMock')
+    const { user } = setup('demo', { tiles: true })
+    await ready()
+    const map = instances.at(-1)
+    if (!map) throw new Error('no map')
+    await waitFor(() => expect(map.sourceData('proposed')).toBeDefined())
+    map.styleLoaded = false // tiles in flight
+    const proposed = () => (map.sourceData('proposed') as { features: unknown[] }).features.length
+    const approved = () => (map.sourceData('approved') as { features: unknown[] }).features.length
+    expect(proposed()).toBeGreaterThan(0)
+    await ackAll(user)
+    await user.click(approveButton())
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Approve & dispatch (simulated)' }))
+    await screen.findByText('DISPATCHED (simulated) v7')
+    expect(proposed()).toBe(0)
+    expect(approved()).toBeGreaterThan(0)
   })
 
   it('shows a clear notice when the base map is disabled', async () => {

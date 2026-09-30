@@ -272,11 +272,14 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
     map.setStyle(tiles && !baseMapFailed ? STYLE_URLS[theme] : blankStyle(theme))
   }, [styleKey, tiles, baseMapFailed, theme])
 
-  // Keep overlay data current.
+  // Keep overlay data current. Not gated on isStyleLoaded(): that is false while any base
+  // tile is loading, which silently dropped live updates (a dispatched plan kept its
+  // "proposed" routes). Sources missing mid style swap are added from dataRef on style.load.
   useEffect(() => {
     const map = mapRef.current
-    if (map?.isStyleLoaded()) addOverlayLayers(map, data, theme)
-  }, [data, theme])
+    if (!map) return
+    for (const [id, fc] of Object.entries(data)) (map.getSource(id) as GeoJSONSource | undefined)?.setData(fc)
+  }, [data])
 
   // Sync DOM markers (positions are MapLibre's; contents are rendered by React below).
   useEffect(() => {
