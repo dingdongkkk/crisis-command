@@ -22,6 +22,7 @@ from app.api.routes import (
 from app.contracts.commands import (
     ApprovalAccepted,
     ApproveCommand,
+    DemoAdvanceCommand,
     FactConfirmCommand,
     OverrideCommand,
     OverrideRecorded,
@@ -423,3 +424,23 @@ def override(
             actor=OPERATOR,
         )
     )
+
+
+@router.post("/demo/advance", responses=PROBLEM_RESPONSES)
+def advance_demo(
+    request: Request, command: DemoAdvanceCommand, idempotency_key: IdempotencyKey = None
+) -> JSONResponse:
+    from app.domain.demo import advance
+
+    result = _store(request).execute(
+        method="POST",
+        path="/demo/advance",
+        key=_require_key(idempotency_key),
+        body=command.model_dump(mode="json"),
+        expected_session_id=command.expected_session_id,
+        decide=lambda state: advance(state, command),
+        actor=OPERATOR,
+    )
+    if result.status == 200:
+        planner(request).recompute()
+    return _result_response(result)
