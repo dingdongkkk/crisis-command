@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
-from typing import Annotated, Any
+from typing import Any
 
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
@@ -18,7 +18,7 @@ from app.api.routes import (
     _result_response,
     _store,
 )
-from app.contracts.commands import SessionBound
+from app.contracts.commands import MedicalProfileAccessCommand, SessionBound
 from app.contracts.common import Id
 from app.contracts.events import MedicalProfileAccessPayload
 from app.contracts.state import StateSnapshot
@@ -33,6 +33,8 @@ FIELDS = ("conditions", "medications", "allergies", "emergency_contacts")
 class ProfileWrite(SessionBound):
     consent_granted: bool
     scope: list[str]
+    # The incident the (synthetic) caller shared this Medical ID for; access is per incident.
+    linked_incident_id: Id | None = None
     conditions: list[str] = Field(default_factory=list, max_length=20)
     medications: list[str] = Field(default_factory=list, max_length=20)
     allergies: list[str] = Field(default_factory=list, max_length=20)
@@ -40,10 +42,35 @@ class ProfileWrite(SessionBound):
     synthetic: bool = True
 
 
-class ProfileRead(SessionBound):
-    profile_ref: Id
-    caller_is_patient: bool
-    operator_reason: Annotated[str, Field(min_length=1, max_length=280)]
+def denial_reason(
+    state: StateSnapshot, incident_id: str, profile: dict[str, Any] | None, operator_reason: str
+) -> str | None:
+    """First failing 0008 access rule, or None when every rule holds.
+
+    ``caller_is_patient`` is a triage fact; missing or ``unknown`` denies (0008).
+    """
+    if not operator_reason.strip():
+        return "MISSING_OPERATOR_REASON"
+    if not any(i.incident_id == incident_id and i.status == "active" for i in state.incidents):
+        return "INCIDENT_NOT_ACTIVE"
+    if profile is None or profile.get("linked_incident_id") != incident_id:
+        return "PROFILE_NOT_LINKED"
+    if not profile["consent_granted"]:
+        return "CONSENT_REVOKED" if profile.get("consent_revoked") else "NO_CONSENT"
+    facts = next((f for f in state.triage_facts if f.incident_id == incident_id), None)
+    fact = next((f for f in facts.facts if f.key == "caller_is_patient"), None) if facts else None
+    value = fact.value if fact else None
+    if value == "no":
+        return "CALLER_IS_NOT_PATIENT"
+    if value != "yes":
+        return "CALLER_IS_PATIENT_UNKNOWN"
+    return None
+
+
+def denied(reason: str) -> dict[str, Any]:
+    body = problem(DomainError(403, "PROFILE_ACCESS_DENIED", "Medical profile access denied"))
+    body["reason"] = reason
+    return body
 
 
 def profile_data(request: Request, ref: str) -> dict[str, Any] | None:
@@ -66,9 +93,13 @@ def put_profile(
                 422, "VALIDATION_FAILED", "Synthetic profiles and supported consent scopes only"
             )
         data = command.model_dump(exclude={"expected_session_id"})
+        previous = profile_data(request, profile_ref)
         if not command.consent_granted:
             for field in FIELDS:
                 data[field] = []
+            data["consent_revoked"] = bool(
+                previous and (previous["consent_granted"] or previous.get("consent_revoked"))
+            )
 
         def write(conn: sqlite3.Connection) -> None:
             conn.execute(
@@ -99,49 +130,46 @@ def put_profile(
     )
 
 
-@router.post("/incidents/{incident_id}/medical-profile/access", responses=PROBLEM_RESPONSES)
+@router.post("/incidents/{incident_id}/medical-profile-access", responses=PROBLEM_RESPONSES)
 def access_profile(
-    request: Request, incident_id: str, command: ProfileRead, idempotency_key: IdempotencyKey = None
+    request: Request,
+    incident_id: str,
+    command: MedicalProfileAccessCommand,
+    idempotency_key: IdempotencyKey = None,
 ) -> JSONResponse:
     # Never persist values in a command receipt: the receipt holds only authorized field names.
     def decide(state: StateSnapshot) -> Decision:
         profile = profile_data(request, command.profile_ref)
-        active = any(i.incident_id == incident_id and i.status == "active" for i in state.incidents)
-        granted = bool(
-            active and command.caller_is_patient and profile and profile["consent_granted"]
-        )
-        fields = [f for f in FIELDS if profile and f in profile["scope"]] if granted else []
+        reason = denial_reason(state, incident_id, profile, command.operator_reason)
+        fields = [f for f in FIELDS if profile and f in profile["scope"]] if reason is None else []
         audit = MedicalProfileAccessPayload.model_validate(
             dict(
                 incident_id=incident_id,
                 profile_ref=command.profile_ref,
                 granted_fields=fields,
-                reason=None if granted else "ACCESS_DENIED",
+                reason=reason,
             )
-        )
-        error = DomainError(
-            403, "ACCESS_DENIED", "Consent, caller-is-patient and active incident are required"
         )
         return Decision(
             [
                 event(
                     state,
-                    "MedicalProfileAccessGranted" if granted else "MedicalProfileAccessDenied",
+                    "MedicalProfileAccessDenied" if reason else "MedicalProfileAccessGranted",
                     audit,
                     "incident",
                     incident_id,
                 )
             ],
             lambda _: (
-                (200, {"profile_ref": command.profile_ref, "granted_fields": fields})
-                if granted
-                else (403, problem(error))
+                (403, denied(reason))
+                if reason
+                else (200, {"profile_ref": command.profile_ref, "granted_fields": fields})
             ),
         )
 
     result = _store(request).execute(
         method="POST",
-        path=f"/incidents/{incident_id}/medical-profile/access",
+        path=f"/incidents/{incident_id}/medical-profile-access",
         key=_require_key(idempotency_key),
         body=command.model_dump(mode="json"),
         expected_session_id=command.expected_session_id,
@@ -150,22 +178,21 @@ def access_profile(
     )
     if result.status != 200:
         return _result_response(result)
-    # Bind the fresh authorization and value read to one SQLite writer transaction.
+    # Bind the fresh authorization and value read to one SQLite writer transaction: a replayed
+    # receipt never returns values unless every rule still holds now (revocation wins).
     store = _store(request)
     with store.private_read() as (conn, current):
         row = conn.execute(
             "SELECT data FROM profiles WHERE profile_ref=?", (command.profile_ref,)
         ).fetchone()
         profile = json.loads(row[0]) if row else None
-        if (
-            current.session_id != command.expected_session_id
-            or not profile
-            or not profile["consent_granted"]
-            or not any(
-                i.incident_id == incident_id and i.status == "active" for i in current.incidents
-            )
-        ):
-            raise DomainError(403, "ACCESS_DENIED", "Access no longer valid")
+        reason = (
+            "INCIDENT_NOT_ACTIVE"
+            if current.session_id != command.expected_session_id
+            else denial_reason(current, incident_id, profile, command.operator_reason)
+        )
+        if reason or profile is None:
+            return JSONResponse(denied(reason or "PROFILE_NOT_LINKED"), status_code=403)
         fields = [f for f in result.body["granted_fields"] if f in profile["scope"]]
         values = {f: profile[f] for f in fields}
     return JSONResponse(

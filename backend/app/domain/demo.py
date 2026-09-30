@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import sqlite3
 import uuid
+from collections.abc import Callable
 from typing import Any
 
 from app.contracts import EVENT_ADAPTER
@@ -39,6 +41,33 @@ REPORTS: dict[int, list[tuple[str, tuple[float, float]]]] = {
         )
     ],
 }
+
+
+# Synthetic Medical ID the T+0 cardiac caller has opted in to share (CC-10). Values are
+# invented; reads still need caller_is_patient = yes, an active incident and a reason (0008).
+DEMO_PROFILE_REF = "mprof_syn_0001"
+DEMO_PROFILE: dict[str, Any] = dict(
+    consent_granted=True,
+    scope=["conditions", "medications", "allergies"],
+    conditions=["SYNTHETIC: prior angina"],
+    medications=["SYNTHETIC: daily aspirin"],
+    allergies=["SYNTHETIC: penicillin"],
+    emergency_contacts=[],
+    synthetic=True,
+)
+
+
+def seed_profile(incident_id: str) -> Callable[[sqlite3.Connection], None]:
+    data = json.dumps({**DEMO_PROFILE, "linked_incident_id": incident_id})
+
+    def write(conn: sqlite3.Connection) -> None:
+        conn.execute(
+            "INSERT INTO profiles VALUES (?, ?) ON CONFLICT(profile_ref) "
+            "DO UPDATE SET data=excluded.data",
+            (DEMO_PROFILE_REF, data),
+        )
+
+    return write
 
 
 def preview(state: StateSnapshot, events: list[NewEvent]) -> StateSnapshot:
@@ -156,6 +185,9 @@ def advance(state: StateSnapshot, command: DemoAdvanceCommand) -> Decision:
         result = report_decision(working, command_report)
         if result.write_private:
             writers.append(result.write_private)
+        if moment == 0 and text.startswith("Chest pain"):
+            created = next(e for e in result.events if e.event_type == "IncidentCreated")
+            writers.append(seed_profile(created.aggregate_id))
         events.extend(result.events)
         working = preview(working, result.events)
     # Shared tick advances time once for every unit, never one planning event per unit.

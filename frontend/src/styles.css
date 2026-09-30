@@ -405,7 +405,7 @@ button.primary[aria-disabled='true'], button.primary:disabled { opacity: 1; bord
 .dialog ul { margin-top: 6px; }
 .dialog label { display: grid; gap: 4px; margin-top: 10px; margin-bottom: 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .dialog fieldset { margin: 0; padding: 0; border: 0; }
-.dialog select, .dialog textarea { width: 100%; padding: 6px 8px; border-radius: 2px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--fg); font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.dialog select, .dialog textarea, .dialog input:not([type=checkbox]) { width: 100%; padding: 6px 8px; border-radius: 2px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--fg); font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; }
 .dialog select { height: 30px; }
 .dialog textarea { min-height: 64px; resize: vertical; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; padding: 10px 16px; background: var(--panel-2); border-top: 1px solid var(--line); }
@@ -460,3 +460,8 @@ kbd { padding: 1px 6px; border-radius: 2px; border: 1px solid var(--line-2); bac
 .question-actions { display: flex; gap: 6px; }
 .question-actions button { min-width: 72px; height: 26px; }
 .notice-degraded { color: var(--warning); border-color: var(--warning-solid); background: var(--warning-tint); }
+.notice-duplicate { margin: 6px 0; }
+.question-actions.inline { display: inline-flex; margin-left: 8px; }
+.medical-values { margin: 8px 0; padding: 8px 10px; border: 1px dashed var(--warning-solid); background: var(--panel-2); }
+.medical-values p { margin: 2px 0; }
+.kv-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 6px 0 10px; }

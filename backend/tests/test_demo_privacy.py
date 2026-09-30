@@ -23,6 +23,7 @@ def test_consent_revocation_and_no_values_in_log_receipts(store: EventStore) -> 
             consent_granted=True,
             scope=["allergies"],
             allergies=["SYNTHETIC_SECRET"],
+            linked_incident_id=iid,
             synthetic=True,
         )
         assert (
@@ -36,14 +37,19 @@ def test_consent_revocation_and_no_values_in_log_receipts(store: EventStore) -> 
         access = dict(
             expected_session_id=sid,
             profile_ref="profile_demo",
-            caller_is_patient=False,
             operator_reason="Synthetic demo",
         )
-        assert post(client, f"/incidents/{iid}/medical-profile/access", access).status_code == 403
-        access["caller_is_patient"] = True
+        denied = post(client, f"/incidents/{iid}/medical-profile-access", access)
+        assert denied.status_code == 403
+        assert denied.json()["reason"] == "CALLER_IS_PATIENT_UNKNOWN"
+        confirm = dict(expected_session_id=sid, value="yes", reason_text="Caller said it is them")
+        assert (
+            post(client, f"/incidents/{iid}/facts/caller_is_patient/confirm", confirm).status_code
+            == 200
+        )
         key = str(uuid.uuid4())
-        result = post(client, f"/incidents/{iid}/medical-profile/access", access, key)
-        assert result.status_code == 200
+        result = post(client, f"/incidents/{iid}/medical-profile-access", access, key)
+        assert result.status_code == 200, result.text
         assert result.json()["values"] == {"allergies": ["SYNTHETIC_SECRET"]}
         write["consent_granted"] = False
         assert (
@@ -54,9 +60,9 @@ def test_consent_revocation_and_no_values_in_log_receipts(store: EventStore) -> 
             ).status_code
             == 200
         )
-        assert (
-            post(client, f"/incidents/{iid}/medical-profile/access", access, key).status_code == 403
-        )
+        revoked = post(client, f"/incidents/{iid}/medical-profile-access", access, key)
+        assert revoked.status_code == 403
+        assert revoked.json()["reason"] == "CONSENT_REVOKED"
         with sqlite3.connect(store.path) as conn:
             assert "SYNTHETIC_SECRET" not in str(
                 conn.execute("SELECT envelope FROM events").fetchall()

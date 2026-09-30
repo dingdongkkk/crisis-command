@@ -12,7 +12,10 @@ import type {
   ApproveCommand,
   DemoAdvanceResult,
   DemoResetResult,
+  DuplicateResolveCommand,
+  FactConfirmCommand,
   HealthResponse,
+  MedicalProfileAccessCommand,
   OverrideCommand,
   OverrideRecorded,
   Problem,
@@ -20,7 +23,7 @@ import type {
   ReportCommand,
   StateSnapshot,
 } from '../contracts'
-import type { ApiResult, ConsoleApi, DemoStep, LiveUpdate, RouteCandidatesView } from './types'
+import type { ApiResult, ConsoleApi, DemoStep, LiveUpdate, MedicalValues, RouteCandidatesView } from './types'
 
 export interface LiveApiOptions {
   /** HTTP base, e.g. `/api` behind the Vite proxy. */
@@ -139,6 +142,25 @@ export class LiveConsoleApi implements ConsoleApi {
     submit: (body: ReportCommand, key: string) => this.request<ReportAccepted>('POST', '/reports', body, key),
     answer: (reportId: string, body: AnswerCommand, key: string) =>
       this.request<ReportAccepted>('POST', `/reports/${encodeURIComponent(reportId)}/answers`, body, key),
+  }
+
+  readonly incidents = {
+    confirmFact: (incidentId: string, factKey: string, body: FactConfirmCommand, key: string) =>
+      this.request<{ sequence: number }>(
+        'POST',
+        `/incidents/${encodeURIComponent(incidentId)}/facts/${encodeURIComponent(factKey)}/confirm`,
+        body,
+        key,
+      ),
+    resolveDuplicate: (originalId: string, reportId: string, body: DuplicateResolveCommand, key: string) =>
+      this.request<{ sequence: number }>(
+        'POST',
+        `/incidents/${encodeURIComponent(originalId)}/duplicates/${encodeURIComponent(reportId)}/resolve`,
+        body,
+        key,
+      ),
+    medicalAccess: (incidentId: string, body: MedicalProfileAccessCommand, key: string) =>
+      this.request<MedicalValues>('POST', `/incidents/${encodeURIComponent(incidentId)}/medical-profile-access`, body, key),
   }
 
   // --- WebSocket ----------------------------------------------------------------------

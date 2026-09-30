@@ -85,14 +85,32 @@ def _incident(state: dict[str, Any], p: IncidentPayload | IncidentCategoryChange
 
 
 def _report_linked(state: dict[str, Any], p: ReportLinkedToIncidentPayload) -> None:
-    if p.resolution != "linked":
+    """Operator duplicate resolution (0007 AS-07). ``incident_id`` is the original incident.
+
+    ``linked``: the report joins the original; the candidate incident it created becomes
+    ``merged_duplicate`` once it has no reports left, so its needs leave planning.
+    ``kept_separate``: both stay active and the candidate marker for this pair is cleared.
+    """
+    report = next((r for r in state["reports"] if r["report_id"] == p.report_id), None)
+    if report is None:
+        raise ProjectionError(f"unknown report {p.report_id}")
+    candidate_id = report["linked_incident_id"]
+    if p.resolution == "kept_separate":
+        for incident in state["incidents"]:
+            if incident["incident_id"] == candidate_id:
+                incident["duplicate_candidate_of"] = [
+                    i for i in incident["duplicate_candidate_of"] if i != p.incident_id
+                ]
         return
-    for report in state["reports"]:
-        if report["report_id"] == p.report_id:
-            report["linked_incident_id"] = p.incident_id
+    report["linked_incident_id"] = p.incident_id
     for incident in state["incidents"]:
         if incident["incident_id"] == p.incident_id and p.report_id not in incident["report_ids"]:
             incident["report_ids"].append(p.report_id)
+        elif incident["incident_id"] == candidate_id and candidate_id != p.incident_id:
+            incident["report_ids"] = [r for r in incident["report_ids"] if r != p.report_id]
+            incident["duplicate_candidate_of"] = []
+            if not incident["report_ids"]:
+                incident["status"] = "merged_duplicate"
 
 
 def _incident_resolved(state: dict[str, Any], p: IncidentResolvedPayload) -> None:
