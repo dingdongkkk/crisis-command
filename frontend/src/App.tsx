@@ -1,4 +1,4 @@
-import { X } from 'lucide-react'
+import { PhoneIncoming, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
 import type { ConsoleApi, RouteCandidatesView } from './api/types'
 import { ApproveDialog } from './components/ApproveDialog'
@@ -10,6 +10,8 @@ import { KpiStrip } from './components/KpiStrip'
 import { MapView } from './components/MapView'
 import { OverrideDialog, type OverridePrefill } from './components/OverrideDialog'
 import { PlanPanel } from './components/PlanPanel'
+import { ReportDialog } from './components/ReportDialog'
+import { ScenarioControls } from './components/ScenarioControls'
 import { ReinforcementsPanel } from './components/ReinforcementsPanel'
 import { Timeline } from './components/Timeline'
 import { TriagePanel } from './components/TriagePanel'
@@ -25,7 +27,12 @@ export interface AppProps {
 
 const TABS = ['Queue', 'Map', 'Plan', 'Triage', 'Fleet'] as const
 type Tab = (typeof TABS)[number]
-type DialogState = null | { kind: 'approve' } | { kind: 'override'; prefill?: OverridePrefill } | { kind: 'keys' }
+type DialogState =
+  | null
+  | { kind: 'approve' }
+  | { kind: 'override'; prefill?: OverridePrefill }
+  | { kind: 'keys' }
+  | { kind: 'report' }
 
 function useNarrow(): boolean {
   const query = '(max-width: 1099px)'
@@ -48,6 +55,7 @@ type RoutesState = { status: 'idle' | 'loading' | 'error' } | { status: 'ready';
 export function App({ api, mapTiles = true }: AppProps) {
   const { state, planView, select, ack, approve, submitOverride, clearPlanAction } = useConsole(api)
   const [dialog, setDialog] = useState<DialogState>(null)
+  const [notice, setNotice] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Queue')
   const [leftTab, setLeftTab] = useState<'incidents' | 'fleet'>('incidents')
   const [theme, toggleTheme] = useTheme()
@@ -162,6 +170,20 @@ export function App({ api, mapTiles = true }: AppProps) {
     <>
       <SimulationBanner />
       <TopBar
+        controls={
+          snapshot && (api.simulation || api.reports) ? (
+            <>
+              {api.simulation && (
+                <ScenarioControls api={api.simulation} snapshot={snapshot} disabled={!enabled} onNotice={setNotice} />
+              )}
+              {api.reports && (
+                <button type="button" className="scenario-btn" disabled={!enabled} onClick={() => setDialog({ kind: 'report' })}>
+                  <PhoneIncoming size={13} aria-hidden="true" /> Simulated call
+                </button>
+              )}
+            </>
+          ) : null
+        }
         connection={connection}
         simTimeS={snapshot?.sim_time_s ?? null}
         sessionId={snapshot?.session_id ?? null}
@@ -173,6 +195,22 @@ export function App({ api, mapTiles = true }: AppProps) {
         <p className="notice notice-strip" role="alert">Simulation was reset. The console now shows the new session.</p>
       )}
       {dialog?.kind === 'keys' && <KeyboardHelp onClose={() => setDialog(null)} />}
+      {notice && (
+        <p className="notice notice-error notice-strip" role="alert">
+          {notice}{' '}
+          <button type="button" className="link" onClick={() => setNotice(null)}>Dismiss</button>
+        </p>
+      )}
+      {dialog?.kind === 'report' && snapshot && api.reports && (
+        <ReportDialog
+          api={api.reports}
+          snapshot={snapshot}
+          onClose={() => setDialog(null)}
+          onCreated={(result) => {
+            if (result.incident_id) select(result.incident_id)
+          }}
+        />
+      )}
     </>
   )
 
