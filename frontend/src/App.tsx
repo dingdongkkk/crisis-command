@@ -435,7 +435,7 @@ export function App({ api, mapTiles = true }: AppProps) {
           {planPanel}
         </aside>
       </main>
-      <CommandFooter sessionId={snapshot.session_id} />
+      <CommandFooter snapshot={snapshot} />
       {dialogs}
     </div>
   )

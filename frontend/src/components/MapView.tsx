@@ -37,16 +37,19 @@ function styleTacticalBasemap(map: MapLibreMap, theme: Theme): void {
   // Only style provider base layers, before operational overlays are added.
   for (const layer of map.getStyle().layers) {
     const sourceLayer = 'source-layer' in layer ? layer['source-layer'] : ''
-    if (layer.type === 'background') map.setPaintProperty(layer.id, 'background-color', '#151717')
+    // Data-strip look: near-black land, red-tinted water and roads, dim red-grey labels.
+    if (layer.type === 'background') map.setPaintProperty(layer.id, 'background-color', '#060606')
     if (layer.type === 'fill') {
-      map.setPaintProperty(layer.id, 'fill-color', sourceLayer === 'water' ? '#101313' : '#1b1e1c')
+      map.setPaintProperty(layer.id, 'fill-color', sourceLayer === 'water' ? '#1a0707' : '#0b0b0b')
     }
     if (layer.type === 'line' && sourceLayer === 'transportation') {
-      map.setPaintProperty(layer.id, 'line-color', layer.id.includes('casing') ? '#202321' : '#3b423c')
+      map.setPaintProperty(layer.id, 'line-color', layer.id.includes('casing') ? '#140505' : '#5c1f1f')
     }
+    if (layer.type === 'line' && sourceLayer === 'waterway') map.setPaintProperty(layer.id, 'line-color', '#3a1010')
+    if (layer.type === 'fill-extrusion') map.setPaintProperty(layer.id, 'fill-extrusion-color', '#161212')
     if (layer.type === 'symbol' && layer.layout?.['text-field']) {
-      map.setPaintProperty(layer.id, 'text-color', '#929b90')
-      map.setPaintProperty(layer.id, 'text-halo-color', '#151717')
+      map.setPaintProperty(layer.id, 'text-color', '#a58383')
+      map.setPaintProperty(layer.id, 'text-halo-color', '#060606')
     }
   }
 }
@@ -113,7 +116,7 @@ function addOverlayLayers(map: MapLibreMap, data: Record<string, FeatureCollecti
       'source-layer': 'building',
       minzoom: 12.5,
       paint: {
-        'fill-extrusion-color': dark ? '#2F343C' : '#D3D8DE',
+        'fill-extrusion-color': dark ? '#1c1414' : '#D3D8DE',
         'fill-extrusion-height': ['coalesce', ['get', 'render_height'], 8],
         'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
         'fill-extrusion-opacity': dark ? 0.85 : 0.7,
