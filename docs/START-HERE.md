@@ -2,6 +2,8 @@
 
 The repo is a planning and collaboration setup, not a running application yet.
 
+For every task's full copy-paste prompt and the review/fix/merge cycle, use [PROMPT-WORKFLOW.md](PROMPT-WORKFLOW.md).
+
 ## 1. Start Claude on CC-01
 
 Use Claude Code from this folder, signed in with your Claude account. The user has confirmed Opus 5.5 is available. This setup did not find the `claude` executable on PATH, so the local Claude Code login has not been tested. Follow the [official setup guide](https://code.claude.com/docs/en/setup) if you need to install it. Select Opus 5.5 with `/model` for CC-01. The custom architect and reviewer roles explicitly use `claude-opus-5-5`.

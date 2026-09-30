@@ -13,6 +13,8 @@ An emergency-response **simulation and decision-support demo** for the GATEWAYS 
 3. Run `python3 scripts/taskboard.py` to see the current GitHub dependency queue (requires authenticated `gh`).
 4. Give the first prompt in [START-HERE.md](docs/START-HERE.md) to Claude. Give the next ready Codex task to Codex when its prerequisites are merged.
 
+All 14 copy-paste task prompts plus review, repair, merge and resume prompts: [complete prompt workflow](docs/PROMPT-WORKFLOW.md).
+
 GitHub: [private repository](https://github.com/dingdongkkk/crisis-command), [task issues](https://github.com/dingdongkkk/crisis-command/issues), [Actions](https://github.com/dingdongkkk/crisis-command/actions). Read [GitHub setup and enforcement limits](docs/GITHUB.md).
 
 | Responsibility | Development agent |
