@@ -1,0 +1,62 @@
+[
+  {
+    "probe": "approval_requires_every_ack",
+    "invariant": "Human approvals bind to acknowledged flags (0005)",
+    "passed": true,
+    "evidence": "409 UNACKNOWLEDGED_FLAGS"
+  },
+  {
+    "probe": "concurrent_approvals_single_winner",
+    "invariant": "No double approval under a race (0005)",
+    "passed": true,
+    "evidence": "statuses [200, 409, 409, 409, 409, 409, 409, 409]; 1 PlanApproved"
+  },
+  {
+    "probe": "stale_after_world_change",
+    "invariant": "Approvals bind to the planning sequence (0005)",
+    "passed": true,
+    "evidence": "409 STALE_PLAN"
+  },
+  {
+    "probe": "wrong_session_rejected",
+    "invariant": "Every mutation carries expected_session_id (0001)",
+    "passed": true,
+    "evidence": "409 STALE_SESSION"
+  },
+  {
+    "probe": "idempotent_retry_and_key_reuse",
+    "invariant": "Idempotent commands; key reuse with a new body fails (0001)",
+    "passed": true,
+    "evidence": "retry replayed; reuse 422"
+  },
+  {
+    "probe": "dispatch_is_simulated_only",
+    "invariant": "Simulated dispatch only; no real sends (AGENTS.md)",
+    "passed": true,
+    "evidence": "10 SimulatedDispatchSent, all simulated=true"
+  },
+  {
+    "probe": "replay_equals_live_at_every_sequence",
+    "invariant": "Every transition replays (0005)",
+    "passed": true,
+    "evidence": "67 prefixes fold; head and restart hash-equal"
+  },
+  {
+    "probe": "report_text_not_in_event_log",
+    "invariant": "No raw report text in append-only events (AGENTS.md)",
+    "passed": true,
+    "evidence": "canary absent from events, receipts and intake state"
+  },
+  {
+    "probe": "medical_values_never_logged",
+    "invariant": "Medical IDs audited without values (0008)",
+    "passed": true,
+    "evidence": "granted; values absent from events and receipts"
+  },
+  {
+    "probe": "override_conflict_has_coded_reason",
+    "invariant": "Record conflicting overrides with reasons (0004)",
+    "passed": false,
+    "evidence": "got OVERRIDE_INFEASIBLE conflicts=[]"
+  }
+]
