@@ -62,3 +62,25 @@ Not run:
 ## Handoff
 
 Next: CC-13 (demo narrative). Merge the stack #15 → #30 in order after review.
+
+## Addendum: P1 findings from the Codex whole-code review (PR #32)
+
+Codex's console PR (#29) reported four P1 backend issues without a reproduction in the repository. Each is reproduced here by a test that fails on the previous code and passes now (`backend/tests/test_p1_fixes.py`):
+
+| P1 | Fix |
+| --- | --- |
+| Medical consent crossed a session reset (incident IDs restart per session) | Profiles store `linked_session_id`. A link is to (session, incident); anything else is `PROFILE_NOT_LINKED`. The demo seed carries the session. |
+| A confirmed life threat did not escalate an informational incident | `assess` counts established dangerous values even when the fact wasn't applicable to the first classification, and a confirmed life threat upgrades any category. Confirmation records `IncidentCategoryChanged` (reason `CONFIRMED_DANGER`) and `EscalatedToHuman`. |
+| Linking a duplicate dropped a critical need only the second caller reported | Linking first merges the candidate's demand into the original: max quantity per type, the stronger basis, the higher severity. It is replay-equal. |
+| A queued simulated dispatch was sent after a flood closed its road | Before delivery the route is recomputed under the current closures, outside the writer lock. If it is not drivable, or if the closures change during delivery, the command is cancelled with `ROUTE_INVALIDATED`. The replan proposes a new route for approval. |
+
+Verification:
+
+- Backend: 211 passed; ruff, format and mypy clean.
+- Scenario: replay-equal.
+- Triage: unchanged, 0 unsafe downgrades.
+- Probes: 10/10.
+- Frontend: 53 passed.
+- Live end-to-end run: 17/17 (`docs/screenshots/cc-12-p1/`).
+
+Known remaining gap: if the merged original is later re-assessed from its own intake (an answer or confirmation), `assess` rebuilds needs from the original's facts only. Carrying merged demand through re-assessment needs a merge record, and is future work.

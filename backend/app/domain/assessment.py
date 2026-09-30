@@ -16,6 +16,9 @@ def assess(incident: Incident, facts: TriageFacts, policy: Policy) -> Incident:
         if k in policy.dangerous_values
         and values.get(k, "unknown") in ("unknown", policy.dangerous_values[k])
     }
+    # A dangerous value that is actually established counts even if the fact was not
+    # "applicable" to the incident's first classification (CC-12 P1).
+    dangerous |= {k for k, v in policy.dangerous_values.items() if values.get(k) == v}
     unknown = sorted(k for k in dangerous if values.get(k, "unknown") == "unknown")
     needs: list[Need] = []
     category = incident.category
@@ -27,7 +30,10 @@ def assess(incident: Incident, facts: TriageFacts, policy: Policy) -> Incident:
         if category == IncidentCategory.INFORMATION_REQUEST
         else ("water_rising", "fire_or_smoke", "gas_smell", "caller_in_danger")
     )
-    if any(values.get(k) == "yes" for k in upgrade):
+    life_threat = {"conscious", "breathing_normally", "chest_pain", "severe_bleeding", "trapped"}
+    if any(values.get(k) == "yes" for k in upgrade) or (
+        life_threat & {k for k in dangerous if values.get(k) == policy.dangerous_values[k]}
+    ):
         category = IncidentCategory.EMERGENCY
 
     def add(kind: NeedType, quantity: int, keys: set[str]) -> None:

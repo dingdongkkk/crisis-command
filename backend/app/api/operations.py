@@ -39,6 +39,7 @@ from app.contracts.entities import Incident, Override, Report, TriageFact
 from app.contracts.events import (
     DuplicateCandidateFlaggedPayload,
     EscalatedToHumanPayload,
+    IncidentCategoryChangedPayload,
     IncidentPayload,
     ModelAdapterDegradedPayload,
     OverrideEndedPayload,
@@ -347,6 +348,39 @@ def answer(
     return _result_response(result)
 
 
+SEVERITY_ORDER = ("low", "medium", "high", "critical")
+
+
+def merge_duplicate_demand(original: Incident, candidate: Incident) -> Incident:
+    """Linking must never drop demand only the second caller reported (CC-12 P1).
+
+    Per need type keep the larger quantity and the stronger basis; keep the higher severity.
+    The candidate's needs then leave planning when it becomes ``merged_duplicate``.
+    """
+    needs = {n.type: n for n in original.needs}
+    for n in candidate.needs:
+        mine = needs.get(n.type)
+        if mine is None:
+            needs[n.type] = n.model_copy(
+                update={"need_id": f"{original.incident_id}_{n.type.value}"}
+            )
+            continue
+        stronger = "confirmed" in (mine.basis, n.basis)
+        needs[n.type] = mine.model_copy(
+            update={
+                "quantity": max(mine.quantity, n.quantity),
+                "basis": "confirmed" if stronger else mine.basis,
+                "reasons": mine.reasons if mine.quantity >= n.quantity else n.reasons,
+            }
+        )
+    severity = max(
+        (original.severity, candidate.severity), key=lambda s: SEVERITY_ORDER.index(s.value)
+    )
+    return original.model_copy(
+        update={"needs": sorted(needs.values(), key=lambda n: n.need_id), "severity": severity}
+    )
+
+
 @router.post("/incidents/{incident_id}/duplicates/{report_id}/resolve", responses=PROBLEM_RESPONSES)
 def resolve_duplicate(
     request: Request,
@@ -377,8 +411,22 @@ def resolve_duplicate(
         payload = ReportLinkedToIncidentPayload(
             report_id=report_id, incident_id=incident_id, resolution=command.resolution
         )
+        events = []
+        if command.resolution == "linked":
+            merged = merge_duplicate_demand(active[incident_id], candidate)
+            if merged != active[incident_id]:
+                events.append(
+                    event(
+                        state,
+                        "IncidentAssessed",
+                        IncidentPayload(incident=merged),
+                        "incident",
+                        incident_id,
+                    )
+                )
+        events.append(event(state, "ReportLinkedToIncident", payload, "report", report_id))
         return Decision(
-            [event(state, "ReportLinkedToIncident", payload, "report", report_id)],
+            events,
             lambda es: (
                 200,
                 dict(
@@ -502,25 +550,66 @@ def confirm(
         else:
             facts.facts = [*facts.facts, fact]
         assessed = assess(incident, facts, state.policy)
-        return Decision(
-            [
+        events = [
+            event(
+                state,
+                "TriageFactConfirmed",
+                TriageFactConfirmedPayload(incident_id=incident_id, fact=fact),
+                "incident",
+                incident_id,
+            )
+        ]
+        if assessed.category != incident.category:
+            # A confirmed danger turned a routine call into an emergency (CC-12 P1): record
+            # why, and hand it to a human, never silently.
+            events.append(
                 event(
                     state,
-                    "TriageFactConfirmed",
-                    TriageFactConfirmedPayload(incident_id=incident_id, fact=fact),
+                    "IncidentCategoryChanged",
+                    IncidentCategoryChangedPayload(
+                        incident=assessed,
+                        from_category=incident.category,
+                        reason="CONFIRMED_DANGER",
+                        triggering_fact_keys=[fact_key],
+                    ),
                     "incident",
                     incident_id,
-                ),
+                )
+            )
+            events.append(
+                event(
+                    state,
+                    "EscalatedToHuman",
+                    EscalatedToHumanPayload(
+                        incident_id=incident_id,
+                        reasons=[
+                            "LIFE_THREAT_INDICATED"
+                            if fact_key
+                            in (
+                                "conscious",
+                                "breathing_normally",
+                                "chest_pain",
+                                "severe_bleeding",
+                                "trapped",
+                            )
+                            else "CONFIRMED_DANGER"
+                        ],
+                    ),
+                    "incident",
+                    incident_id,
+                )
+            )
+        else:
+            events.append(
                 event(
                     state,
                     "IncidentAssessed",
                     IncidentPayload(incident=assessed),
                     "incident",
                     incident_id,
-                ),
-            ],
-            lambda es: (200, {"sequence": es[-1].sequence}),
-        )
+                )
+            )
+        return Decision(events, lambda es: (200, {"sequence": es[-1].sequence}))
 
     return _result_response(
         _store(request).execute(
