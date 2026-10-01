@@ -90,7 +90,8 @@ async function waitFor(label, fn, timeoutMs = 20_000) {
   throw new Error(`timed out waiting for: ${label}${last instanceof Error ? ` (${last.message})` : ''}`)
 }
 
-const text = () => page('document.body.innerText')
+// textContent ignores CSS text-transform, so checks read the real state, not the styling.
+const text = () => page('document.body.textContent')
 const pageSequence = async () => Number((await text()).match(/(?:Live · |as of )seq (\d+)/)?.[1] ?? NaN)
 const clickButton = (label) => page(`(() => {
   const b = [...document.querySelectorAll('button')].find((e) => (e.getAttribute('aria-label') ?? e.textContent).trim().startsWith(${JSON.stringify(label)}))

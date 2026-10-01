@@ -1,6 +1,6 @@
 # Combined release branch
 
-`claude/release-combined` holds every task branch, CC-01 to CC-14, in one line of history. It is the same code as the PR stack #15 → #34. It keeps the original operator UI (navy and teal, MapLibre GL). The alternative restyles, Codex's #29 and Claude's #31, are left out by the user's choice and remain open for reference.
+`claude/release-combined` holds every task branch, CC-01 to CC-14, in one line of history. It is the same code as the PR stack #15 → #34. The UI is Codex's black-and-red "City command" console from #29, `codex/console-command-center` at `8c8b212`, merged at the user's request. Claude's restyle (#31) is not included.
 
 ## Verified on this branch (2026-10-01)
 
@@ -16,7 +16,7 @@
 | Benchmark smoke | pass |
 | Frontend lint, typecheck and build | pass |
 | Frontend tests | 53 passed |
-| Live console end-to-end run | 17/17 (`docs/screenshots/release/`) |
+| Live console end-to-end run | 17/17 (`docs/screenshots/release/`); the test now reads text content, so CSS capitalisation of labels cannot break checks |
 
 ## Open
 
