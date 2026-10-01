@@ -6,7 +6,7 @@ Crisis Command is an emergency-response **simulation and decision-support consol
 
 > ⚠️ **Simulation only.** Everything is synthetic data. There are no real calls, no real dispatch and no notifications. This is not a validated emergency-dispatch system.
 
-**Live preview:** https://crisis-command-tau.vercel.app. This is the console running on built-in demo data. The full live system, with backend, scenario controls and simulated calls, runs on your computer; see [Run it](#run-it).
+**Live demo:** https://crisis-command-tau.vercel.app. This is the full system: the console runs on Vercel and the backend (API, planner, live feed) runs on Render at `crisis-command-api.onrender.com`. The backend is on a free plan, so the first load after it has been idle can take up to a minute, and its data resets when it restarts. To run it on your own computer, see [Run it](#run-it).
 
 ---
 
@@ -177,6 +177,7 @@ More documentation:
 - Water rescue routes are not modelled, and the system says so.
 - There is no login; run it on your own machine (localhost).
 - The background map tiles need the internet; everything else works offline.
+- The hosted demo has no login and is shared: anyone with the link can advance or reset the scenario. Its free hosting is slow and sleeps when idle.
 - Not a medical or dispatch product.
 
 Built for GATEWAYS 2026 with AI coding agents (Claude and Codex). See [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
