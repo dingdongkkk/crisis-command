@@ -13,6 +13,8 @@ The console now opens with a four-step demo preflight covering the simulation bo
 
 The Simulated Call dialog now offers experimental browser speech transcription for English/Hinglish (`en-IN`) and Hindi (`hi-IN`). Speech only fills the existing caller-text field: the operator must stop, review or edit the transcript, choose the synthetic location and explicitly record the call. Crisis Command does not retain audio. Unsupported browsers, denied permission, missing microphones, no-speech, network failures and unavailable languages all leave typed intake available with a visible explanation.
 
+`docs/demo/FULL-JUDGE-SCRIPT.md` is the presentation runbook for this UI: a word-for-word 8–9 minute demo, three-minute cut-down, voice fallback, exact judge answers, failure lines and claims to avoid. Its setup command assumes integration onto the release branch where `scripts/demo.sh` exists; this stacked UI worktree remains previewable on the documented development ports.
+
 The presentation stylesheet is separate from existing operational styles. New map styling only touches provider base layers before operational overlays are added. The MapLibre test recorder now implements the newly used `getStyle` API.
 
 ## Contracts and behavior
