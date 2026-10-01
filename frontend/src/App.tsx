@@ -416,7 +416,7 @@ export function App({ api, mapTiles = true }: AppProps) {
           <div className="rail-scroll">{leftTab === 'incidents' ? queue : fleet}</div>
         </aside>
         <section className="stage" aria-label="Situation">
-          <div className="module-heading map-heading"><span>Operations map</span><span>Bengaluru metropolitan area</span></div>
+          <div className="module-heading map-heading"><span>Operations map</span><span>LIVE / BLR METRO</span></div>
           <div className="stage-map">{map}</div>
           <Timeline incidents={snapshot.incidents} simTimeS={snapshot.sim_time_s} selectedId={state.selectedIncidentId} onSelect={select} />
           <div className={`detail-dock${selected ? ' open' : ''}`}>
