@@ -62,6 +62,7 @@ function overlays(
   proposal: Plan | null,
   candidates: CandidateRoute[],
   focusedUnitId: string | null,
+  pin: [number, number] | null = null,
 ): Record<string, FeatureCollection> {
   const coverage = (proposal ?? snapshot.approved_plan)?.coverage ?? []
   const uncovered = new Set(coverage.filter((c) => c.status !== 'covered').map((c) => c.zone_id))
@@ -93,6 +94,11 @@ function overlays(
           properties: { unit: c.unitId, focused: c.unitId === focusedUnitId },
           geometry: c.route.geometry as LineString,
         })),
+    },
+    // Operator-pinned location for a simulated call (not an incident until recorded).
+    pin: {
+      type: 'FeatureCollection',
+      features: pin ? [{ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: pin } }] : [],
     },
   }
 }
@@ -138,6 +144,8 @@ function addOverlayLayers(map: MapLibreMap, data: Record<string, FeatureCollecti
   map.addLayer({ id: 'candidates-alt', type: 'line', source: 'candidates', filter: ['!', ['get', 'focused']], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#B9ABD2', 'line-width': 1.5, 'line-opacity': 0.35 } })
   map.addLayer({ id: 'candidates-casing', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': dark ? '#0a0d12' : '#ffffff', 'line-width': 7, 'line-opacity': 0.85 } })
   map.addLayer({ id: 'candidates-focus', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#B9ABD2', 'line-width': 3.5 } })
+  map.addLayer({ id: 'pin-halo', type: 'circle', source: 'pin', paint: { 'circle-radius': 14, 'circle-color': '#ffffff', 'circle-opacity': 0.18 } })
+  map.addLayer({ id: 'pin-dot', type: 'circle', source: 'pin', paint: { 'circle-radius': 6, 'circle-color': '#ffffff', 'circle-stroke-color': '#ff3b30', 'circle-stroke-width': 3 } })
 }
 
 const DASH_STEPS: [number, number, number][] = [
@@ -187,9 +195,14 @@ interface MapViewProps {
   theme: Theme
   /** Vector base map on/off (tests, offline demos). Features render regardless. */
   tiles?: boolean
+  /** Pick mode: the next map click reports its coordinates instead of selecting. */
+  picking?: boolean
+  onPick?: (lngLat: [number, number]) => void
+  /** Location pinned for a simulated call, shown until the call is recorded or cancelled. */
+  pin?: [number, number] | null
 }
 
-export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = null, selectedId, onSelect, theme, tiles = true }: MapViewProps) {
+export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = null, selectedId, onSelect, theme, tiles = true, picking = false, onPick, pin = null }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MapLibreMap | null>(null)
   const markersRef = useRef(new Map<string, Marker>())
@@ -199,16 +212,18 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
   const [hud, setHud] = useState({ lng: CENTER[0], lat: CENTER[1], zoom: 11.4, bearing: -12, pitch: 20 })
   const [cursor, setCursor] = useState<{ lng: number; lat: number } | null>(null)
   const data = useMemo(
-    () => overlays(snapshot, proposal, candidates, focusedUnitId),
-    [snapshot, proposal, candidates, focusedUnitId],
+    () => overlays(snapshot, proposal, candidates, focusedUnitId, pin),
+    [snapshot, proposal, candidates, focusedUnitId, pin],
   )
   const dataRef = useRef(data)
   const themeRef = useRef(theme)
   const onSelectRef = useRef(onSelect)
+  const pickRef = useRef({ picking, onPick })
   useEffect(() => {
     dataRef.current = data
     themeRef.current = theme
     onSelectRef.current = onSelect
+    pickRef.current = { picking, onPick }
   })
 
   // Create the map once.
@@ -262,6 +277,10 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
     map.on('move', readCamera)
     map.on('mousemove', (e: { lngLat: { lng: number; lat: number } }) => setCursor({ lng: e.lngLat.lng, lat: e.lngLat.lat }))
     map.on('mouseout', () => setCursor(null))
+    map.on('click', (e: { lngLat: { lng: number; lat: number } }) => {
+      const { picking: active, onPick: report } = pickRef.current
+      if (active && report) report([Number(e.lngLat.lng.toFixed(5)), Number(e.lngLat.lat.toFixed(5))])
+    })
     let frame = 0
     let step = 0
     let last = 0
@@ -339,7 +358,7 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
       element.className = key.startsWith('incident:') ? 'marker marker-incident' : 'marker marker-unit'
       if (key.startsWith('incident:')) {
         const id = key.slice('incident:'.length)
-        element.addEventListener('click', () => onSelectRef.current(id))
+        element.addEventListener('click', () => !pickRef.current.picking && onSelectRef.current(id))
       }
       markers.set(key, new Marker({ element, anchor: 'center' }).setLngLat(lngLat).addTo(map))
       changed = true
@@ -378,10 +397,13 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
   const units = new Map(snapshot.units.map((u) => [u.unit_id, u]))
 
   return (
-    <section className="map-panel" aria-labelledby="map-title">
+    <section className={`map-panel${picking ? ' map-picking' : ''}`} aria-labelledby="map-title">
       <h2 id="map-title" className="visually-hidden">Map</h2>
       <p className="visually-hidden">The map repeats the incident queue and fleet list, which are keyboard accessible.</p>
       <div ref={containerRef} className="map-canvas" data-testid="map-canvas" />
+      {picking && (
+        <p className="map-pick-banner" role="status">Click the map to set the caller&apos;s location · Esc to cancel</p>
+      )}
       {Object.entries(markerEls).map(([key, element]) => {
         const [kind, id = ''] = key.split(':')
         if (kind === 'incident') {

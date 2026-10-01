@@ -32,3 +32,11 @@
 #root > .app, #root > .tour-shell { flex: 1; height: auto; min-height: 0; }
 .tour-shell { display: flex; flex-direction: column; }
 .tour-shell > .app { flex: 1; height: auto; min-height: 0; }
+
+/* Simulated-call location picking */
+.map-picking .map-canvas, .map-picking .maplibregl-canvas { cursor: crosshair !important; }
+.map-picking .maplibregl-marker { pointer-events: none; }
+.map-pick-banner { position: absolute; z-index: 5; top: 14px; left: 50%; transform: translateX(-50%); margin: 0; padding: 8px 14px; border: 1px solid var(--accent, #ff3b30); background: #000000e6; color: var(--fg); font: 500 11px/1.2 'IBM Plex Mono', monospace; letter-spacing: .04em; white-space: nowrap; }
+.location-row { display: flex; align-items: flex-end; gap: 8px; }
+.location-row label { flex: 1; min-width: 0; }
+.pin-button { display: inline-flex; align-items: center; gap: 6px; height: 32px; white-space: nowrap; }

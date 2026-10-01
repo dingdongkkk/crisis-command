@@ -75,3 +75,43 @@ describe('ReportDialog voice transcription', () => {
     expect(screen.getByLabelText('Caller transcript')).toBeEnabled()
   })
 })
+
+describe('pin on map', () => {
+  const snapshot = snapshotT10()
+
+  it('submits the pinned coordinates as an operator-entered location', async () => {
+    const sent: unknown[] = []
+    const api = {
+      ...reports,
+      submit: async (body: unknown) => {
+        sent.push(body)
+        return { ok: true as const, status: 201, replayed: false, body: { report_id: 'r', incident_id: 'i', sequence: 1, escalated: false } }
+      },
+    } as NonNullable<ConsoleApi['reports']>
+    const user = userEvent.setup()
+    render(<ReportDialog api={api} snapshot={snapshot} pinned={[77.6123, 12.9456]} onPickOnMap={() => undefined} onClose={() => undefined} onCreated={() => undefined} />)
+    expect(screen.getByRole('option', { name: 'Pinned on map (12.9456°N, 77.6123°E)' })).toBeInTheDocument()
+    await user.type(screen.getByLabelText('Caller transcript'), 'fire in the building')
+    await user.click(screen.getByRole('button', { name: 'Record call' }))
+    expect(sent[0]).toMatchObject({
+      location: { type: 'Point', coordinates: [77.6123, 12.9456] },
+      location_source: 'operator_entered',
+    })
+  })
+
+  it('asks to pick on the map and keeps the draft while hidden', async () => {
+    const pick = vi.fn()
+    const user = userEvent.setup()
+    const props = { api: reports, snapshot, onClose: () => undefined, onCreated: () => undefined, onPickOnMap: pick }
+    const { rerender } = render(<ReportDialog {...props} />)
+    await user.type(screen.getByLabelText('Caller transcript'), 'gas smell')
+    await user.click(screen.getByRole('button', { name: 'Pin on map' }))
+    expect(pick).toHaveBeenCalledOnce()
+    rerender(<ReportDialog {...props} hidden />)
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    rerender(<ReportDialog {...props} pinned={[77.6, 12.97]} />)
+    expect(screen.getByLabelText('Caller transcript')).toHaveValue('gas smell')
+    expect(screen.getByLabelText('Location')).toHaveValue('-1')
+    expect(screen.getByRole('button', { name: 'Move pin' })).toBeInTheDocument()
+  })
+})
