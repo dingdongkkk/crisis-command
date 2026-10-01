@@ -155,7 +155,7 @@ export function ReportDialog({ api, snapshot, onClose, onCreated }: ReportDialog
 
   return (
     <Dialog title="Simulated call" onClose={close}>
-      <p className="muted">Speak or type what a synthetic caller says. Review the transcript before recording it. Crisis Command stores no audio and contacts no real emergency service.</p>
+      <p className="muted">Speak or type what a synthetic caller says. Review the transcript before recording it. Crisis Command stores no audio and contacts no real emergency service. Voice uses your browser's speech recognition (Chrome, Edge or Safari), which needs the internet and sends the audio to the browser vendor.</p>
       {phase.kind === 'error' && <p className="notice notice-error" role="alert">Report not recorded: {phase.message}</p>}
       <div className={`voice-intake voice-${voice.kind}`}>
         <div className="voice-heading">
