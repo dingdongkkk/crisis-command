@@ -416,7 +416,9 @@ def allocate(
             )
     flags: list[dict[str, Any]] = []
 
-    def flag(code: str, **extra: Any) -> None:
+    zone_window = {z.zone_id: z.coverage_eta_s for z in state.reserve_zones}
+
+    def flag(code: str, why: str = "", **extra: Any) -> None:
         flags.append(
             dict(
                 flag_id=f"flag_{version}_{len(flags) + 1}",
@@ -427,7 +429,7 @@ def allocate(
                 if code in ("PROVISIONAL_NEED", "SOLVER_TIME_LIMIT")
                 else "warning",
                 requires_ack=code not in ("PROVISIONAL_NEED", "SOLVER_TIME_LIMIT"),
-                message=code.replace("_", " "),
+                message=flag_message(code, why, zone_window, extra),
                 **extra,
             )
         )
@@ -444,10 +446,18 @@ def allocate(
             # automatically (0007 AS-07). Resolving it clears the flag.
             flagged_duplicates.add(inc.incident_id)
             flag(
-                "DUPLICATE_CANDIDATE_UNRESOLVED", incident_id=inc.incident_id, need_id=need.need_id
+                "DUPLICATE_CANDIDATE_UNRESOLVED",
+                ", ".join(inc.duplicate_candidate_of),
+                incident_id=inc.incident_id,
+                need_id=need.need_id,
             )
         if need.basis == "provisional_unknown":
-            flag("PROVISIONAL_NEED", incident_id=inc.incident_id, need_id=need.need_id)
+            flag(
+                "PROVISIONAL_NEED",
+                need.type.value,
+                incident_id=inc.incident_id,
+                need_id=need.need_id,
+            )
         if missing:
             age = max(0, state.sim_time_s - inc.created_sim_time_s)
             counts[list(Severity).index(inc.severity)] += missing
@@ -523,7 +533,8 @@ def allocate(
                 c.bridge and c.need.need_id == need.need_id for c, _ in chosen
             ):
                 code = "ALS_UNMET_BLS_BRIDGING"
-            flag(code, incident_id=inc.incident_id, need_id=need.need_id)
+            why = f"{need.type.value}|{missing_rows[-1]['reasons'][0]['code']}"
+            flag(code, why, incident_id=inc.incident_id, need_id=need.need_id)
     assigned = {a["unit_id"] for a in assignments}
     coverage = []
     for key, ids in cover.items():
@@ -654,6 +665,54 @@ def allocate(
     plan = Plan.model_validate(data)
     validate_plan(state, plan, routes)
     return plan
+
+
+NEED_NAME = {
+    "als": "ALS",
+    "bls": "BLS",
+    "fire": "fire",
+    "water_rescue": "water rescue",
+    "tow": "tow",
+    "shelter_places": "shelter",
+}
+UNMET_WHY = {
+    "NO_ALS_AVAILABLE": "No eligible ALS is available.",
+    "NO_ELIGIBLE_CAPACITY": "No eligible unit is free.",
+    "NO_REACHABLE_UNIT": "No eligible unit can reach it by road.",
+    "WATER_ACCESS_NOT_MODELLED": "Water access is not modelled, so no route can be verified.",
+}
+
+
+def flag_message(code: str, why: str, zone_window: dict[str, int], extra: dict[str, Any]) -> str:
+    """Operator-facing sentence for a plan flag, built only from plan facts (0006)."""
+    incident = extra.get("incident_id")
+    zone = extra.get("zone_id")
+    kind, _, reason = why.partition("|")
+    need = NEED_NAME.get(kind, kind)
+    if code == "PROVISIONAL_NEED":
+        return f"{need} need is provisional because applicable critical facts are unknown."
+    if code == "DUPLICATE_CANDIDATE_UNRESOLVED":
+        return (
+            f"{incident} may be the same emergency as {why}. Both are planned for until you decide."
+        )
+    if code == "ALS_UNMET_BLS_BRIDGING":
+        return f"{incident} has no ALS unit. A BLS unit is bridging until ALS arrives."
+    if code in ("ALS_UNMET", "CRITICAL_NEED_UNMET", "NEED_UNMET"):
+        detail = UNMET_WHY.get(reason, "No eligible unit is available.")
+        return f"{incident} has no {need} unit. {detail}"
+    if code == "RESERVE_UNCOVERED":
+        kind_name = NEED_NAME.get(str(extra.get("resource_type")), "reserve")
+        return (
+            f"{zone} has no free {kind_name} ambulance within {zone_window.get(str(zone), 600)} s."
+        )
+    if code == "RESERVE_COVERAGE_UNKNOWN":
+        return f"{zone} reserve coverage cannot be verified because routing is degraded."
+    return {
+        "FALLBACK_HEURISTIC": "The optimiser did not finish. "
+        "This plan uses the nearest-unit fallback.",
+        "SOLVER_TIME_LIMIT": "Time limit reached. The plan is valid but not proven optimal.",
+        "ROUTING_DEGRADED": "The routing provider is degraded. Some routes could not be verified.",
+    }.get(code, code.replace("_", " "))
 
 
 def unmet_reason(

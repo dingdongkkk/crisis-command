@@ -225,3 +225,21 @@ def test_gate_uses_the_allocators_current_route_lock(store: EventStore) -> None:
 
         assert "LOCK_VIOLATION" not in violations(FixedRoutes(300))
         assert "LOCK_VIOLATION" in violations(FixedRoutes(60))  # now 60 s out: near arrival
+
+
+def test_plan_flags_carry_operator_readable_sentences(demo: Any) -> None:
+    _, store = demo
+    plan = store.state().current_proposal or store.state().approved_plan
+    assert plan is not None
+    by_code: dict[str, list[str]] = {}
+    for f in plan.flags:
+        by_code.setdefault(f.code, []).append(f.message)
+        assert f.message != f.code.replace("_", " ")  # never a bare code
+        assert f.message.endswith(".")
+    als = by_code["ALS_UNMET"][0]
+    assert als.startswith("incident_") and "has no ALS unit." in als
+    reserve = by_code["RESERVE_UNCOVERED"][0]
+    assert reserve.startswith("zone_") and "ambulance within 600 s." in reserve
+    assert by_code["PROVISIONAL_NEED"][0].endswith(
+        "is provisional because applicable critical facts are unknown."
+    )
