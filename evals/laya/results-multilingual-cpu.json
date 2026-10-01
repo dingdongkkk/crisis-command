@@ -1,0 +1,5144 @@
+{
+  "adapter": "laya",
+  "checkpoint": "convaiinnovations/laya (multilingual)",
+  "laya_version": "0.3.22",
+  "torch_version": "2.14.1",
+  "device": "cpu",
+  "machine": "macOS-26.4.1-arm64-arm-64bit arm64",
+  "load_seconds": 6685.0,
+  "raise_threshold": 0.8,
+  "sets": {
+    "cases.dev.jsonl": {
+      "cases": 24,
+      "rules": {
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1,
+        "category_correct": 24,
+        "fully_correct": 23
+      },
+      "laya": {
+        "unsafe_downgrades": 43,
+        "missed_danger": 6,
+        "false_danger": 70,
+        "fact_errors": 115,
+        "category_correct": 19,
+        "fully_correct": 2
+      },
+      "hybrid": {
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 17,
+        "fact_errors": 18,
+        "category_correct": 24,
+        "fully_correct": 13
+      }
+    },
+    "cases.heldout.jsonl": {
+      "cases": 30,
+      "rules": {
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0,
+        "category_correct": 30,
+        "fully_correct": 30
+      },
+      "laya": {
+        "unsafe_downgrades": 74,
+        "missed_danger": 5,
+        "false_danger": 70,
+        "fact_errors": 145,
+        "category_correct": 19,
+        "fully_correct": 3
+      },
+      "hybrid": {
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 18,
+        "fact_errors": 18,
+        "category_correct": 30,
+        "fully_correct": 18
+      }
+    },
+    "cases.cc11.jsonl": {
+      "cases": 30,
+      "rules": {
+        "unsafe_downgrades": 0,
+        "missed_danger": 1,
+        "false_danger": 0,
+        "fact_errors": 1,
+        "category_correct": 30,
+        "fully_correct": 29
+      },
+      "laya": {
+        "unsafe_downgrades": 75,
+        "missed_danger": 2,
+        "false_danger": 63,
+        "fact_errors": 140,
+        "category_correct": 23,
+        "fully_correct": 1
+      },
+      "hybrid": {
+        "unsafe_downgrades": 0,
+        "missed_danger": 1,
+        "false_danger": 22,
+        "fact_errors": 23,
+        "category_correct": 30,
+        "fully_correct": 17
+      }
+    }
+  },
+  "cases": [
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d01",
+      "lang": "en",
+      "latency_ms": 202.6,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d02",
+      "lang": "en",
+      "latency_ms": 197.9,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 3,
+        "missed_danger": 1,
+        "false_danger": 3,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d03",
+      "lang": "en",
+      "latency_ms": 207.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d04",
+      "lang": "en",
+      "latency_ms": 209.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d05",
+      "lang": "en",
+      "latency_ms": 210.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d06",
+      "lang": "en",
+      "latency_ms": 204.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 7,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d07",
+      "lang": "en",
+      "latency_ms": 201.1,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d08",
+      "lang": "en",
+      "latency_ms": 203.6,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d09",
+      "lang": "en",
+      "latency_ms": 188.6,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d10",
+      "lang": "hi",
+      "latency_ms": 205.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 3
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d11",
+      "lang": "hi",
+      "latency_ms": 206.9,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 2,
+        "false_danger": 5,
+        "fact_errors": 7
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d12",
+      "lang": "hi",
+      "latency_ms": 203.1,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 4,
+        "missed_danger": 1,
+        "false_danger": 5,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d13",
+      "lang": "hi",
+      "latency_ms": 242.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "yes",
+          "trapped": "no",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 6,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d14",
+      "lang": "hi",
+      "latency_ms": 264.4,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 1,
+        "false_danger": 3,
+        "fact_errors": 5
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d15",
+      "lang": "hi",
+      "latency_ms": 218.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 5,
+        "fact_errors": 7
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d16",
+      "lang": "hinglish",
+      "latency_ms": 219.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d17",
+      "lang": "hinglish",
+      "latency_ms": 200.2,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 2
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d18",
+      "lang": "hinglish",
+      "latency_ms": 209.9,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 1,
+        "missed_danger": 1,
+        "false_danger": 3,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d19",
+      "lang": "hinglish",
+      "latency_ms": 202.9,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 6,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 4
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d20",
+      "lang": "hinglish",
+      "latency_ms": 193.6,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 9,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d21",
+      "lang": "en",
+      "latency_ms": 202.9,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 6,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d22",
+      "lang": "en",
+      "latency_ms": 203.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "no",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "no",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "no",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d23",
+      "lang": "en",
+      "latency_ms": 204.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 6,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.dev.jsonl",
+      "id": "d24",
+      "lang": "en",
+      "latency_ms": 198.6,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h01",
+      "lang": "en",
+      "latency_ms": 201.2,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h02",
+      "lang": "en",
+      "latency_ms": 196.8,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 5,
+        "missed_danger": 1,
+        "false_danger": 3,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h03",
+      "lang": "en",
+      "latency_ms": 200.3,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 1,
+        "false_danger": 5,
+        "fact_errors": 7
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h04",
+      "lang": "en",
+      "latency_ms": 230.4,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 3
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h05",
+      "lang": "en",
+      "latency_ms": 205.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 6,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h06",
+      "lang": "en",
+      "latency_ms": 200.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h07",
+      "lang": "en",
+      "latency_ms": 213.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h08",
+      "lang": "en",
+      "latency_ms": 211.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 2
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h09",
+      "lang": "en",
+      "latency_ms": 218.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 7,
+        "fact_errors": 7
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h10",
+      "lang": "en",
+      "latency_ms": 190.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h11",
+      "lang": "en",
+      "latency_ms": 217.1,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h12",
+      "lang": "en",
+      "latency_ms": 201.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h13",
+      "lang": "en",
+      "latency_ms": 221.1,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h14",
+      "lang": "en",
+      "latency_ms": 225.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "no",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "unknown",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 5,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 5
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "no",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h15",
+      "lang": "hi",
+      "latency_ms": 215.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 3
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h16",
+      "lang": "hi",
+      "latency_ms": 211.9,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 6,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h17",
+      "lang": "hi",
+      "latency_ms": 230.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 5,
+        "fact_errors": 5
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h18",
+      "lang": "hi",
+      "latency_ms": 223.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "no",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h19",
+      "lang": "hi",
+      "latency_ms": 231.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "no",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 3,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h20",
+      "lang": "hi",
+      "latency_ms": 245.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h21",
+      "lang": "hi",
+      "latency_ms": 260.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 5
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h22",
+      "lang": "hi",
+      "latency_ms": 204.0,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "yes",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h23",
+      "lang": "hinglish",
+      "latency_ms": 208.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 6,
+        "missed_danger": 1,
+        "false_danger": 2,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h24",
+      "lang": "hinglish",
+      "latency_ms": 197.3,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 3,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 3
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h25",
+      "lang": "hinglish",
+      "latency_ms": 208.3,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 3
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h26",
+      "lang": "hinglish",
+      "latency_ms": 217.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "no",
+          "gas_smell": "yes",
+          "water_rising": "no",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 3,
+        "missed_danger": 1,
+        "false_danger": 5,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h27",
+      "lang": "hinglish",
+      "latency_ms": 238.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 1,
+        "missed_danger": 1,
+        "false_danger": 4,
+        "fact_errors": 6
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h28",
+      "lang": "hinglish",
+      "latency_ms": 223.3,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h29",
+      "lang": "hinglish",
+      "latency_ms": 194.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 2
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.heldout.jsonl",
+      "id": "h30",
+      "lang": "hinglish",
+      "latency_ms": 214.4,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r01",
+      "lang": "en",
+      "latency_ms": 193.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "no",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 6,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 3
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r02",
+      "lang": "en",
+      "latency_ms": 201.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r03",
+      "lang": "en",
+      "latency_ms": 273.1,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 3
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r04",
+      "lang": "en",
+      "latency_ms": 214.4,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "no",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 6,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "no",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r05",
+      "lang": "hinglish",
+      "latency_ms": 212.7,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r06",
+      "lang": "hi",
+      "latency_ms": 236.4,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r07",
+      "lang": "en",
+      "latency_ms": 214.4,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r08",
+      "lang": "en",
+      "latency_ms": 203.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r09",
+      "lang": "en",
+      "latency_ms": 216.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r10",
+      "lang": "en",
+      "latency_ms": 218.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "yes",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "yes",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 5,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r11",
+      "lang": "en",
+      "latency_ms": 222.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 5,
+        "fact_errors": 5
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r12",
+      "lang": "en",
+      "latency_ms": 217.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r13",
+      "lang": "en",
+      "latency_ms": 194.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r14",
+      "lang": "en",
+      "latency_ms": 214.3,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "yes",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 5,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r15",
+      "lang": "en",
+      "latency_ms": 196.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 1,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 1,
+        "false_danger": 1,
+        "fact_errors": 2
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r16",
+      "lang": "hinglish",
+      "latency_ms": 237.3,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "yes",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 6,
+        "fact_errors": 7
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 3
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r17",
+      "lang": "en",
+      "latency_ms": 230.8,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 1,
+        "false_danger": 0,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r18",
+      "lang": "en",
+      "latency_ms": 204.3,
+      "rules": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "yes",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 7,
+        "missed_danger": 1,
+        "false_danger": 2,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r19",
+      "lang": "en",
+      "latency_ms": 199.2,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 5,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 7
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r20",
+      "lang": "en",
+      "latency_ms": 203.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "no",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r21",
+      "lang": "en",
+      "latency_ms": 211.9,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "no",
+          "water_rising": "yes",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 2,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "yes",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r22",
+      "lang": "en",
+      "latency_ms": 218.5,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "yes",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 5,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 5
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r23",
+      "lang": "hi",
+      "latency_ms": 206.7,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r24",
+      "lang": "hi",
+      "latency_ms": 208.3,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r25",
+      "lang": "en",
+      "latency_ms": 214.6,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r26",
+      "lang": "en",
+      "latency_ms": 211.2,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "yes",
+          "severe_bleeding": "unknown",
+          "trapped": "yes",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 4,
+        "fact_errors": 4
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r27",
+      "lang": "hinglish",
+      "latency_ms": 228.0,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 7,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 9
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r28",
+      "lang": "en",
+      "latency_ms": 235.0,
+      "rules": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "no",
+          "chest_pain": "no",
+          "severe_bleeding": "no",
+          "trapped": "no",
+          "fire_or_smoke": "no",
+          "gas_smell": "no",
+          "water_rising": "no",
+          "caller_in_danger": "no"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 6,
+        "missed_danger": 0,
+        "false_danger": 2,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "yes",
+          "breathing_normally": "no",
+          "chest_pain": "unknown",
+          "severe_bleeding": "no",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 1,
+        "fact_errors": 1
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r29",
+      "lang": "en",
+      "latency_ms": 241.4,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "no",
+          "breathing_normally": "yes",
+          "chest_pain": "yes",
+          "severe_bleeding": "yes",
+          "trapped": "yes",
+          "fire_or_smoke": "yes",
+          "gas_smell": "yes",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 1,
+        "missed_danger": 0,
+        "false_danger": 7,
+        "fact_errors": 8
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "yes",
+          "trapped": "unknown",
+          "fire_or_smoke": "yes",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "yes"
+        },
+        "category": "emergency",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 3,
+        "fact_errors": 3
+      }
+    },
+    {
+      "set": "cases.cc11.jsonl",
+      "id": "r30",
+      "lang": "en",
+      "latency_ms": 220.9,
+      "rules": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "laya": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "non_emergency_assist",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      },
+      "hybrid": {
+        "facts": {
+          "conscious": "unknown",
+          "breathing_normally": "unknown",
+          "chest_pain": "unknown",
+          "severe_bleeding": "unknown",
+          "trapped": "unknown",
+          "fire_or_smoke": "unknown",
+          "gas_smell": "unknown",
+          "water_rising": "unknown",
+          "caller_in_danger": "unknown"
+        },
+        "category": "information_request",
+        "unsafe_downgrades": 0,
+        "missed_danger": 0,
+        "false_danger": 0,
+        "fact_errors": 0
+      }
+    }
+  ],
+  "latency_ms": {
+    "p50": 210.7,
+    "p95": 241.4,
+    "n": 84
+  },
+  "calibration_p_dangerous": {
+    "brier": 0.1659,
+    "ece": 0.2285
+  }
+}

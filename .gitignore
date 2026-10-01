@@ -15,7 +15,14 @@ coverage/
 *.sqlite*
 tmp/
 output/
+.playwright-cli/
 .worktrees/
 .claude/settings.local.json
 *.pem
 *.key
+.mypy_cache/
+*.tsbuildinfo
+data/
+
+.vercel
+.env*

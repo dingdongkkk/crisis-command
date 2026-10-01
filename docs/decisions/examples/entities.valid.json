@@ -1,0 +1,472 @@
+{
+  "_comment": "CC-01 draft examples. All data synthetic. Coordinates [longitude, latitude]. See 0001 and 0008.",
+  "Report": {
+    "report_id": "rpt_0010",
+    "received_sim_time_s": 600,
+    "received_at": "2026-09-30T09:10:00.000Z",
+    "channel": "text_sim",
+    "text_ref": {
+      "store": "report_text",
+      "report_id": "rpt_0010",
+      "text_sha256": "38cc11fc20fbffd0040266edc788b9bc474e53c15e0d87788c27a85534bda0cf",
+      "length_chars": 76
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        77.5838,
+        12.93
+      ]
+    },
+    "location_source": "caller_stated",
+    "linked_incident_id": "inc_0006"
+  },
+  "TriageFacts": {
+    "incident_id": "inc_0006",
+    "policy_version": "demo-2026.2",
+    "facts": [
+      {
+        "key": "trapped",
+        "value": "yes",
+        "source": "rule_adapter",
+        "evidence": [
+          {
+            "report_id": "rpt_0010",
+            "start": 38,
+            "end": 54
+          }
+        ],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "conscious",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "breathing_normally",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "severe_bleeding",
+        "value": "unknown",
+        "source": "model_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false,
+        "coerced_from": "no",
+        "coercion_reason": "ASSERTION_WITHOUT_EVIDENCE"
+      },
+      {
+        "key": "fire_or_smoke",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "people_count",
+        "count": {
+          "value": null,
+          "status": "unknown"
+        },
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "chest_pain",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "gas_smell",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "water_rising",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      },
+      {
+        "key": "caller_in_danger",
+        "value": "unknown",
+        "source": "rule_adapter",
+        "evidence": [],
+        "updated_sim_time_s": 601,
+        "confirmed_by_operator": false
+      }
+    ],
+    "questions_asked": [],
+    "escalation": {
+      "escalated": true,
+      "reasons": [
+        "LIFE_THREAT_INDICATED"
+      ],
+      "sim_time_s": 601
+    },
+    "applicable_facts": [
+      "conscious",
+      "breathing_normally",
+      "trapped",
+      "fire_or_smoke",
+      "people_count"
+    ]
+  },
+  "Incident": {
+    "incident_id": "inc_0006",
+    "category": "emergency",
+    "kind": "structural_collapse",
+    "severity": "critical",
+    "assumed_facts": [
+      "conscious",
+      "breathing_normally"
+    ],
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        77.5838,
+        12.93
+      ]
+    },
+    "created_sim_time_s": 600,
+    "status": "active",
+    "report_ids": [
+      "rpt_0010"
+    ],
+    "needs": [
+      {
+        "need_id": "need_0006_als",
+        "type": "als",
+        "quantity": 1,
+        "basis": "provisional_unknown",
+        "reasons": [
+          {
+            "code": "SEVERITY_FROM_UNKNOWN",
+            "params": {
+              "facts": [
+                "conscious",
+                "breathing_normally"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "need_id": "need_0006_bls",
+        "type": "bls",
+        "quantity": 2,
+        "basis": "confirmed",
+        "reasons": [
+          {
+            "code": "TRAPPED_PERSONS",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "need_id": "need_0006_fire",
+        "type": "fire",
+        "quantity": 1,
+        "basis": "confirmed",
+        "reasons": [
+          {
+            "code": "STRUCTURAL_COLLAPSE_RESCUE",
+            "params": {}
+          }
+        ]
+      }
+    ],
+    "duplicate_candidate_of": []
+  },
+  "Unit": {
+    "unit_id": "unit_A2",
+    "display_name": "A2",
+    "type": "als",
+    "status": "broken_down",
+    "position": {
+      "type": "Point",
+      "coordinates": [
+        77.6231,
+        12.9241
+      ]
+    },
+    "position_sim_time_s": 600,
+    "home_zone_id": "zone_south",
+    "current_task": null,
+    "capacity_persons": 1
+  },
+  "Hospital": {
+    "facility_id": "hosp_H1",
+    "kind": "hospital",
+    "display_name": "Synthetic General H1",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        77.596,
+        12.958
+      ]
+    },
+    "capabilities": [
+      "emergency",
+      "cardiac"
+    ],
+    "ed_beds_available": 4
+  },
+  "Shelter": {
+    "facility_id": "shelter_S1",
+    "kind": "shelter",
+    "display_name": "Synthetic Community Hall S1",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        77.61,
+        12.95
+      ]
+    },
+    "capacity_persons": 120,
+    "occupied_persons": 30
+  },
+  "FloodZone": {
+    "flood_id": "flood_bellandur",
+    "version": 1,
+    "effective_sim_time_s": 300,
+    "closes_roads": true,
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            77.668,
+            12.924
+          ],
+          [
+            77.69,
+            12.924
+          ],
+          [
+            77.69,
+            12.938
+          ],
+          [
+            77.668,
+            12.938
+          ],
+          [
+            77.668,
+            12.924
+          ]
+        ]
+      ]
+    },
+    "source": "synthetic_progression"
+  },
+  "ReserveZone": {
+    "zone_id": "zone_north",
+    "reference_point": {
+      "type": "Point",
+      "coordinates": [
+        77.592,
+        13.0358
+      ]
+    },
+    "required_types": [
+      "bls"
+    ],
+    "coverage_eta_s": 600,
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            77.58,
+            13.02
+          ],
+          [
+            77.61,
+            13.02
+          ],
+          [
+            77.61,
+            13.05
+          ],
+          [
+            77.58,
+            13.05
+          ],
+          [
+            77.58,
+            13.02
+          ]
+        ]
+      ]
+    }
+  },
+  "Route": {
+    "route_id": "route_unit_B3_inc_0006_fv1",
+    "from": {
+      "type": "Point",
+      "coordinates": [
+        77.592,
+        13.0358
+      ]
+    },
+    "to": {
+      "type": "Point",
+      "coordinates": [
+        77.5838,
+        12.93
+      ]
+    },
+    "route_status": "ok",
+    "provider": "fixture",
+    "flood_version": 1,
+    "duration_s": 1260,
+    "distance_m": 12600,
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          77.592,
+          13.0358
+        ],
+        [
+          77.5838,
+          12.93
+        ]
+      ]
+    }
+  },
+  "RouteUnavailable": {
+    "route_id": "route_unit_T1_inc_0003_fv1",
+    "from": {
+      "type": "Point",
+      "coordinates": [
+        77.66,
+        12.95
+      ]
+    },
+    "to": {
+      "type": "Point",
+      "coordinates": [
+        77.6784,
+        12.9304
+      ]
+    },
+    "route_status": "unavailable",
+    "unavailable_reason": "DESTINATION_IN_CLOSED_FLOOD_ZONE",
+    "provider": "fixture",
+    "flood_version": 1,
+    "duration_s": null,
+    "distance_m": null,
+    "geometry": null
+  },
+  "Override": {
+    "override_id": "ovr_0002",
+    "kind": "approve_bls_bridge",
+    "unit_id": "unit_B2",
+    "bridges_need_id": "need_0006_als",
+    "reason_text": "No ALS available; BLS bridge until ALS frees.",
+    "status": "active",
+    "created_by": {
+      "kind": "operator",
+      "id": "op_demo_1"
+    },
+    "accepted_sequence": 68,
+    "expected_session_id": "sess_demo_01"
+  },
+  "MedicalProfileConsent": {
+    "profile_ref": "mprof_syn_0001",
+    "subject_ref": "subj_syn_0001",
+    "consent": {
+      "granted": true,
+      "scope": [
+        "conditions",
+        "medications",
+        "allergies"
+      ],
+      "granted_at": "2026-09-01T00:00:00.000Z",
+      "revocable": true
+    },
+    "access_rule": {
+      "requires_caller_is_patient": true,
+      "requires_active_incident": true,
+      "requires_operator_reason": true
+    },
+    "synthetic": true
+  },
+  "BridgeAssignment": {
+    "assignment_id": "asg_0007_03",
+    "unit_id": "unit_B2",
+    "incident_id": "inc_0006",
+    "role": "bridge",
+    "satisfies_need": false,
+    "eta_s": 140,
+    "locked": null,
+    "reasons": [
+      {
+        "code": "NEAREST_ELIGIBLE",
+        "params": {
+          "unit_id": "unit_B2",
+          "eta_s": 140
+        }
+      }
+    ],
+    "route": {
+      "route_id": "route_unit_B2_inc_0006_fv1",
+      "from": {
+        "type": "Point",
+        "coordinates": [
+          77.5838,
+          12.925
+        ]
+      },
+      "to": {
+        "type": "Point",
+        "coordinates": [
+          77.5838,
+          12.93
+        ]
+      },
+      "route_status": "ok",
+      "provider": "fixture",
+      "flood_version": 1,
+      "duration_s": 140,
+      "distance_m": 1400,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.5838,
+            12.925
+          ],
+          [
+            77.5838,
+            12.93
+          ]
+        ]
+      }
+    },
+    "bridges_need_id": "need_0006_als"
+  }
+}
