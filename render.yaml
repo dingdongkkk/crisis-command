@@ -1,0 +1,19 @@
+# Render Blueprint: hosts the Crisis Command backend (API + WebSocket) for the Vercel console.
+# Simulation only. Free plan: sleeps when idle and has no persistent disk, so the event log
+# resets on restart (the demo reseeds itself).
+services:
+  - type: web
+    name: crisis-command-api
+    runtime: python
+    plan: free
+    buildCommand: pip install uv && cd backend && uv sync --frozen --no-dev
+    startCommand: cd backend && uv run --no-dev uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_PATH
+        value: /tmp/crisis.db
+      - key: CRISIS_CORS_ORIGINS
+        value: https://crisis-command-tau.vercel.app,https://crisis-command-anubvkr.vercel.app

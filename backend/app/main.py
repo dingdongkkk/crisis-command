@@ -7,6 +7,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from .api import operations, privacy, routes, ws
 from .config import Settings
@@ -51,6 +52,17 @@ def create_app(
         description="Synthetic data and simulated dispatch only. Not an emergency service.",
         lifespan=lifespan,
     )
+    # A hosted console on another origin (e.g. Vercel) may call this API only when listed in
+    # CRISIS_CORS_ORIGINS (comma-separated). Unset = same-origin only (local dev proxy).
+    origins = [o.strip() for o in os.environ.get("CRISIS_CORS_ORIGINS", "").split(",") if o.strip()]
+    if origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=origins,
+            allow_methods=["GET", "POST", "PUT"],
+            allow_headers=["Content-Type", "Idempotency-Key"],
+            expose_headers=["Idempotent-Replayed", "Retry-After"],
+        )
     app.state.settings = settings
     app.state.heartbeat_s = heartbeat_s
     app.state.intake = IntakeService.from_settings(settings.llm_provider)

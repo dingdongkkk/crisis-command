@@ -22,7 +22,8 @@ if (!root) throw new Error('Missing #root element')
 const params = new URLSearchParams(window.location.search)
 // Hosted static build (e.g. Vercel): no backend exists, so the console runs on its built-in
 // synthetic T+10 scenario and says so. The live API/WebSocket backend runs locally.
-const staticDemo = import.meta.env.VITE_DEMO_MODE === 'static'
+// A configured backend (VITE_API_BASE) always wins: the hosted console is then fully live.
+const staticDemo = import.meta.env.VITE_DEMO_MODE === 'static' && !import.meta.env.VITE_API_BASE
 const api: ConsoleApi =
   params.has('mock') || staticDemo
     ? new MockConsoleApi(scenarioFromLocation(window.location.search))
