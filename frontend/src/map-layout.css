@@ -7,8 +7,10 @@
 .stat:first-child .stat-value { font-size: 27px; }
 .app > .statbar { margin-bottom: 8px; }
 .console { grid-template-columns: 232px minmax(0, 1fr) 296px; }
-.stage-map { min-height: 420px; }
+.stage-map { min-height: 0; }
 .detail-dock:not(.open) { max-height: 34px; overflow: hidden; }
+/* Selected incident: triage always reachable; it takes up to 45% and scrolls, the map keeps the rest. */
+.detail-dock.open { flex: none; max-height: 45%; min-height: 180px; overflow: auto; }
 .detail-dock:not(.open) .triage { display: flex; align-items: baseline; gap: 12px; }
 .map-heading-right { display: inline-flex; align-items: center; gap: 10px; }
 .map-expand { width: 26px; height: 26px; }
@@ -27,4 +29,6 @@
 .static-demo-note { margin: 0; padding: 6px 16px; font-size: 11px; text-align: center; border-bottom: 1px solid var(--line); }
 .static-demo-note code { font-family: 'IBM Plex Mono', monospace; }
 #root { display: flex; flex-direction: column; }
-#root > .app { flex: 1; height: auto; min-height: 0; }
+#root > .app, #root > .tour-shell { flex: 1; height: auto; min-height: 0; }
+.tour-shell { display: flex; flex-direction: column; }
+.tour-shell > .app { flex: 1; height: auto; min-height: 0; }

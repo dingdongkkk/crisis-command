@@ -1,4 +1,4 @@
-import { Activity, CloudOff, Keyboard, Moon, RefreshCw, ShieldAlert, Sun, TriangleAlert, WifiOff } from 'lucide-react'
+import { Activity, BookOpen, CloudOff, Keyboard, Moon, RefreshCw, ShieldAlert, Sun, TriangleAlert, WifiOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { ConnectionStatus } from '../api/types'
 import { simClock } from '../state/labels'
@@ -91,11 +91,12 @@ interface TopBarProps {
   theme: Theme
   onToggleTheme: () => void
   onShowKeys: () => void
+  onShowTour?: () => void
   /** Simulation controls (scenario steps, simulated call) when the backend offers them. */
   controls?: React.ReactNode
 }
 
-export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, onShowKeys, controls }: TopBarProps) {
+export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, onShowKeys, onShowTour, controls }: TopBarProps) {
   return (
     <header className="topbar">
       <div className="brand">
@@ -124,6 +125,7 @@ export function TopBar({ connection, simTimeS, sessionId, theme, onToggleTheme, 
         )}
         {connection}
         <span className="topbar-rule" aria-hidden="true" />
+        {onShowTour && <button type="button" className="icon-btn tour-launch" onClick={onShowTour} aria-label="Open demo guide"><BookOpen size={15} /></button>}
         <button type="button" className="icon-btn" onClick={onShowKeys} aria-label="Keyboard shortcuts">
           <Keyboard size={15} />
         </button>

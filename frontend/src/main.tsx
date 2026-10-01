@@ -5,10 +5,10 @@ import '@fontsource/ibm-plex-mono/600.css'
 import './map/worker'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { App } from './App'
 import { LiveConsoleApi } from './api/liveApi'
 import type { ConsoleApi } from './api/types'
 import { MockConsoleApi, scenarioFromLocation } from './mocks/mockApi'
+import { ConsoleRoot } from './components/ConsoleRoot'
 import './styles.css'
 import './command-center.css'
 import './map-layout.css'
@@ -30,12 +30,12 @@ const api: ConsoleApi =
 
 createRoot(root).render(
   <StrictMode>
-    {staticDemo && (
+{staticDemo && (
       <p className="notice notice-strip static-demo-note" role="note">
         Hosted preview on built-in synthetic data (Bengaluru, T+10). The live backend, scenario
         controls and simulated calls run locally with <code>scripts/demo.sh</code>.
       </p>
     )}
-    <App api={api} mapTiles={params.get('tiles') !== 'off'} />
+    <ConsoleRoot api={api} mapTiles={params.get('tiles') !== 'off'} tourMode={params.get('tour')} />
   </StrictMode>,
 )

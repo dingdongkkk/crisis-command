@@ -27,6 +27,8 @@ export interface AppProps {
   api: ConsoleApi
   /** Vector base map on/off (tests, offline demos). Map features always render. */
   mapTiles?: boolean
+  /** Reopen the preflight guide from the command bar. */
+  onShowTour?: () => void
 }
 
 const TABS = ['Queue', 'Map', 'Plan', 'Triage', 'Fleet'] as const
@@ -59,7 +61,7 @@ const isTyping = (target: EventTarget | null) =>
 
 type RoutesState = { status: 'idle' | 'loading' | 'error' } | { status: 'ready'; data: RouteCandidatesView }
 
-export function App({ api, mapTiles = true }: AppProps) {
+export function App({ api, mapTiles = true, onShowTour }: AppProps) {
   const { state, planView, select, ack, approve, submitOverride, clearPlanAction } = useConsole(api)
   const [dialog, setDialog] = useState<DialogState>(null)
   const [notice, setNotice] = useState<string | null>(null)
@@ -221,6 +223,7 @@ export function App({ api, mapTiles = true }: AppProps) {
         theme={theme}
         onToggleTheme={toggleTheme}
         onShowKeys={() => setDialog({ kind: 'keys' })}
+        onShowTour={onShowTour}
       />
       {degraded.map((code) => (
         <p key={code} className="notice notice-strip notice-degraded" role="status">{degradedText(code)}</p>

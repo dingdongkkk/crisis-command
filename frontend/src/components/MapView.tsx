@@ -196,7 +196,7 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
   const fittedRef = useRef(false)
   const [markerEls, setMarkerEls] = useState<Record<string, HTMLElement>>({})
   const [baseMapFailed, setBaseMapFailed] = useState(false)
-  const [hud, setHud] = useState({ lng: CENTER[0], lat: CENTER[1], zoom: 11.4, bearing: -12, pitch: 42 })
+  const [hud, setHud] = useState({ lng: CENTER[0], lat: CENTER[1], zoom: 11.4, bearing: -12, pitch: 20 })
   const [cursor, setCursor] = useState<{ lng: number; lat: number } | null>(null)
   const data = useMemo(
     () => overlays(snapshot, proposal, candidates, focusedUnitId),
@@ -220,9 +220,16 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
       style: tiles ? STYLE_URLS[themeRef.current] : blankStyle(themeRef.current),
       center: CENTER,
       zoom: 11.4,
-      pitch: 42,
+      // A gentle tilt: steep pitch pulls tiles out to the horizon and slows first load.
+      pitch: 20,
       bearing: -12,
       maxPitch: 60,
+      // Stay on Bengaluru so the map never fetches tiles for far-away areas.
+      maxBounds: [
+        [77.25, 12.7],
+        [78.0, 13.25],
+      ],
+      minZoom: 9.5,
       attributionControl: false,
       fadeDuration: 0,
     })
@@ -341,7 +348,7 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
     if (!fittedRef.current && wanted.size > 0) {
       const bounds = new LngLatBounds()
       wanted.forEach((c) => bounds.extend(c))
-      map.fitBounds(bounds, { padding: { top: 70, bottom: 70, left: 60, right: 60 }, maxZoom: 13, duration: 0, pitch: 42, bearing: -12 })
+      map.fitBounds(bounds, { padding: { top: 70, bottom: 70, left: 60, right: 60 }, maxZoom: 13, duration: 0, pitch: 20, bearing: -12 })
       fittedRef.current = true
     }
   }, [snapshot.incidents, snapshot.units])
