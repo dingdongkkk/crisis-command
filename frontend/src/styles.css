@@ -408,6 +408,28 @@ button.primary[aria-disabled='true'], button.primary:disabled { opacity: 1; bord
 .dialog select, .dialog textarea, .dialog input:not([type=checkbox]) { width: 100%; padding: 6px 8px; border-radius: 2px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--fg); font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; }
 .dialog select { height: 30px; }
 .dialog textarea { min-height: 64px; resize: vertical; }
+.voice-intake { margin-top: 13px; padding: 11px; border: 1px solid var(--line); background: var(--panel-2); }
+.voice-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--fg-2); font: 500 9px/1.2 'IBM Plex Mono', monospace; letter-spacing: .06em; text-transform: uppercase; }
+.voice-heading > span { display: inline-flex; align-items: center; gap: 7px; }
+.voice-heading svg { color: var(--accent); }
+.voice-heading em { padding: 3px 5px; color: var(--accent); border: 1px solid var(--accent-solid); font-size: 7px; font-style: normal; }
+.voice-live { color: var(--accent); }
+.voice-live i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px var(--accent-tint); animation: voice-pulse 1.2s ease-in-out infinite; }
+.voice-controls { display: grid; grid-template-columns: 1fr auto; gap: 9px; align-items: end; margin-top: 10px; }
+.dialog .voice-controls label { margin: 0; }
+.voice-button { display: inline-flex; min-width: 154px; height: 30px; align-items: center; justify-content: center; gap: 7px; color: var(--fg); border: 1px solid var(--line-2); background: var(--panel-3); font: 500 9px/1 'IBM Plex Mono', monospace; letter-spacing: .04em; text-transform: uppercase; }
+.voice-button:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-tint); }
+.voice-button.voice-stop { color: #111; border-color: var(--fg); background: var(--fg); }
+.voice-message { margin: 9px 0 0; color: var(--faint); font: 400 9px/1.5 'IBM Plex Mono', monospace; }
+.voice-message.voice-error { color: var(--danger); }
+.dialog textarea[readonly] { color: var(--fg-2); border-color: var(--accent-solid); }
+@keyframes voice-pulse { 0%, 100% { opacity: .5; transform: scale(.85); } 50% { opacity: 1; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .voice-live i { animation: none; } }
+@media (max-width: 520px) {
+  .voice-heading { align-items: flex-start; }
+  .voice-controls { grid-template-columns: 1fr; }
+  .voice-button { width: 100%; }
+}
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; padding: 10px 16px; background: var(--panel-2); border-top: 1px solid var(--line); }
 .dialog-actions button.primary { flex: none; }
 .keys { display: grid; gap: 6px; margin-top: 12px; margin-bottom: 12px; }
