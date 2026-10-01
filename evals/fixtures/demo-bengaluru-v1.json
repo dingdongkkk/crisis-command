@@ -1,0 +1,440 @@
+{
+  "_comment": "Synthetic demo-bengaluru-v1 initial world (decision 0007). Coordinates are approximate public places used only to position fictional data. session_id/sequence fields are filled when a session starts.",
+  "fixture": "demo-bengaluru-v1",
+  "policy": {
+    "policy_version": "demo-2026.2",
+    "dangerous_values": {
+      "conscious": "no",
+      "breathing_normally": "no",
+      "chest_pain": "yes",
+      "severe_bleeding": "yes",
+      "trapped": "yes",
+      "fire_or_smoke": "yes",
+      "gas_smell": "yes",
+      "water_rising": "yes",
+      "caller_in_danger": "yes"
+    },
+    "objective_tiers": [
+      "unmet_critical",
+      "unmet_high",
+      "unmet_medium",
+      "unmet_low",
+      "waiting_cost",
+      "operating_cost"
+    ],
+    "severity_weights": {
+      "critical": 5,
+      "high": 3,
+      "medium": 2,
+      "low": 1
+    },
+    "limits": {
+      "units": 25,
+      "need_records": 30,
+      "demand_quanta": 2000,
+      "reserve_pairs": 12
+    },
+    "costs": {
+      "travel_cap_s": 3600,
+      "waiting_cap_s": 3600,
+      "reassignment": 600,
+      "reserve_shortfall": 900,
+      "als_on_bls": 900
+    },
+    "planning_tick_s": 10,
+    "max_debounce_ms": 250,
+    "solver_budget_ms": 2000,
+    "near_arrival_lock_s": 120
+  },
+  "units": [
+    {
+      "unit_id": "unit_A1",
+      "display_name": "A1",
+      "type": "als",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.607,
+          12.975
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_central",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_A2",
+      "display_name": "A2",
+      "type": "als",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6245,
+          12.9352
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_south",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_B1",
+      "display_name": "B1",
+      "type": "bls",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.5946,
+          12.9716
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_central",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_B2",
+      "display_name": "B2",
+      "type": "bls",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.5838,
+          12.925
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_south",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_B3",
+      "display_name": "B3",
+      "type": "bls",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.592,
+          13.0358
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_north",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_F1",
+      "display_name": "F1",
+      "type": "fire",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.601,
+          12.978
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_central",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_F2",
+      "display_name": "F2",
+      "type": "fire",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.7,
+          12.96
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_east",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_BT1",
+      "display_name": "BT1",
+      "type": "boat",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.6784,
+          12.94
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_east",
+      "current_task": null,
+      "capacity_persons": 6,
+      "desired_revision": 0
+    },
+    {
+      "unit_id": "unit_T1",
+      "display_name": "T1",
+      "type": "tow",
+      "status": "available",
+      "position": {
+        "type": "Point",
+        "coordinates": [
+          77.66,
+          12.95
+        ]
+      },
+      "position_sim_time_s": 0,
+      "home_zone_id": "zone_east",
+      "current_task": null,
+      "capacity_persons": 1,
+      "desired_revision": 0
+    }
+  ],
+  "facilities": [
+    {
+      "facility_id": "hosp_H1",
+      "kind": "hospital",
+      "display_name": "Synthetic General H1",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.596,
+          12.958
+        ]
+      },
+      "capabilities": [
+        "emergency",
+        "cardiac"
+      ],
+      "ed_beds_available": 4
+    },
+    {
+      "facility_id": "hosp_H2",
+      "kind": "hospital",
+      "display_name": "Synthetic District H2",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.648,
+          12.916
+        ]
+      },
+      "capabilities": [
+        "emergency"
+      ],
+      "ed_beds_available": 6
+    },
+    {
+      "facility_id": "shelter_S1",
+      "kind": "shelter",
+      "display_name": "Synthetic Community Hall S1",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.61,
+          12.95
+        ]
+      },
+      "capacity_persons": 120,
+      "occupied_persons": 30
+    },
+    {
+      "facility_id": "shelter_S2",
+      "kind": "shelter",
+      "display_name": "Synthetic School Hall S2",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.64,
+          12.99
+        ]
+      },
+      "capacity_persons": 80,
+      "occupied_persons": 0
+    }
+  ],
+  "reserve_zones": [
+    {
+      "zone_id": "zone_north",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.592,
+          13.0358
+        ]
+      },
+      "required_types": [
+        "bls"
+      ],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              13.0
+            ],
+            [
+              77.65,
+              13.0
+            ],
+            [
+              77.65,
+              13.1
+            ],
+            [
+              77.55,
+              13.1
+            ],
+            [
+              77.55,
+              13.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "zone_id": "zone_central",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.5946,
+          12.9716
+        ]
+      },
+      "required_types": [
+        "bls"
+      ],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              12.95
+            ],
+            [
+              77.65,
+              12.95
+            ],
+            [
+              77.65,
+              13.0
+            ],
+            [
+              77.55,
+              13.0
+            ],
+            [
+              77.55,
+              12.95
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "zone_id": "zone_south",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.5838,
+          12.925
+        ]
+      },
+      "required_types": [
+        "bls"
+      ],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.55,
+              12.88
+            ],
+            [
+              77.65,
+              12.88
+            ],
+            [
+              77.65,
+              12.95
+            ],
+            [
+              77.55,
+              12.95
+            ],
+            [
+              77.55,
+              12.88
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "zone_id": "zone_east",
+      "reference_point": {
+        "type": "Point",
+        "coordinates": [
+          77.7,
+          12.96
+        ]
+      },
+      "required_types": [],
+      "coverage_eta_s": 600,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.65,
+              12.9
+            ],
+            [
+              77.78,
+              12.9
+            ],
+            [
+              77.78,
+              13.0
+            ],
+            [
+              77.65,
+              13.0
+            ],
+            [
+              77.65,
+              12.9
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

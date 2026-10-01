@@ -16,7 +16,69 @@ jobs:
           python-version: '3.12'
       - name: Validate setup and dependency graph
         run: python scripts/validate_setup.py
-      - name: Test task handoff transitions
+      - name: Test task handoff transitions and CC-01 fixtures
         run: python -m unittest discover -s tests -v
       - name: Show initial graph (not live status)
         run: python scripts/taskboard.py --offline
+
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - name: Install locked dependencies
+        run: uv sync --frozen
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format check
+        run: uv run ruff format --check .
+      - name: Type check
+        run: uv run mypy
+      - name: Test
+        run: uv run pytest
+      - name: Generated contracts are current
+        run: uv run python -m app.contracts.export --check
+      - name: Lint evaluation harnesses
+        run: uv run ruff check ../evals
+      - name: Scripted scenario T+0 to T+10 with replay equality
+        run: uv run python -m app.scenario
+      - name: Triage evaluation (fails on any unsafe downgrade)
+        run: uv run python ../evals/triage/run_eval.py
+      - name: Adversarial probes (approvals, replay, privacy, overrides)
+        run: uv run python ../evals/adversarial/run_probes.py
+      - name: Benchmark smoke (3 seeds; full 100-seed run is manual)
+        run: uv run python ../evals/benchmark/run_benchmark.py --seeds 3
+
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Generated TypeScript contracts are current
+        run: |
+          npm run gen:contracts
+          git diff --exit-code -- src/generated
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build

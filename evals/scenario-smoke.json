@@ -1,0 +1,1113 @@
+{
+  "simulated": true,
+  "replay_equal": true,
+  "stages": [
+    {
+      "step": "T+0",
+      "elapsed_ms": 128,
+      "plan": {
+        "plan_id": "plan_sess_0001_1_12",
+        "solver": {
+          "engine": "ortools_cp_sat",
+          "status": "OPTIMAL",
+          "wall_time_ms": 88,
+          "seed": 7,
+          "workers": 1,
+          "objective_vector": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1115
+          ],
+          "completed_tiers": [
+            "unmet_critical",
+            "unmet_high",
+            "unmet_medium",
+            "unmet_low",
+            "waiting_cost",
+            "operating_cost"
+          ],
+          "lexicographic_complete": true,
+          "tie_break_complete": true
+        },
+        "assignments": [
+          {
+            "assignment_id": "asgn_1_unit_A1",
+            "unit_id": "unit_A1",
+            "incident_id": "incident_2",
+            "need_id": "incident_2_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 223,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 223
+                }
+              }
+            ]
+          }
+        ],
+        "unmet_needs": [],
+        "flags": []
+      }
+    },
+    {
+      "step": "T+2",
+      "elapsed_ms": 139,
+      "plan": {
+        "plan_id": "plan_sess_0001_2_28",
+        "solver": {
+          "engine": "ortools_cp_sat",
+          "status": "OPTIMAL",
+          "wall_time_ms": 55,
+          "seed": 7,
+          "workers": 1,
+          "objective_vector": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            14693
+          ],
+          "completed_tiers": [
+            "unmet_critical",
+            "unmet_high",
+            "unmet_medium",
+            "unmet_low",
+            "waiting_cost",
+            "operating_cost"
+          ],
+          "lexicographic_complete": true,
+          "tie_break_complete": true
+        },
+        "assignments": [
+          {
+            "assignment_id": "asgn_1_unit_A1",
+            "unit_id": "unit_A1",
+            "incident_id": "incident_2",
+            "need_id": "incident_2_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 18,
+            "locked": "on_scene",
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "UNIT_LOCKED",
+                "params": {
+                  "eta_s": 18
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_A2",
+            "unit_id": "unit_A2",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 896,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 896
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_B1",
+            "unit_id": "unit_B1",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 412,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 412
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_F1",
+            "unit_id": "unit_F1",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 328,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": null,
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 328
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_F2",
+            "unit_id": "unit_F2",
+            "incident_id": "incident_25",
+            "need_id": "incident_25_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 1841,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": null,
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 1841
+                }
+              }
+            ]
+          }
+        ],
+        "unmet_needs": [],
+        "flags": [
+          {
+            "flag_id": "flag_2_1",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_2_2",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_fire",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_2_3",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "message": "RESERVE UNCOVERED",
+            "incident_id": null,
+            "need_id": null,
+            "zone_id": "zone_central",
+            "resource_type": "bls",
+            "since_sim_time_s": 120,
+            "override_id": null
+          }
+        ]
+      }
+    },
+    {
+      "step": "T+5",
+      "elapsed_ms": 188,
+      "plan": {
+        "plan_id": "plan_sess_0001_3_55",
+        "solver": {
+          "engine": "ortools_cp_sat",
+          "status": "OPTIMAL",
+          "wall_time_ms": 88,
+          "seed": 7,
+          "workers": 1,
+          "objective_vector": [
+            4,
+            0,
+            0,
+            0,
+            0,
+            15414
+          ],
+          "completed_tiers": [
+            "unmet_critical",
+            "unmet_high",
+            "unmet_medium",
+            "unmet_low",
+            "waiting_cost",
+            "operating_cost"
+          ],
+          "lexicographic_complete": true,
+          "tie_break_complete": true
+        },
+        "assignments": [
+          {
+            "assignment_id": "asgn_1_unit_A1",
+            "unit_id": "unit_A1",
+            "incident_id": "incident_2",
+            "need_id": "incident_2_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 18,
+            "locked": "on_scene",
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "UNIT_LOCKED",
+                "params": {
+                  "eta_s": 18
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_A2",
+            "unit_id": "unit_A2",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 973,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 973
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_B1",
+            "unit_id": "unit_B1",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 412,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 412
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_F1",
+            "unit_id": "unit_F1",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 328,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": null,
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 328
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_F2",
+            "unit_id": "unit_F2",
+            "incident_id": "incident_25",
+            "need_id": "incident_25_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 1953,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": null,
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 1953
+                }
+              }
+            ]
+          }
+        ],
+        "unmet_needs": [
+          {
+            "need_id": "incident_46_als",
+            "incident_id": "incident_46",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 0,
+            "reasons": [
+              {
+                "code": "NO_ALS_AVAILABLE",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_46_water_rescue",
+            "incident_id": "incident_46",
+            "type": "water_rescue",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "confirmed",
+            "waiting_s": 0,
+            "reasons": [
+              {
+                "code": "NO_ELIGIBLE_CAPACITY",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_50_als",
+            "incident_id": "incident_50",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 0,
+            "reasons": [
+              {
+                "code": "NO_ALS_AVAILABLE",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_50_water_rescue",
+            "incident_id": "incident_50",
+            "type": "water_rescue",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "confirmed",
+            "waiting_s": 0,
+            "reasons": [
+              {
+                "code": "NO_ELIGIBLE_CAPACITY",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          }
+        ],
+        "flags": [
+          {
+            "flag_id": "flag_3_1",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_2",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_fire",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_3",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_46",
+            "need_id": "incident_46_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_4",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "ALS UNMET",
+            "incident_id": "incident_46",
+            "need_id": "incident_46_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_5",
+            "code": "CRITICAL_NEED_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "CRITICAL NEED UNMET",
+            "incident_id": "incident_46",
+            "need_id": "incident_46_water_rescue",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_6",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_50",
+            "need_id": "incident_50_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_7",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "ALS UNMET",
+            "incident_id": "incident_50",
+            "need_id": "incident_50_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_8",
+            "code": "CRITICAL_NEED_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "CRITICAL NEED UNMET",
+            "incident_id": "incident_50",
+            "need_id": "incident_50_water_rescue",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_3_9",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "message": "RESERVE UNCOVERED",
+            "incident_id": null,
+            "need_id": null,
+            "zone_id": "zone_central",
+            "resource_type": "bls",
+            "since_sim_time_s": 300,
+            "override_id": null
+          }
+        ]
+      }
+    },
+    {
+      "step": "T+10",
+      "elapsed_ms": 154,
+      "plan": {
+        "plan_id": "plan_sess_0001_4_63",
+        "solver": {
+          "engine": "ortools_cp_sat",
+          "status": "OPTIMAL",
+          "wall_time_ms": 25,
+          "seed": 7,
+          "workers": 1,
+          "objective_vector": [
+            6,
+            1,
+            0,
+            0,
+            9840,
+            23985
+          ],
+          "completed_tiers": [
+            "unmet_critical",
+            "unmet_high",
+            "unmet_medium",
+            "unmet_low",
+            "waiting_cost",
+            "operating_cost"
+          ],
+          "lexicographic_complete": true,
+          "tie_break_complete": true
+        },
+        "assignments": [
+          {
+            "assignment_id": "asgn_1_unit_A1",
+            "unit_id": "unit_A1",
+            "incident_id": "incident_2",
+            "need_id": "incident_2_als",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 18,
+            "locked": "on_scene",
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "UNIT_LOCKED",
+                "params": {
+                  "eta_s": 18
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_B1",
+            "unit_id": "unit_B1",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 412,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 412
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_4_unit_B2",
+            "unit_id": "unit_B2",
+            "incident_id": "incident_59",
+            "need_id": "incident_59_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 1145,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 1145
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_4_unit_B3",
+            "unit_id": "unit_B3",
+            "incident_id": "incident_59",
+            "need_id": "incident_59_bls",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 1192,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": "hosp_H1",
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 1192
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_2_unit_F1",
+            "unit_id": "unit_F1",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 328,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": null,
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 328
+                }
+              }
+            ]
+          },
+          {
+            "assignment_id": "asgn_4_unit_F2",
+            "unit_id": "unit_F2",
+            "incident_id": "incident_59",
+            "need_id": "incident_59_fire",
+            "role": "primary",
+            "satisfies_need": true,
+            "bridges_need_id": null,
+            "eta_s": 1042,
+            "locked": null,
+            "persons": null,
+            "destination_facility_id": null,
+            "reasons": [
+              {
+                "code": "ELIGIBLE_ALLOCATION",
+                "params": {
+                  "eta_s": 1042
+                }
+              }
+            ]
+          }
+        ],
+        "unmet_needs": [
+          {
+            "need_id": "incident_21_als",
+            "incident_id": "incident_21",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 480,
+            "reasons": [
+              {
+                "code": "NO_ALS_AVAILABLE",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": [
+              {
+                "unit_id": "unit_B1",
+                "eta_s": 412,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "incident_21_bls",
+                    "zone_id": null,
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "unit_id": "unit_B3",
+                "eta_s": 919,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "incident_59_bls",
+                    "zone_id": null,
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "unit_id": "unit_B2",
+                "eta_s": 1053,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "incident_59_bls",
+                    "zone_id": null,
+                    "delta": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "need_id": "incident_25_fire",
+            "incident_id": "incident_25",
+            "type": "fire",
+            "quantity_unmet": 1,
+            "severity": "high",
+            "basis": "confirmed",
+            "waiting_s": 480,
+            "reasons": [
+              {
+                "code": "NO_ELIGIBLE_CAPACITY",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_46_als",
+            "incident_id": "incident_46",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 300,
+            "reasons": [
+              {
+                "code": "NO_ALS_AVAILABLE",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_46_water_rescue",
+            "incident_id": "incident_46",
+            "type": "water_rescue",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "confirmed",
+            "waiting_s": 300,
+            "reasons": [
+              {
+                "code": "NO_ELIGIBLE_CAPACITY",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_50_als",
+            "incident_id": "incident_50",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 300,
+            "reasons": [
+              {
+                "code": "NO_ALS_AVAILABLE",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_50_water_rescue",
+            "incident_id": "incident_50",
+            "type": "water_rescue",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "confirmed",
+            "waiting_s": 300,
+            "reasons": [
+              {
+                "code": "NO_ELIGIBLE_CAPACITY",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": []
+          },
+          {
+            "need_id": "incident_59_als",
+            "incident_id": "incident_59",
+            "type": "als",
+            "quantity_unmet": 1,
+            "severity": "critical",
+            "basis": "provisional_unknown",
+            "waiting_s": 0,
+            "reasons": [
+              {
+                "code": "NO_ALS_AVAILABLE",
+                "params": {}
+              }
+            ],
+            "bridge_candidates": [
+              {
+                "unit_id": "unit_B1",
+                "eta_s": 592,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "incident_21_bls",
+                    "zone_id": null,
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "unit_id": "unit_B2",
+                "eta_s": 1145,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "incident_59_bls",
+                    "zone_id": null,
+                    "delta": 1
+                  }
+                ]
+              },
+              {
+                "unit_id": "unit_B3",
+                "eta_s": 1192,
+                "cost_of_taking": [
+                  {
+                    "metric": "unmet_need",
+                    "need_id": "incident_59_bls",
+                    "zone_id": null,
+                    "delta": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flags": [
+          {
+            "flag_id": "flag_4_1",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_2",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "ALS UNMET",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_3",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_21",
+            "need_id": "incident_21_fire",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_4",
+            "code": "NEED_UNMET",
+            "severity": "warning",
+            "requires_ack": true,
+            "message": "NEED UNMET",
+            "incident_id": "incident_25",
+            "need_id": "incident_25_fire",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_5",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_46",
+            "need_id": "incident_46_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_6",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "ALS UNMET",
+            "incident_id": "incident_46",
+            "need_id": "incident_46_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_7",
+            "code": "CRITICAL_NEED_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "CRITICAL NEED UNMET",
+            "incident_id": "incident_46",
+            "need_id": "incident_46_water_rescue",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_8",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_50",
+            "need_id": "incident_50_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_9",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "ALS UNMET",
+            "incident_id": "incident_50",
+            "need_id": "incident_50_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_10",
+            "code": "CRITICAL_NEED_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "CRITICAL NEED UNMET",
+            "incident_id": "incident_50",
+            "need_id": "incident_50_water_rescue",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_11",
+            "code": "PROVISIONAL_NEED",
+            "severity": "info",
+            "requires_ack": false,
+            "message": "PROVISIONAL NEED",
+            "incident_id": "incident_59",
+            "need_id": "incident_59_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_12",
+            "code": "ALS_UNMET",
+            "severity": "critical",
+            "requires_ack": true,
+            "message": "ALS UNMET",
+            "incident_id": "incident_59",
+            "need_id": "incident_59_als",
+            "zone_id": null,
+            "resource_type": null,
+            "since_sim_time_s": null,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_13",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "message": "RESERVE UNCOVERED",
+            "incident_id": null,
+            "need_id": null,
+            "zone_id": "zone_north",
+            "resource_type": "bls",
+            "since_sim_time_s": 600,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_14",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "message": "RESERVE UNCOVERED",
+            "incident_id": null,
+            "need_id": null,
+            "zone_id": "zone_central",
+            "resource_type": "bls",
+            "since_sim_time_s": 600,
+            "override_id": null
+          },
+          {
+            "flag_id": "flag_4_15",
+            "code": "RESERVE_UNCOVERED",
+            "severity": "warning",
+            "requires_ack": true,
+            "message": "RESERVE UNCOVERED",
+            "incident_id": null,
+            "need_id": null,
+            "zone_id": "zone_south",
+            "resource_type": "bls",
+            "since_sim_time_s": 600,
+            "override_id": null
+          }
+        ]
+      }
+    }
+  ]
+}

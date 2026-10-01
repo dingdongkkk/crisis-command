@@ -1,0 +1,58 @@
+[
+  {
+    "dataset": "cases.dev.jsonl",
+    "cases": 24,
+    "passed": 24,
+    "unsafe_downgrades": 0,
+    "missed_danger": 0,
+    "false_danger": 0,
+    "category_accuracy": "24/24",
+    "required_escalations_met": "16/16",
+    "cases_by_language": {
+      "en": 13,
+      "hi": 6,
+      "hinglish": 5
+    },
+    "failures": []
+  },
+  {
+    "dataset": "cases.heldout.jsonl",
+    "cases": 30,
+    "passed": 30,
+    "unsafe_downgrades": 0,
+    "missed_danger": 0,
+    "false_danger": 0,
+    "category_accuracy": "30/30",
+    "required_escalations_met": "19/19",
+    "cases_by_language": {
+      "en": 14,
+      "hi": 8,
+      "hinglish": 8
+    },
+    "failures": []
+  },
+  {
+    "dataset": "cases.cc11.jsonl",
+    "cases": 30,
+    "passed": 29,
+    "unsafe_downgrades": 0,
+    "missed_danger": 1,
+    "false_danger": 0,
+    "category_accuracy": "30/30",
+    "required_escalations_met": "11/11",
+    "cases_by_language": {
+      "en": 24,
+      "hinglish": 3,
+      "hi": 3
+    },
+    "failures": [
+      {
+        "id": "r15",
+        "lang": "en",
+        "errors": [
+          "breathing_normally: expected no, got conflict"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,96 @@
+{
+  "consoleUrl": "http://127.0.0.1:5292",
+  "api": "http://127.0.0.1:8291",
+  "results": [
+    {
+      "name": "reset to a fresh seeded session (API)",
+      "ok": true,
+      "ms": 67,
+      "detail": "sess_0007 → sess_0008"
+    },
+    {
+      "name": "console loads and goes live on the new session",
+      "ok": true,
+      "ms": 299,
+      "detail": "Live · seq 1 · sim T+0:00"
+    },
+    {
+      "name": "advance to T+0 from the console",
+      "ok": true,
+      "ms": 278,
+      "detail": "seq 13, 3 incidents"
+    },
+    {
+      "name": "advance to T+2 from the console",
+      "ok": true,
+      "ms": 299,
+      "detail": "seq 23, 5 incidents"
+    },
+    {
+      "name": "advance to T+5 from the console",
+      "ok": true,
+      "ms": 604,
+      "detail": "seq 37, 7 incidents"
+    },
+    {
+      "name": "advance to T+10 from the console",
+      "ok": true,
+      "ms": 317,
+      "detail": "seq 44, 8 incidents"
+    },
+    {
+      "name": "proposal is shown as PROPOSED, not dispatched, and approval is gated",
+      "ok": true,
+      "ms": 2616,
+      "detail": "v4, 6 assignments, 10 flags need acknowledgement"
+    },
+    {
+      "name": "a unit breakdown while the approval dialog is open voids the confirmation",
+      "ok": true,
+      "ms": 2983,
+      "detail": "unit_A1 broken down; confirmation for v4 withdrawn"
+    },
+    {
+      "name": "replanning excludes the broken unit and the console shows the new version",
+      "ok": true,
+      "ms": 14,
+      "detail": "v4 → v5"
+    },
+    {
+      "name": "the server rejects a stale approval of the superseded plan",
+      "ok": true,
+      "ms": 18,
+      "detail": "409 STALE_PLAN"
+    },
+    {
+      "name": "acknowledged approval → simulated dispatch",
+      "ok": true,
+      "ms": 3720,
+      "detail": "11 flags acknowledged; v5 dispatched (simulated), outbox 8"
+    },
+    {
+      "name": "a simulated call creates a triaged incident",
+      "ok": true,
+      "ms": 2968,
+      "detail": "incident_71 road_accident_injuries (critical)"
+    },
+    {
+      "name": "the caller answers the pending intake question from the triage panel",
+      "ok": true,
+      "ms": 3194,
+      "detail": "incident_19: fire_or_smoke = no (caller_structured)"
+    },
+    {
+      "name": "WebSocket loss shows Disconnected; reconnect replays the missed backlog",
+      "ok": true,
+      "ms": 31487,
+      "detail": "offline at seq 79; unit_BT1 off duty while offline; caught up to seq 81"
+    },
+    {
+      "name": "session reset from the console resyncs to the new session",
+      "ok": true,
+      "ms": 279,
+      "detail": "sess_0008 → sess_0009"
+    }
+  ]
+}

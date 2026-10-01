@@ -1,0 +1,45 @@
+{
+  "policy_version": "demo-2026.2",
+  "dangerous_values": {
+    "conscious": "no",
+    "breathing_normally": "no",
+    "chest_pain": "yes",
+    "severe_bleeding": "yes",
+    "trapped": "yes",
+    "fire_or_smoke": "yes",
+    "gas_smell": "yes",
+    "water_rising": "yes",
+    "caller_in_danger": "yes"
+  },
+  "objective_tiers": [
+    "unmet_critical",
+    "unmet_high",
+    "unmet_medium",
+    "unmet_low",
+    "waiting_cost",
+    "operating_cost"
+  ],
+  "severity_weights": {
+    "critical": 5,
+    "high": 3,
+    "medium": 2,
+    "low": 1
+  },
+  "limits": {
+    "units": 25,
+    "need_records": 30,
+    "demand_quanta": 2000,
+    "reserve_pairs": 12
+  },
+  "costs": {
+    "travel_cap_s": 3600,
+    "waiting_cap_s": 3600,
+    "reassignment": 600,
+    "reserve_shortfall": 900,
+    "als_on_bls": 900
+  },
+  "planning_tick_s": 10,
+  "max_debounce_ms": 250,
+  "solver_budget_ms": 2000,
+  "near_arrival_lock_s": 120
+}
