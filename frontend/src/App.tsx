@@ -9,6 +9,7 @@ import { FleetList } from './components/FleetList'
 import { IncidentQueue } from './components/IncidentQueue'
 import { KeyboardHelp } from './components/KeyboardHelp'
 import { KpiStrip } from './components/KpiStrip'
+import { CommandFooter, CommandHeader } from './components/CommandHeader'
 import { MapView } from './components/MapView'
 import { OverrideDialog, type OverridePrefill } from './components/OverrideDialog'
 import { PlanPanel } from './components/PlanPanel'
@@ -375,6 +376,7 @@ export function App({ api, mapTiles = true }: AppProps) {
     return (
       <div className="app app-narrow">
         {chrome}
+        <CommandHeader snapshot={snapshot} />
         <div className="sticky-plan" role="status">
           <span>{planView.kind === 'proposed' ? `PROPOSED v${planView.plan.version} — not dispatched` : planView.kind.replace('_', ' ').toUpperCase()}</span>
           {tab !== 'Plan' && (
@@ -399,6 +401,8 @@ export function App({ api, mapTiles = true }: AppProps) {
   return (
     <div className="app">
       {chrome}
+      <CommandHeader snapshot={snapshot} />
+      <KpiStrip snapshot={snapshot} />
       <main className="console">
         <aside className="rail rail-left" aria-label="Incidents and fleet">
           <div className="rail-tabs" aria-label="Left panel">
@@ -412,7 +416,7 @@ export function App({ api, mapTiles = true }: AppProps) {
           <div className="rail-scroll">{leftTab === 'incidents' ? queue : fleet}</div>
         </aside>
         <section className="stage" aria-label="Situation">
-          <KpiStrip snapshot={snapshot} />
+          <div className="module-heading map-heading"><span>Operations map</span><span>LIVE / BLR METRO</span></div>
           <div className="stage-map">{map}</div>
           <Timeline incidents={snapshot.incidents} simTimeS={snapshot.sim_time_s} selectedId={state.selectedIncidentId} onSelect={select} />
           <div className={`detail-dock${selected ? ' open' : ''}`}>
@@ -431,6 +435,7 @@ export function App({ api, mapTiles = true }: AppProps) {
           {planPanel}
         </aside>
       </main>
+      <CommandFooter sessionId={snapshot.session_id} />
       {dialogs}
     </div>
   )

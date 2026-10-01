@@ -32,6 +32,25 @@ function blankStyle(theme: Theme): StyleSpecification {
   }
 }
 
+function styleTacticalBasemap(map: MapLibreMap, theme: Theme): void {
+  if (theme !== 'dark') return
+  // Only style provider base layers, before operational overlays are added.
+  for (const layer of map.getStyle().layers) {
+    const sourceLayer = 'source-layer' in layer ? layer['source-layer'] : ''
+    if (layer.type === 'background') map.setPaintProperty(layer.id, 'background-color', '#151717')
+    if (layer.type === 'fill') {
+      map.setPaintProperty(layer.id, 'fill-color', sourceLayer === 'water' ? '#101313' : '#1b1e1c')
+    }
+    if (layer.type === 'line' && sourceLayer === 'transportation') {
+      map.setPaintProperty(layer.id, 'line-color', layer.id.includes('casing') ? '#202321' : '#3b423c')
+    }
+    if (layer.type === 'symbol' && layer.layout?.['text-field']) {
+      map.setPaintProperty(layer.id, 'text-color', '#929b90')
+      map.setPaintProperty(layer.id, 'text-halo-color', '#151717')
+    }
+  }
+}
+
 
 export interface CandidateRoute {
   unitId: string
@@ -116,9 +135,9 @@ function addOverlayLayers(map: MapLibreMap, data: Record<string, FeatureCollecti
   map.addLayer({ id: 'routes-proposed-casing', type: 'line', source: 'proposed', paint: { 'line-color': dark ? '#111418' : '#ffffff', 'line-width': 5, 'line-opacity': 0.7 } })
   map.addLayer({ id: 'routes-proposed', type: 'line', source: 'proposed', paint: { 'line-color': '#EC9A3C', 'line-width': 2, 'line-dasharray': [2, 2] } })
   // Road-router candidates for the selected incident: faint alternatives, one focused route.
-  map.addLayer({ id: 'candidates-alt', type: 'line', source: 'candidates', filter: ['!', ['get', 'focused']], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#3EC7D8', 'line-width': 1.5, 'line-opacity': 0.35 } })
+  map.addLayer({ id: 'candidates-alt', type: 'line', source: 'candidates', filter: ['!', ['get', 'focused']], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#B9ABD2', 'line-width': 1.5, 'line-opacity': 0.35 } })
   map.addLayer({ id: 'candidates-casing', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': dark ? '#0a0d12' : '#ffffff', 'line-width': 7, 'line-opacity': 0.85 } })
-  map.addLayer({ id: 'candidates-focus', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#3EC7D8', 'line-width': 3.5 } })
+  map.addLayer({ id: 'candidates-focus', type: 'line', source: 'candidates', filter: ['get', 'focused'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#B9ABD2', 'line-width': 3.5 } })
 }
 
 const DASH_STEPS: [number, number, number][] = [
@@ -212,6 +231,7 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
     let styleLoadedOnce = false
     map.on('style.load', () => {
       styleLoadedOnce = true
+      styleTacticalBasemap(map, themeRef.current)
       addOverlayLayers(map, dataRef.current, themeRef.current)
     })
     // A missing style server must not hide incidents: if the base style never loads,

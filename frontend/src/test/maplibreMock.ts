@@ -51,6 +51,10 @@ export class Map {
     return this.layers.has(id) ? { id } : undefined
   }
   setPaintProperty() {}
+  getStyle() {
+    const style = this.record.styles.at(-1)
+    return typeof style === 'object' && style !== null ? style : { layers: [] }
+  }
   isStyleLoaded() {
     return this.styleLoaded
   }
