@@ -268,8 +268,13 @@ export function MapView({ snapshot, proposal, candidates = [], focusedUnitId = n
     }
     if (!prefersReducedMotion() && typeof requestAnimationFrame === 'function') frame = requestAnimationFrame(animate)
     mapRef.current = map
+    // Keep the canvas matched to its panel when the layout changes (e.g. expanded map).
+    const resizer =
+      typeof ResizeObserver === 'function' ? new ResizeObserver(() => map.resize()) : null
+    resizer?.observe(container)
     const markers = markersRef.current
     return () => {
+      resizer?.disconnect()
       clearTimeout(styleTimeout)
       cancelAnimationFrame(frame)
       cancelAnimationFrame(hudFrame)

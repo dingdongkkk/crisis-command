@@ -1,4 +1,4 @@
-import { PhoneIncoming, X } from 'lucide-react'
+import { Maximize2, Minimize2, PhoneIncoming, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
 import type { ConsoleApi, RouteCandidatesView } from './api/types'
 import { ApproveDialog } from './components/ApproveDialog'
@@ -66,6 +66,7 @@ export function App({ api, mapTiles = true }: AppProps) {
   const [info, setInfo] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Queue')
   const [leftTab, setLeftTab] = useState<'incidents' | 'fleet'>('incidents')
+  const [mapExpanded, setMapExpanded] = useState(false)
   const [theme, toggleTheme] = useTheme()
   const narrow = useNarrow()
   const approveRef = useRef<HTMLButtonElement>(null)
@@ -174,6 +175,9 @@ export function App({ api, mapTiles = true }: AppProps) {
         event.preventDefault()
       } else if (event.key === 'o' && enabled && overridePlan) {
         setDialog({ kind: 'override' })
+        event.preventDefault()
+      } else if (event.key === 'm' && !narrow) {
+        setMapExpanded((v) => !v)
         event.preventDefault()
       } else if (event.key === '?') {
         setDialog({ kind: 'keys' })
@@ -399,7 +403,7 @@ export function App({ api, mapTiles = true }: AppProps) {
   }
 
   return (
-    <div className="app">
+    <div className={`app${mapExpanded ? ' map-expanded' : ''}`}>
       {chrome}
       <CommandHeader snapshot={snapshot} />
       <KpiStrip snapshot={snapshot} />
@@ -416,7 +420,22 @@ export function App({ api, mapTiles = true }: AppProps) {
           <div className="rail-scroll">{leftTab === 'incidents' ? queue : fleet}</div>
         </aside>
         <section className="stage" aria-label="Situation">
-          <div className="module-heading map-heading"><span>Operations map</span><span>LIVE / BLR METRO</span></div>
+          <div className="module-heading map-heading">
+            <span>Operations map</span>
+            <span className="map-heading-right">
+              LIVE / BLR METRO
+              <button
+                type="button"
+                className="icon-btn map-expand"
+                aria-pressed={mapExpanded}
+                aria-label={mapExpanded ? 'Restore layout (M)' : 'Expand map (M)'}
+                title={mapExpanded ? 'Restore layout (M)' : 'Expand map (M)'}
+                onClick={() => setMapExpanded((v) => !v)}
+              >
+                {mapExpanded ? <Minimize2 size={14} aria-hidden="true" /> : <Maximize2 size={14} aria-hidden="true" />}
+              </button>
+            </span>
+          </div>
           <div className="stage-map">{map}</div>
           <Timeline incidents={snapshot.incidents} simTimeS={snapshot.sim_time_s} selectedId={state.selectedIncidentId} onSelect={select} />
           <div className={`detail-dock${selected ? ' open' : ''}`}>
