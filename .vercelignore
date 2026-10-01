@@ -1,0 +1,9 @@
+# Only the console is hosted; it needs frontend/, contracts/ and docs/decisions/examples/.
+backend/.venv
+backend/data
+**/node_modules
+frontend/dist
+.vercel
+.env*
+evals/fixtures/roads
+docs/screenshots
