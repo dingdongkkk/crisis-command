@@ -1,4 +1,4 @@
-import { AudioLines, Mic, Square } from 'lucide-react'
+import { AudioLines, MapPin, Mic, Square } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import type { ConsoleApi } from '../api/types'
 import type { ReportAccepted, StateSnapshot } from '../contracts'
@@ -10,7 +10,16 @@ interface ReportDialogProps {
   snapshot: StateSnapshot
   onClose: () => void
   onCreated: (result: ReportAccepted) => void
+  /** Coordinates the operator pinned on the map, if any. */
+  pinned?: [number, number] | null
+  /** Ask the console to enter map pick mode (the dialog is hidden meanwhile). */
+  onPickOnMap?: () => void
+  /** True while the operator is picking on the map: keep the draft, show nothing. */
+  hidden?: boolean
 }
+
+const PINNED = -1
+const formatPoint = ([lng, lat]: [number, number]) => `${lat.toFixed(4)}°N, ${lng.toFixed(4)}°E`
 
 type SpeechLanguage = 'en-IN' | 'hi-IN'
 type VoiceState =
@@ -63,9 +72,15 @@ const speechErrors: Record<string, string> = {
 }
 
 /** Simulated caller text → live intake (`POST /reports`). Synthetic data only. */
-export function ReportDialog({ api, snapshot, onClose, onCreated }: ReportDialogProps) {
+export function ReportDialog({ api, snapshot, onClose, onCreated, pinned = null, onPickOnMap, hidden = false }: ReportDialogProps) {
   const [text, setText] = useState('')
-  const [place, setPlace] = useState(0)
+  const [place, setPlace] = useState(pinned ? PINNED : 0)
+  // A fresh pin selects itself; the operator can still switch back to a named place.
+  const [seenPin, setSeenPin] = useState(pinned)
+  if (pinned !== seenPin) {
+    setSeenPin(pinned)
+    if (pinned) setPlace(PINNED)
+  }
   const [language, setLanguage] = useState<SpeechLanguage>('en-IN')
   const [voice, setVoice] = useState<VoiceState>({ kind: 'idle' })
   const [phase, setPhase] = useState<{ kind: 'editing' | 'submitting' } | { kind: 'error'; message: string }>({ kind: 'editing' })
@@ -132,7 +147,8 @@ export function ReportDialog({ api, snapshot, onClose, onCreated }: ReportDialog
 
   const submit = async () => {
     setPhase({ kind: 'submitting' })
-    const location = DEMO_PLACES[place] ?? DEMO_PLACES[0]
+    const usePin = place === PINNED && pinned !== null
+    const location = usePin ? { coordinates: pinned } : (DEMO_PLACES[place] ?? DEMO_PLACES[0])
     if (!location) return
     const result = await api.submit(
       {
@@ -140,7 +156,7 @@ export function ReportDialog({ api, snapshot, onClose, onCreated }: ReportDialog
         channel: 'text_sim',
         text: text.trim(),
         location: { type: 'Point', coordinates: location.coordinates },
-        location_source: 'caller_stated',
+        location_source: usePin ? 'operator_entered' : 'caller_stated',
         sim_time_s: snapshot.sim_time_s,
       },
       crypto.randomUUID(),
@@ -153,6 +169,8 @@ export function ReportDialog({ api, snapshot, onClose, onCreated }: ReportDialog
     }
   }
 
+  // Hidden (not unmounted) during map picking so the typed or spoken draft survives.
+  if (hidden) return null
   return (
     <Dialog title="Simulated call" onClose={close}>
       <p className="muted">Speak or type what a synthetic caller says. Review the transcript before recording it. Crisis Command stores no audio and contacts no real emergency service. Voice uses your browser's speech recognition (Chrome, Edge or Safari), which needs the internet and sends the audio to the browser vendor.</p>
@@ -190,14 +208,22 @@ export function ReportDialog({ api, snapshot, onClose, onCreated }: ReportDialog
         Caller transcript
         <textarea value={text} readOnly={voice.kind === 'listening' || voice.kind === 'stopping'} maxLength={2000} onChange={(e) => setText(e.target.value)} placeholder="e.g. bhai accident ho gaya, do log ghayal hain, khoon beh raha hai" />
       </label>
-      <label>
-        Location
-        <select value={place} onChange={(e) => setPlace(Number(e.target.value))}>
-          {DEMO_PLACES.map((p, i) => (
-            <option key={p.label} value={i}>{p.label}</option>
-          ))}
-        </select>
-      </label>
+      <div className="location-row">
+        <label>
+          Location
+          <select value={place === PINNED && !pinned ? 0 : place} onChange={(e) => setPlace(Number(e.target.value))}>
+            {pinned && <option value={PINNED}>Pinned on map ({formatPoint(pinned)})</option>}
+            {DEMO_PLACES.map((p, i) => (
+              <option key={p.label} value={i}>{p.label}</option>
+            ))}
+          </select>
+        </label>
+        {onPickOnMap && (
+          <button type="button" className="pin-button" onClick={onPickOnMap} disabled={voice.kind === 'listening' || voice.kind === 'stopping'}>
+            <MapPin size={14} aria-hidden="true" /> {pinned ? 'Move pin' : 'Pin on map'}
+          </button>
+        )}
+      </div>
       <div className="dialog-actions">
         <button type="button" onClick={close}>Cancel</button>
         <button type="button" className="primary" disabled={!text.trim() || phase.kind === 'submitting' || voice.kind === 'listening' || voice.kind === 'stopping'} onClick={() => void submit()}>

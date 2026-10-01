@@ -69,6 +69,8 @@ export function App({ api, mapTiles = true, onShowTour }: AppProps) {
   const [tab, setTab] = useState<Tab>('Queue')
   const [leftTab, setLeftTab] = useState<'incidents' | 'fleet'>('incidents')
   const [mapExpanded, setMapExpanded] = useState(false)
+  // Simulated-call location picking: the report dialog hides while the map takes one click.
+  const [pick, setPick] = useState<{ active: boolean; point: [number, number] | null }>({ active: false, point: null })
   const [theme, toggleTheme] = useTheme()
   const narrow = useNarrow()
   const approveRef = useRef<HTMLButtonElement>(null)
@@ -156,6 +158,11 @@ export function App({ api, mapTiles = true, onShowTour }: AppProps) {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (pick.active && event.key === 'Escape') {
+        setPick((p) => ({ ...p, active: false }))
+        event.preventDefault()
+        return
+      }
       if (dialog || isTyping(event.target) || event.metaKey || event.ctrlKey || event.altKey) return
       if (event.key === 'j' || event.key === 'k') {
         if (emergencies.length === 0) return
@@ -188,7 +195,7 @@ export function App({ api, mapTiles = true, onShowTour }: AppProps) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [dialog, emergencies, state.selectedIncidentId, select, enabled, overridePlan, narrow])
+  }, [dialog, emergencies, state.selectedIncidentId, select, enabled, overridePlan, narrow, pick.active])
 
   const connection = (
     <ConnectionBanner
@@ -248,7 +255,16 @@ export function App({ api, mapTiles = true, onShowTour }: AppProps) {
         <ReportDialog
           api={api.reports}
           snapshot={snapshot}
-          onClose={() => setDialog(null)}
+          hidden={pick.active}
+          pinned={pick.point}
+          onPickOnMap={() => {
+            setPick((p) => ({ ...p, active: true }))
+            if (narrow) setTab('Map')
+          }}
+          onClose={() => {
+            setDialog(null)
+            setPick({ active: false, point: null })
+          }}
           onCreated={(result) => {
             if (result.incident_id) select(result.incident_id)
           }}
@@ -284,7 +300,7 @@ export function App({ api, mapTiles = true, onShowTour }: AppProps) {
 
   const queue = <IncidentQueue incidents={snapshot.incidents} proposal={snapshot.current_proposal ?? snapshot.approved_plan} selectedId={state.selectedIncidentId} onSelect={select} />
   const fleet = <FleetList units={snapshot.units} />
-  const map = <MapView snapshot={snapshot} proposal={snapshot.current_proposal} candidates={candidateRoutes} focusedUnitId={focusedUnitId} selectedId={state.selectedIncidentId} onSelect={select} theme={theme} tiles={mapTiles} />
+  const map = <MapView snapshot={snapshot} proposal={snapshot.current_proposal} candidates={candidateRoutes} focusedUnitId={focusedUnitId} selectedId={state.selectedIncidentId} onSelect={select} theme={theme} tiles={mapTiles} picking={pick.active} pin={dialog?.kind === 'report' ? pick.point : null} onPick={(point) => setPick({ active: false, point })} />
   const triage = <TriagePanel
       ref={triageRef}
       incident={selected}
